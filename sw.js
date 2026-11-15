@@ -1,5 +1,5 @@
-const CACHE = "divan-v4";
-const ASSETS = ["./", "./index.html", "./cours.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
+const CACHE = "divan-v5";
+const ASSETS = ["./", "./index.html", "./cours.html", "./cours-a.js?v=1", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil((async () => {

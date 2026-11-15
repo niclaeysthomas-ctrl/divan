@@ -126,6 +126,44 @@ h1{font-size:clamp(32px,6vw,50px);line-height:1.06;letter-spacing:-.015em}
 .plate code{font-family:var(--mono);font-size:13px;background:var(--stone2);padding:1px 5px;border-radius:2px;color:var(--ink)}
 .warn{border-left:3px solid var(--rose);background:var(--rose-soft);border-radius:0 3px 3px 0;padding:14px 16px;margin-top:22px;font-size:14.5px;line-height:1.6}
 .warn b{color:var(--rose)}
+/* ——— leçon ——— */
+.lec-nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:38px;padding-top:18px;border-top:1px solid var(--rule)}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--stone);border-radius:3px;padding:10px 17px;font-weight:500;font-size:14.5px;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--bleu);border-color:var(--bleu);color:var(--on-fg)}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{background:var(--stone2);color:var(--ink);border-color:var(--ink)}
+.lec-meta{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:14px;display:flex;gap:16px;flex-wrap:wrap}
+.lec{margin-top:30px;display:flex;flex-direction:column;gap:19px;max-width:35rem}
+.lh{font-size:21px;line-height:1.25;margin-top:12px}
+.lp{font-size:17px;line-height:1.68;color:var(--ink);margin:0}
+.ex{border-left:3px solid var(--bleu);background:var(--bleu-soft);border-radius:0 3px 3px 0;padding:15px 17px}
+.exk{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bleu);margin-bottom:6px}
+.ex p{margin:0;font-family:var(--disp);font-size:17.5px;line-height:1.55}
+.def{border:1px solid var(--rule);border-radius:3px;padding:13px 16px;background:var(--panel)}
+.defm{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.def p{margin:0;font-size:15.5px;line-height:1.6;color:var(--ink-soft)}
+.calc{font-family:var(--mono);font-size:12.5px;line-height:1.85;background:var(--stone2);border:1px solid var(--rule-soft);border-radius:3px;padding:14px 16px;overflow-x:auto;margin:0;white-space:pre;color:var(--ink)}
+ol.lnum,ul.lli{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:11px}
+ol.lnum li,ul.lli li{font-size:16.5px;line-height:1.62}
+ol.lnum li::marker{font-family:var(--mono);font-size:13px;color:var(--bleu)}
+.tabwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;background:var(--panel)}
+th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:400;padding:10px 13px;border-bottom:1px solid var(--rule)}
+td{padding:10px 13px;border-bottom:1px solid var(--rule-soft);line-height:1.45;vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:last-child{font-variant-numeric:tabular-nums}
+.lverdict{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--rule);border-radius:3px;padding:13px 15px;background:var(--panel)}
+.lverdict .vx{font-size:15.5px;line-height:1.55}
+.lverdict .vx b{font-weight:500}
+.lkey{border-left:3px solid var(--vert);background:var(--vert-soft);border-radius:0 3px 3px 0;padding:15px 17px}
+.lkeyk{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--vert);margin-bottom:6px}
+.lkey p{margin:0;font-size:16.5px;line-height:1.6}
+.fig{overflow-x:auto;border:1px solid var(--rule-soft);border-radius:3px;background:var(--panel);padding:12px}
+.fig svg{display:block;width:100%;height:auto;min-width:420px}
+.lecon.ouvrable{cursor:pointer}
+.lecon a{text-decoration:none;color:inherit}
+.lecon a:hover .lt{color:var(--bleu);text-decoration:underline;text-underline-offset:3px}
+.lire{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-fg);background:var(--bleu);border-radius:2px;padding:2px 5px;margin-left:7px;vertical-align:2px}
 .foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--faint);line-height:1.8}
 </style>
 </head>
@@ -138,6 +176,7 @@ h1{font-size:clamp(32px,6vw,50px);line-height:1.06;letter-spacing:-.015em}
   <div id="app"></div>
 </div>
 
+<script src="cours-a.js?v=1"></script>
 <script>
 "use strict";
 
@@ -566,6 +605,10 @@ const PLAN = [
 /* ─────────── rendu ─────────── */
 const el = (t, c, x) => { const n = document.createElement(t); if(c) n.className = c; if(x != null) n.textContent = x; return n; };
 const LABEL = {etabli:"Établi", conteste:"Contesté", effondre:"Effondré", marketing:"Marketing"};
+const CONTENU = Object.assign({}, window.CONTENU_A || {});
+const LECONS = PLAN.flatMap(b => b.modules.flatMap(m => m.lecons.map(l => ({l, m, b}))));
+const ECRITES = LECONS.filter(x => CONTENU[x.l.n]);
+const mots = bl => bl.reduce((a, b) => a + [b.x, b.d, b.titre, b.mot, (b.items||[]).join(" "), (b.lignes||[]).join(" "), (b.rows||[]).flat().join(" ")].filter(Boolean).join(" ").split(/\s+/).length, 0);
 
 function render(){
   const app = document.getElementById("app");
@@ -598,7 +641,7 @@ function render(){
   const idees = PLAN.flatMap(b => b.modules.flatMap(m => m.idees));
   const st = el("div", "stats");
   [["Blocs", String(PLAN.length)], ["Modules", String(nMod)], ["Leçons", String(nLec)],
-   ["Idées jugées", String(idees.length)], ["Écrites", "0"]]
+   ["Idées jugées", String(idees.length)], ["Écrites", ECRITES.length + " / " + nLec]]
    .forEach(([k, v]) => { const d = el("div", "stat"); d.appendChild(el("div", "k", k)); d.appendChild(el("div", "v", v)); st.appendChild(d); });
   app.appendChild(st);
 
@@ -622,9 +665,16 @@ function render(){
         const li = el("li", "lecon");
         li.appendChild(el("span", "ln", l.n));
         const d = el("div");
-        d.appendChild(el("div", "lt", l.t));
+        const t = el("div", "lt", l.t);
+        if(CONTENU[l.n]) t.appendChild(el("span", "lire", "Lire"));
+        d.appendChild(t);
         d.appendChild(el("div", "ld", l.d));
-        li.appendChild(d); ul.appendChild(li);
+        if(CONTENU[l.n]){
+          const a = document.createElement("a");
+          a.href = "#" + l.n; a.appendChild(d);
+          li.appendChild(a); li.className = "lecon ouvrable";
+        } else li.appendChild(d);
+        ul.appendChild(li);
       });
       col.appendChild(ul);
 
@@ -668,7 +718,84 @@ function render(){
   app.appendChild(f);
 }
 
-render();
+/* ─────────── vue leçon ─────────── */
+function renderLecon(num){
+  const idx = LECONS.findIndex(x => x.l.n === num);
+  const {l, m, b} = LECONS[idx];
+  const blocs = CONTENU[num];
+  const app = document.getElementById("app");
+  app.textContent = "";
+
+  app.appendChild(el("div", "eyebrow", "Bloc " + b.bloc + " · Module " + m.n + " · Leçon " + l.n));
+  app.appendChild(el("h1", null, l.t));
+  const meta = el("div", "lec-meta");
+  meta.appendChild(el("span", null, m.titre.toUpperCase()));
+  meta.appendChild(el("span", null, Math.max(1, Math.round(mots(blocs) / 200)) + " min de lecture"));
+  app.appendChild(meta);
+
+  const box = el("div", "lec");
+  blocs.forEach(bl => {
+    if(bl.t === "h") box.appendChild(el("h2", "lh", bl.x));
+    else if(bl.t === "p") box.appendChild(el("p", "lp", bl.x));
+    else if(bl.t === "ex"){
+      const d = el("div", "ex");
+      d.appendChild(el("div", "exk", bl.titre || "Exemple"));
+      d.appendChild(el("p", null, bl.x)); box.appendChild(d);
+    }
+    else if(bl.t === "def"){
+      const d = el("div", "def");
+      d.appendChild(el("div", "defm", bl.mot));
+      d.appendChild(el("p", null, bl.x)); box.appendChild(d);
+    }
+    else if(bl.t === "calc") box.appendChild(el("pre", "calc", bl.lignes.join("\n")));
+    else if(bl.t === "num" || bl.t === "li"){
+      const list = el(bl.t === "num" ? "ol" : "ul", bl.t === "num" ? "lnum" : "lli");
+      bl.items.forEach(i => list.appendChild(el("li", null, i)));
+      box.appendChild(list);
+    }
+    else if(bl.t === "tab"){
+      const w = el("div", "tabwrap"); const tb = el("table");
+      const tr = el("tr"); bl.head.forEach(h => tr.appendChild(el("th", null, h)));
+      const th = document.createElement("thead"); th.appendChild(tr); tb.appendChild(th);
+      const tbody = document.createElement("tbody");
+      bl.rows.forEach(r => { const row = el("tr"); r.forEach(c => row.appendChild(el("td", null, c))); tbody.appendChild(row); });
+      tb.appendChild(tbody); w.appendChild(tb); box.appendChild(w);
+    }
+    else if(bl.t === "verdict"){
+      const d = el("div", "lverdict");
+      d.appendChild(el("span", "pill p-" + bl.s, LABEL[bl.s]));
+      const x = el("div", "vx");
+      const strong = el("b", null, "« " + bl.x + " » ");
+      x.appendChild(strong); x.appendChild(el("span", null, "— " + bl.d));
+      d.appendChild(x); box.appendChild(d);
+    }
+    else if(bl.t === "key"){
+      const d = el("div", "lkey");
+      d.appendChild(el("div", "lkeyk", "Ce qu'il faut retenir"));
+      d.appendChild(el("p", null, bl.x)); box.appendChild(d);
+    }
+    else if(bl.t === "svg"){
+      const d = el("div", "fig"); d.innerHTML = bl.src; box.appendChild(d);
+    }
+  });
+  app.appendChild(box);
+
+  const nav = el("div", "lec-nav");
+  const pos = ECRITES.findIndex(x => x.l.n === num);
+  if(pos > 0){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + ECRITES[pos-1].l.n; a.textContent = "← " + ECRITES[pos-1].l.n; nav.appendChild(a); }
+  if(pos < ECRITES.length - 1){ const a = document.createElement("a"); a.className = "btn"; a.href = "#" + ECRITES[pos+1].l.n; a.textContent = "Leçon " + ECRITES[pos+1].l.n + " · " + ECRITES[pos+1].l.t + " →"; nav.appendChild(a); }
+  const back = document.createElement("a"); back.className = "btn ghost"; back.href = "#plan"; back.textContent = "Le plan";
+  nav.appendChild(back);
+  app.appendChild(nav);
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+function route(){
+  const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if(h && CONTENU[h]) renderLecon(h); else render();
+}
+addEventListener("hashchange", route);
+route();
 </script>
 </body>
 </html>
