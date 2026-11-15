@@ -170,6 +170,26 @@ input[type=range]{flex:1;accent-color:var(--bleu);height:26px}
 .skipped{opacity:.45;pointer-events:none}
 .skipmark{font-family:var(--mono);font-size:11px;color:var(--rose);margin-top:10px}
 
+/* ——— accueil ——— */
+.railback{background:none;border:0;padding:0;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-align:left;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.railback b{color:var(--ink);font-weight:500}
+.railback:hover,.railback:hover b{color:var(--bleu)}
+.cards{display:flex;flex-direction:column;gap:12px;margin-top:30px}
+.card{border:1px solid var(--rule);border-radius:4px;background:var(--panel);padding:18px 20px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 18px;align-items:start}
+.card .num{font-family:var(--disp);font-size:40px;line-height:.92;color:var(--bleu);font-variant-numeric:tabular-nums}
+.cardbody{display:flex;flex-direction:column;gap:9px;min-width:0}
+.cardt{font-size:22px;line-height:1.2}
+.cardmeta{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.cardp{margin:0;font-size:15px;color:var(--ink-soft);line-height:1.5}
+.prog{height:3px;background:var(--rule-soft);border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--bleu)}
+.cardstat{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:-4px}
+.cardnav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:3px}
+.cardnav .btn{padding:8px 15px;font-size:14px}
+.cardwarn{font-family:var(--mono);font-size:10.5px;color:var(--rose)}
+.loaderr{margin-top:10px;color:var(--rose);font-size:13.5px;line-height:1.5}
+@media (max-width:520px){.card{grid-template-columns:minmax(0,1fr)}.card .num{font-size:26px;margin-bottom:8px}}
+
 /* ——— navigation ——— */
 .nav{display:flex;gap:10px;align-items:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--rule);flex-wrap:wrap}
 .btn{border:1px solid var(--ink);background:var(--ink);color:var(--stone);border-radius:3px;padding:11px 20px;font-weight:500;font-size:15px}
@@ -202,7 +222,7 @@ input[type=range]{flex:1;accent-color:var(--bleu);height:26px}
 <body>
 <div class="shell">
   <nav class="rail">
-    <div class="railtitle"><b>LE DIVAN</b> · entretien 1</div>
+    <div class="railtitle" id="railhead"></div>
     <div class="bar" id="bar" aria-hidden="true"></div>
     <ul class="seclist" id="seclist"></ul>
   </nav>
@@ -211,7 +231,7 @@ input[type=range]{flex:1;accent-color:var(--bleu);height:26px}
 <script>
 "use strict";
 const K = "divan_v1";
-const VERSION = 1;
+const VERSION = 2;
 
 /* ═══════════════════════════════════════════════════════════════════
    ENTRETIEN 1 — « Faire connaissance »
@@ -222,7 +242,7 @@ const VERSION = 1;
 
 const LIK = ["Pas du tout","","","Moyen","","","Tout à fait"];
 
-const SECTIONS = [
+const E1 = [
 {
   n:"0", axe:"Le seuil", titre:"Avant de commencer",
   lede:"Trois minutes de cadre. Ce n'est pas une formalité : savoir exactement où vont tes réponses change ce que tu acceptes d'écrire.",
@@ -446,10 +466,212 @@ const SECTIONS = [
 }
 ];
 
+/* ═══════════════════════════════════════════════════════════════════
+   ENTRETIEN 2 — « Les reliures »
+   Suppose l'entretien 1 fait. On ne redemande pas ce qu'on sait :
+   on cherche ce qui relie, ce qui se répète, et ce que ça coûterait
+   d'arrêter.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const E2 = [
+{
+  n:"1", axe:"La reprise", titre:"Depuis la dernière fois",
+  lede:"Un entretien ne finit pas quand on ferme l'onglet. Ce qui a continué à tourner tout seul, dans les jours suivants, fait partie des données.",
+  items:[
+    {id:"1.1",type:"scale",q:"À quel point l'entretien 1 t'a remué ?",why:"0 = un questionnaire de plus. 10 = j'y ai repensé tous les jours.",min:0,max:10},
+    {id:"1.2",type:"long",q:"Quelle question est restée ? Et qu'est-ce que tu aurais voulu répondre, avec le recul ?",why:"Les réponses qu'on corrige après coup sont souvent plus vraies que les premières — et parfois plus arrangées. Les deux m'intéressent.",rows:4},
+    {id:"1.3",type:"choice",q:"En relisant tes réponses, tu as surtout eu l'impression…",options:[
+      "D'avoir été plus honnête que d'habitude",
+      "D'avoir donné une version propre",
+      "D'avoir découvert quelque chose",
+      "D'avoir répété ce que je sais déjà par cœur",
+      "De m'être senti jugé",
+      "Je n'ai pas relu"
+    ]},
+    {id:"1.4",type:"text",q:"Quelque chose a-t-il changé depuis ? Même minuscule.",optional:true}
+  ]
+},
+{
+  n:"2", axe:"La répétition", titre:"La scène qui revient",
+  lede:"Freud appelait compulsion de répétition cette tendance à remettre en scène, sans le vouloir, un même épisode avec d'autres décors et d'autres visages. On ne va pas en débattre : on va chercher ta scène à toi, par ses faits.",
+  items:[
+    {id:"2.1",type:"rows",q:"Trois épisodes de ta vie, à des époques et avec des gens différents, qui se ressemblent.",why:"Ne cherche pas la ressemblance d'abord : note trois histoires qui t'ont fait le même effet, la ressemblance apparaîtra ensuite.",cols:["Âge","Avec qui","Ce qui s'est passé"],rows:3},
+    {id:"2.2",type:"long",q:"Maintenant regarde les trois ensemble. Qu'est-ce qui est commun ?",why:"Le décor change, le rôle rarement. Regarde surtout : qui commence, qui s'en va, et à quel moment précis ça bascule.",rows:4},
+    {id:"2.3",type:"text",q:"Quelle phrase est prononcée — par toi ou par l'autre — dans chacune de ces scènes ?",why:"Souvent la même, à un mot près."},
+    {id:"2.4",type:"choice",q:"Dans cette scène, tu es le plus souvent :",why:"Eric Berne, fondateur de l'analyse transactionnelle, appelait ça un rôle : une position qu'on occupe sans l'avoir choisie, et qui appelle celle de l'autre.",options:[
+      "Celui qui donne trop et finit en colère",
+      "Celui qui teste jusqu'à ce que l'autre parte",
+      "Celui qui se tait jusqu'à l'explosion",
+      "Celui qui sauve quelqu'un qui n'a rien demandé",
+      "Celui qui est choisi puis lâché",
+      "Celui qui part le premier",
+      "Autre"
+    ],other:true},
+    {id:"2.5",type:"likert",q:"Quand cette scène recommence, je le vois venir.",why:"Voir venir et ne pas pouvoir s'arrêter est l'expérience la plus fréquente, et la plus décourageante. Ce n'est pas un manque de volonté.",poles:["Jamais, je comprends après","Je le vois dès le début"]},
+    {id:"2.6",type:"long",q:"La dernière fois, qu'est-ce qui t'aurait permis de sortir de la scène ? Et qu'est-ce qui t'en a empêché ?",rows:4}
+  ]
+},
+{
+  n:"3", axe:"L'ambivalence", titre:"Le prix du changement",
+  lede:"L'entretien motivationnel (Miller et Rollnick) part d'un constat simple : personne ne reste coincé par bêtise. Si une chose ne bouge pas, c'est qu'une partie de toi a de bonnes raisons de ne pas la faire bouger. On va écouter cette partie-là, sérieusement.",
+  items:[
+    {id:"3.1",type:"long",q:"Imagine que ton problème principal disparaisse ce soir, proprement. Qu'est-ce que tu perds ?",why:"Il y a toujours quelque chose : une excuse, une identité, une attention, une raison de ne pas essayer.",rows:4},
+    {id:"3.2",type:"alloc",q:"Répartis 100 points sur ce qui te retient vraiment.",why:"Sois honnête sur les deux derniers : ils sont rarement à zéro.",domains:[
+      "Je ne sais pas comment faire",
+      "Je n'ai pas l'énergie",
+      "J'ai peur de réussir et de devoir continuer",
+      "J'ai peur de rater en public",
+      "Ça décevrait quelqu'un",
+      "Ça me priverait d'une excuse",
+      "J'y tiens plus que je ne le dis",
+      "Le problème n'est pas de moi"
+    ]},
+    {id:"3.3",type:"text",q:"Qui serait déçu si tu changeais ?",why:"Question contre-intuitive, et elle a presque toujours une réponse."},
+    {id:"3.4",type:"pairs",q:"Choisis, même si les deux sont vrais.",pairs:[
+      {a:"Je veux changer mais je ne peux pas",b:"Je peux changer mais je ne veux pas assez"},
+      {a:"J'attends le bon moment",b:"Je n'ai jamais commencé"},
+      {a:"Si j'échoue, c'est que je n'ai pas essayé",b:"Si j'essaie vraiment, je saurai ce que je vaux"},
+      {a:"Mon problème me vient des autres",b:"Mon problème est ma façon de répondre aux autres"}
+    ]},
+    {id:"3.5",type:"long",q:"Qu'est-ce que tu as déjà essayé, et qu'est-ce qui a échoué exactement ?",why:"Pas « ça n'a pas marché » : à quel moment précis ça s'est arrêté, et ce qui se passait ce jour-là.",rows:4}
+  ]
+},
+{
+  n:"4", axe:"La voix", titre:"Le commentaire intérieur",
+  lede:"Dans l'entretien 1, tu as écrit ce que tu te dis quand ça va mal. On y revient, parce que c'est la pièce qui relie presque tout le reste : cette voix a un vocabulaire, un âge, une origine, et souvent une fonction protectrice qu'on sous-estime.",
+  items:[
+    {id:"4.1",type:"long",q:"Fais-la parler. Trois phrases qu'elle te dit, telles quelles, sans les adoucir.",rows:4,sensitive:true},
+    {id:"4.2",type:"choice",q:"Elle te parle surtout :",options:[
+      "Avant d'agir, pour m'empêcher",
+      "Pendant, pour me corriger",
+      "Après, pour faire le procès",
+      "La nuit, sans objet précis",
+      "Quand quelqu'un me complimente",
+      "Quand je suis seul"
+    ]},
+    {id:"4.3",type:"text",q:"Quel âge as-tu, quand tu l'entends ?",why:"Pas ton âge réel. Celui que tu as, dans ces moments-là."},
+    {id:"4.4",type:"likert",q:"Je me parle comme je parlerais à un ami dans la même situation.",why:"Kristin Neff a construit toute une échelle d'auto-compassion sur cet écart. Il est en général énorme, et sa taille est le vrai indicateur.",poles:["Beaucoup plus dur avec moi","Pareil"]},
+    {id:"4.5",type:"long",q:"Qu'est-ce que cette voix essaie d'éviter qu'il t'arrive ?",why:"Une critique intérieure est rarement gratuite : elle anticipe une humiliation qu'elle a déjà vue arriver. Laquelle ?",rows:3},
+    {id:"4.6",type:"text",q:"Si elle avait entièrement raison, qu'est-ce que ça dirait de toi ?",sensitive:true},
+    {id:"4.7",type:"text",q:"Et qu'est-ce qu'elle dirait si tu réussissais vraiment ?",why:"C'est souvent là qu'on découvre qu'il n'y a pas de bonne réponse possible, et que le jeu est truqué d'avance."}
+  ]
+},
+{
+  n:"5", axe:"Les règles", titre:"Ce qu'on ne t'a jamais dit explicitement",
+  lede:"Chaque famille transmet des commandements que personne n'a formulés à voix haute, et qu'on applique encore à trente ou quarante ans en les prenant pour du bon sens. On va les écrire noir sur blanc : une règle nommée perd la moitié de son autorité.",
+  items:[
+    {id:"5.1",type:"stems",q:"Complète, vite.",stems:[
+      "Dans ma famille, on ne parlait jamais de…",
+      "Quelqu'un de bien, c'est quelqu'un qui…",
+      "Demander de l'aide, c'est…",
+      "L'argent, chez nous…",
+      "Se plaindre, c'est…",
+      "On ne pleure pas quand…",
+      "La réussite, c'était…",
+      "Ce qu'on pensait des gens qui échouent…"
+    ]},
+    {id:"5.2",type:"rank",q:"Classe ces règles, de la plus active chez toi à la moins active.",options:[
+      "Ne dérange pas",
+      "Sois fort, ne montre rien",
+      "Fais mieux que ce qu'on attend",
+      "Ne fais pas confiance",
+      "Passe après les autres",
+      "Ne te vante pas, reste à ta place"
+    ]},
+    {id:"5.3",type:"text",q:"Laquelle de ces règles transmets-tu, malgré toi ?",why:"À tes proches, tes élèves, tes collègues, tes enfants s'il y en a."},
+    {id:"5.4",type:"long",q:"Une règle que tu as cassée. Qu'est-ce qui s'est passé, et qu'est-ce que ça t'a coûté ?",rows:4},
+    {id:"5.5",type:"likert",q:"Je crois encore que ces règles sont justes.",why:"Beaucoup de règles héritées sont effectivement utiles : le but n'est pas de toutes les jeter, c'est de savoir lesquelles tu gardes par choix.",poles:["Je n'y crois plus","Je les crois justes"]}
+  ]
+},
+{
+  n:"6", axe:"Honte", titre:"Ce qui se cache",
+  lede:"Section difficile, et tu peux en passer chaque item. La honte se distingue de la culpabilité sur un point : elle ne porte pas sur un acte mais sur la personne entière, et c'est pour ça qu'elle ne mène à aucune réparation possible. On en cherche l'emplacement, pas le contenu.",
+  items:[
+    {id:"6.1",type:"choice",q:"Où ça se loge, physiquement, quand ça arrive ?",why:"La honte a presque toujours un siège corporel, et il est stable d'une fois sur l'autre.",options:[
+      "Gorge, mâchoire","Ventre","Poitrine, respiration","Visage qui chauffe","Nuque, épaules","Nulle part, je ne sens rien"
+    ]},
+    {id:"6.2",type:"text",q:"La dernière fois que tu as voulu disparaître : c'était quand, et devant qui ?",sensitive:true},
+    {id:"6.3",type:"likert",q:"Il y a des choses que personne de mon entourage ne sait.",poles:["On sait tout de moi","Une part entière est cachée"]},
+    {id:"6.4",type:"long",q:"Sans dire quoi : qu'est-ce que ça te coûte de le garder ?",why:"Je ne demande pas le secret. Je demande la facture : énergie, évitements, relations tenues à distance.",rows:3,sensitive:true},
+    {id:"6.5",type:"pairs",q:"Lequel de ces deux reproches te ferait le plus mal ?",why:"Le choix situe la ligne de faille, sans qu'il soit besoin de la raconter.",pairs:[
+      {a:"Tu es quelqu'un de faible",b:"Tu es quelqu'un de méchant"},
+      {a:"Tu n'as aucun talent",b:"Tu n'as aucune importance pour personne"},
+      {a:"Tu es un imposteur",b:"Tu es ennuyeux"},
+      {a:"Tu as gâché tes chances",b:"Tu n'en as jamais eu"}
+    ]},
+    {id:"6.6",type:"text",q:"Qui, dans ta vie, a vu le plus près de ça sans partir ?",why:"S'il n'y a personne, écris-le : c'est une information, pas un échec.",optional:true}
+  ]
+},
+{
+  n:"7", axe:"Les autres, suite", titre:"Ce que tu provoques",
+  lede:"L'entretien 1 a demandé ce que les autres te font. Celui-ci demande l'inverse, qui est plus désagréable et plus utile : ce que ta manière d'être appelle chez eux, sans que tu le veuilles.",
+  items:[
+    {id:"7.1",type:"long",q:"Quel rôle les gens te donnent-ils spontanément, dès les premières semaines ?",why:"Le solide, le drôle, le conseiller, le fragile, le brillant, celui qu'on n'invite pas. Et est-ce que ça t'arrange ?",rows:3},
+    {id:"7.2",type:"text",q:"Qu'est-ce que tu fais pour qu'on reste ?",why:"Chacun a sa monnaie : être utile, être drôle, être performant, être disponible, ne jamais rien demander."},
+    {id:"7.3",type:"text",q:"Et qu'est-ce que tu fais quand tu as peur que quelqu'un parte ?",why:"Les deux réponses se contredisent souvent. C'est précisément l'endroit intéressant."},
+    {id:"7.4",type:"likert",q:"Il m'arrive de provoquer exactement ce que je crains.",poles:["Jamais","Souvent, et je le vois"]},
+    {id:"7.5",type:"long",q:"Raconte la dernière fois.",rows:4},
+    {id:"7.6",type:"choice",q:"Quand quelqu'un te dit quelque chose de bien sur toi :",options:[
+      "Je le rejette, je minimise",
+      "Je cherche l'intention derrière",
+      "Je le prends, et ça me gêne",
+      "Je le prends sans difficulté",
+      "Je retourne le compliment aussitôt"
+    ]}
+  ]
+},
+{
+  n:"8", axe:"Contrefactuels", titre:"La vie que tu n'as pas",
+  lede:"Dernier axe. Les psychologues appellent pensée contrefactuelle ce « et si » qu'on refait tourner après coup. Elle est pénible à l'usage, mais elle montre précisément où tu places tes regrets — et donc ce que tu n'as jamais cessé de vouloir.",
+  items:[
+    {id:"8.1",type:"text",q:"Complète : « Si ça ne s'était pas passé, je serais… »",why:"Tu sais déjà de quoi je parle."},
+    {id:"8.2",type:"long",q:"La décision que tu ruminerais encore à quatre-vingts ans.",rows:3},
+    {id:"8.3",type:"text",q:"Qu'est-ce que tu ferais demain si personne ne regardait et que ça ne comptait pas ?",why:"Ni vu, ni jugé, ni cumulable. La réponse sépare ce que tu veux de ce que tu veux qu'on voie."},
+    {id:"8.4",type:"stems",q:"Finis ces phrases-là aussi.",stems:[
+      "Ce que j'ai sacrifié sans le dire, c'est…",
+      "La personne que je n'ose pas contacter…",
+      "Ce dont je suis secrètement fier…",
+      "Si on me donnait trois ans sans obligations…",
+      "Ce que j'ai compris trop tard…",
+      "Ce que je ne me pardonne pas…"
+    ]},
+    {id:"8.5",type:"scale",q:"À quel point ta vie actuelle ressemble à celle que tu voulais ?",min:0,max:10}
+  ]
+},
+{
+  n:"9", axe:"La sortie", titre:"Ce que ce tour a ouvert",
+  lede:"Comme la dernière fois : tu fixes toi-même les règles du tour suivant.",
+  items:[
+    {id:"9.1",type:"long",q:"Qu'est-ce qui s'est noué, pendant cet entretien ?",why:"Une réponse qui en a éclairé une autre, une contradiction que tu as vue en l'écrivant.",rows:4},
+    {id:"9.2",type:"scale",q:"À quel point as-tu été honnête, cette fois ?",why:"Comparée à l'entretien 1, cette note est plus parlante que la première.",min:0,max:10},
+    {id:"9.3",type:"text",q:"Sur quel item as-tu menti, ou arrondi ?",optional:true},
+    {id:"9.4",type:"text",q:"Qu'est-ce que tu autorises pour l'entretien 3 ?"},
+    {id:"9.5",type:"text",q:"Et qu'est-ce qui reste fermé ?",sensitive:true,optional:true}
+  ]
+}
+];
+
+/* ─────────── registre des entretiens ─────────── */
+const TYPES_OK = ["long","text","likert","scale","choice","multi","rank","pairs","stems","rows","fields","grid3","alloc","consent"];
+
+const ENTRETIENS = [
+  {key:"1", n:"1", titre:"Faire connaissance", duree:"25 à 40 min",
+   pitch:"Le premier tour. La demande, le décor, les origines, le tempérament, les liens, l'écart entre ce que tu dis et ce que tu fais.",
+   sections:E1, meta:{honnetete:"9.3", intouchable:"1.9", interdit:"9.6", ton:"9.7"}},
+  {key:"2", n:"2", titre:"Les reliures", duree:"20 à 35 min", requiert:"1",
+   pitch:"Plus resserré, plus inconfortable. Ce qui se répète, ce que le changement coûterait, la voix intérieure, les règles héritées, ce que tu provoques.",
+   sections:E2, meta:{honnetete:"9.2", interdit:"9.5"}}
+];
+
+let eIdx = 0;
+let SECTIONS = ENTRETIENS[0].sections;
+const E = () => ENTRETIENS[eIdx];
+
 /* ─────────── état ─────────── */
-let state = {v:VERSION, started:null, a:{}};
+let state = {v:VERSION, e:{}, custom:null};
 let CORRUPT = false, NOSTORE = false, QUOTA = false;
-let cur = 0;
+let cur = -1;                                        // -1 = l'accueil
+const bucket = () => (state.e[E().key] || (state.e[E().key] = {started:null, a:{}}));
 
 function banner(msg){
   state._banner = msg;
@@ -467,8 +689,12 @@ function load(){
   if(raw === null) return null;                       // vide : légitime, on démarre
   try{
     const o = JSON.parse(raw);
-    if(!o || typeof o !== "object" || typeof o.a !== "object") throw new Error("forme");
-    return o;
+    if(!o || typeof o !== "object") throw new Error("forme");
+    // v1 : un seul entretien, réponses à plat → on les reloge sans rien perdre
+    if(o.v === 1 && o.a && typeof o.a === "object")
+      return {v:VERSION, e:{"1":{started:o.started || null, a:o.a}}, custom:null};
+    if(!o.e || typeof o.e !== "object") throw new Error("forme");
+    return {v:VERSION, e:o.e, custom:o.custom || null};
   }catch(e){ CORRUPT = true; return null; }           // illisible ≠ vide : on n'écrase pas
 }
 function save(){
@@ -478,13 +704,28 @@ function save(){
     if(!QUOTA){ QUOTA = true; banner("Mémoire du navigateur pleine : tes réponses ne sont plus sauvegardées automatiquement. Va à la dernière section et copie le dossier maintenant."); }
   }
 }
-const get = id => state.a[id];
-function set(id, v){ state.a[id] = v; save(); paintRail(); }
+const get = id => bucket().a[id];
+function set(id, v){ bucket().a[id] = v; save(); paintRail(); }
 
 /* ─────────── utilitaires ─────────── */
 const el = (t, cls, txt) => { const n = document.createElement(t); if(cls) n.className = cls; if(txt != null) n.textContent = txt; return n; };
 const SKIP = "__passe__";
 const allItems = () => SECTIONS.flatMap(s => s.items);
+const findItem = id => allItems().find(i => i.id === id);
+function entretienProgress(ent){
+  const b = state.e[ent.key]; if(!b) return {done:0, total:0, started:false};
+  const qs = ent.sections.flatMap(x => x.items).filter(i => i.type !== "consent");
+  const done = qs.filter(i => {
+    const v = b.a[i.id];
+    if(v === SKIP) return true;
+    if(v == null) return false;
+    if(typeof v === "string") return v.trim() !== "";
+    if(Array.isArray(v)) return v.some(x => x != null && String(x).trim() !== "");
+    if(typeof v === "object") return Object.values(v).some(x => x != null && String(x).trim() !== "");
+    return true;
+  }).length;
+  return {done, total: qs.length, started: !!b.started};
+}
 function isAnswered(it){
   const v = get(it.id);
   if(v === SKIP) return true;
@@ -502,8 +743,29 @@ function secProgress(s){
 
 /* ─────────── rail ─────────── */
 function paintRail(){
+  const head = document.getElementById("railhead");
+  head.textContent = "";
+  const hb = el("button", "railback");
+  hb.appendChild(el("b", null, "LE DIVAN"));
+  hb.appendChild(el("span", null, cur < 0 ? " · les entretiens" : " · entretien " + E().n));
+  hb.onclick = home; hb.title = "Revenir aux entretiens";
+  head.appendChild(hb);
   const bar = document.getElementById("bar");
+  const ul = document.getElementById("seclist");
   bar.textContent = "";
+  if(cur < 0){                                       // sur l'accueil : pas de sommaire de section
+    ul.textContent = "";
+    ENTRETIENS.forEach(ent => {
+      const li = el("li"); const b = el("button");
+      const p = entretienProgress(ent);
+      b.className = (p.total && p.done === p.total) ? "done" : "";
+      b.appendChild(el("span", "n", ent.n));
+      b.appendChild(el("span", null, ent.titre));
+      b.onclick = () => openEntretien(ENTRETIENS.indexOf(ent));
+      li.appendChild(b); ul.appendChild(li);
+    });
+    return;
+  }
   SECTIONS.forEach((s, i) => {
     const t = el("i");
     const p = secProgress(s);
@@ -512,7 +774,6 @@ function paintRail(){
     else if(p.done > 0) t.className = "p";
     bar.appendChild(t);
   });
-  const ul = document.getElementById("seclist");
   ul.textContent = "";
   SECTIONS.forEach((s, i) => {
     const li = el("li");
@@ -789,6 +1050,7 @@ function ctl(it){
 
 /* ─────────── rendu d'une section ─────────── */
 function render(){
+  if(cur < 0) return renderHome();
   const s = SECTIONS[cur];
   const m = document.getElementById("main");
   m.textContent = "";
@@ -797,7 +1059,7 @@ function render(){
   else if(state._banner){ const b = el("div","banner",state._banner); m.appendChild(b); }
 
   const col = el("div", "col");
-  col.appendChild(el("div", "eyebrow", "Entretien 1 · Section " + s.n + " sur 9"));
+  col.appendChild(el("div", "eyebrow", "Entretien " + E().n + " · Section " + s.n + " sur " + SECTIONS.filter(x => x.n !== "0").length));
   col.appendChild(el("h1", "h-sec", s.titre));
   col.appendChild(el("p", "lede", s.lede));
 
@@ -851,7 +1113,14 @@ function render(){
   paintRail();
   window.scrollTo({top: 0, behavior: "instant"});
 }
-function go(i){ cur = Math.max(0, Math.min(SECTIONS.length - 1, i)); if(!state.started){ state.started = new Date().toISOString(); save(); } render(); }
+function openEntretien(i, section){
+  eIdx = i; SECTIONS = ENTRETIENS[i].sections;
+  cur = (section == null) ? 0 : section;
+  const b = bucket(); if(!b.started) b.started = new Date().toISOString();
+  save(); render();
+}
+function home(){ cur = -1; render(); }
+function go(i){ cur = Math.max(0, Math.min(SECTIONS.length - 1, i)); const b = bucket(); if(!b.started){ b.started = new Date().toISOString(); save(); } render(); }
 
 /* ─────────── dossier ─────────── */
 function fmt(it){
@@ -859,8 +1128,8 @@ function fmt(it){
   if(v === SKIP) return "(passée — préfère ne pas répondre)";
   if(v == null || v === "") return "(sans réponse)";
   switch(it.type){
-    case "likert": return v + "/7  [1 = " + it.poles[0] + " · 7 = " + it.poles[1] + "]";
-    case "scale":  return v + "/" + it.max;
+    case "likert": return v + "/7" + (it.poles ? "  [1 = " + it.poles[0] + " · 7 = " + it.poles[1] + "]" : "");
+    case "scale":  return v + "/" + (it.max != null ? it.max : 10);
     case "multi":  { const a = Array.isArray(v) ? v : [];
                      const o = get(it.id + ".autre");
                      return (a.length ? a.join(" · ") : "(aucune case)") + (o ? "  + autre : " + o : ""); }
@@ -895,56 +1164,77 @@ function fmt(it){
   }
 }
 
-function dossierText(){
-  const nom = (get("0.1") && get("0.1").nom) || "anonyme";
-  const age = (get("0.1") && get("0.1").age) || "?";
-  const sit = (get("0.1") && get("0.1").situation) || "";
+function dossierText(ent, idx){
+  ent = ent || E();
+  const was = eIdx, wasS = SECTIONS;
+  eIdx = (idx == null) ? ENTRETIENS.indexOf(ent) : idx; SECTIONS = ent.sections;
+  const id1 = (state.e["1"] && state.e["1"].a["0.1"]) || {};
+  const nom = id1.nom || "anonyme", age = id1.age || "?", sit = id1.situation || "";
+  const M = ent.meta || {};
   const tot = allItems().filter(i => i.type !== "consent");
   const rep = tot.filter(isAnswered).length;
   const mots = tot.reduce((a, i) => { const v = get(i.id); return a + (typeof v === "string" && v !== SKIP ? v.trim().split(/\s+/).filter(Boolean).length : 0); }, 0);
+  const bk = bucket();
+  const suivant = (String(ent.n).match(/^\d+$/) ? (parseInt(ent.n, 10) + 1) : "suivant");
+  const dit = id => { const it = findItem(id); return it ? fmt(it) : "(non posé dans cet entretien)"; };
   const L = [];
-  L.push("# DOSSIER — LE DIVAN · ENTRETIEN 1");
+  L.push("# DOSSIER — LE DIVAN · ENTRETIEN " + ent.n + " — " + ent.titre);
   L.push("");
   L.push("Sujet : " + nom + " · " + age + " ans · " + sit);
-  L.push("Passation : " + new Date().toLocaleString("fr-FR") + (state.started ? "  (ouvert le " + new Date(state.started).toLocaleString("fr-FR") + ")" : ""));
+  L.push("Passation : " + new Date().toLocaleString("fr-FR") + (bk.started ? "  (ouvert le " + new Date(bk.started).toLocaleString("fr-FR") + ")" : ""));
   L.push("Complétion : " + rep + "/" + tot.length + " items · " + mots + " mots rédigés");
-  L.push("Honnêteté auto-évaluée : " + (get("9.3") != null ? get("9.3") + "/10" : "non renseignée"));
-  L.push("Zone déclarée intouchable (item 1.9) : " + (fmt(SECTIONS[1].items.find(i => i.id === "1.9"))));
-  L.push("Sujet interdit pour l'entretien 2 (item 9.6) : " + (fmt(SECTIONS[9].items.find(i => i.id === "9.6"))));
-  L.push("Ton demandé pour l'entretien 2 (item 9.7) : " + (get("9.7") || "non renseigné"));
+  if(M.honnetete)   L.push("Honnêteté auto-évaluée (" + M.honnetete + ") : " + dit(M.honnetete));
+  if(M.intouchable) L.push("Zone déclarée intouchable (" + M.intouchable + ") : " + dit(M.intouchable));
+  if(M.interdit)    L.push("Sujet fermé pour la suite (" + M.interdit + ") : " + dit(M.interdit));
+  if(M.ton)         L.push("Ton demandé pour la suite (" + M.ton + ") : " + dit(M.ton));
   L.push("");
   L.push("---");
   L.push("");
-  L.push("## CONSIGNE POUR CLAUDE — construire l'ENTRETIEN 2");
+  L.push("## CONSIGNE POUR CLAUDE — construire l'ENTRETIEN " + suivant);
   L.push("");
-  L.push("Ce dossier est le produit de l'entretien 1 de l'app LE DIVAN (entretiens successifs,");
-  L.push("chacun plus profond que le précédent). Tu reçois les réponses brutes. Attendu :");
+  L.push("Ce dossier est le produit de l'entretien " + ent.n + " de l'app LE DIVAN (entretiens");
+  L.push("successifs, chacun plus profond que le précédent). Tu reçois les réponses brutes.");
+  L.push("Attendu, dans cet ordre :");
   L.push("");
-  L.push("1. **Une lecture d'abord**, courte et honnête : ce qui se tient, ce qui se contredit,");
-  L.push("   ce qui a été évité. Distingue explicitement ce que les réponses établissent de ce");
-  L.push("   que tu supposes. Aucune étiquette diagnostique, aucun chiffre inventé.");
-  L.push("2. **Les reliures** : trois à cinq hypothèses de fond qui relient des réponses");
-  L.push("   éloignées les unes des autres (p.ex. un item de la section 3 avec un de la 7).");
-  L.push("   Chaque hypothèse citée par ses codes d'items, et formulée comme une hypothèse.");
-  L.push("3. **Les dissonances** : les écarts entre le déclaré et le vécu (items 6.1/6.2, 6.3,");
-  L.push("   6.4, 6.5), entre ce qui est dit d'une section à l'autre, et entre la note");
-  L.push("   d'honnêteté 9.3 et le reste.");
-  L.push("4. **L'ENTRETIEN 2**, écrit comme un nouveau tour jouable : 7 à 9 sections, chacune");
-  L.push("   avec son axe, son lede pédagogique, et des items typés dans la même grammaire que");
-  L.push("   ci-dessous (long, text, likert, scale, choice, multi, rank, pairs, stems, rows,");
-  L.push("   fields, grid3, alloc). Les questions doivent être personnalisées : elles citent");
-  L.push("   ses propres mots et reprennent ses propres contradictions. Pas de questionnaire");
-  L.push("   générique. Respecte sans exception la zone intouchable et le sujet interdit");
-  L.push("   ci-dessus, le ton demandé, et ouvre sur la question de l'item 9.2.");
-  L.push("5. **Le format de sortie** : le tableau JS `SECTIONS` prêt à coller dans");
-  L.push("   `~/divan/index.html`, plus la liste de ce que l'entretien 2 cherche à trancher.");
+  L.push("1. **Une lecture**, courte et honnête : ce qui se tient, ce qui se contredit, ce qui a");
+  L.push("   été évité. Distingue explicitement ce que les réponses établissent de ce que tu");
+  L.push("   supposes. Aucune étiquette diagnostique, aucun chiffre inventé.");
+  L.push("2. **Les reliures** : trois à cinq hypothèses de fond reliant des réponses éloignées");
+  L.push("   les unes des autres, chacune citée par ses codes d'items, et formulée comme une");
+  L.push("   hypothèse — pas comme un verdict.");
+  L.push("3. **Les dissonances** : les écarts entre le déclaré et le vécu, entre une section et");
+  L.push("   une autre, et entre la note d'honnêteté et le reste du dossier.");
+  L.push("4. **L'ENTRETIEN " + suivant + "**, écrit comme un tour jouable : 6 à 9 sections, chacune avec");
+  L.push("   son `axe`, son `lede` pédagogique, et des items personnalisés qui citent ses propres");
+  L.push("   mots et reprennent ses propres contradictions — jamais un questionnaire générique.");
+  L.push("   Respecte sans exception la zone intouchable, le sujet fermé et le ton demandé");
+  L.push("   ci-dessus.");
+  L.push("");
+  L.push("**Format de livraison** — un seul bloc JSON, que la personne colle dans");
+  L.push("« charger un entretien sur mesure » sur la page d'accueil de l'app. Aucune");
+  L.push("modification de code, aucun redéploiement :");
+  L.push("");
+  L.push("```json");
+  L.push('{ "divan": 2, "n": "' + suivant + '", "titre": "<titre court>", "pour": "' + nom + '",');
+  L.push('  "duree": "20 à 30 min", "pitch": "<une phrase>",');
+  L.push('  "meta": { "honnetete": "<id de l\'item note d\'honnêteté>", "interdit": "<id>" },');
+  L.push('  "sections": [ { "n": "1", "axe": "<deux mots>", "titre": "<titre>", "lede": "<pourquoi cette section>",');
+  L.push('                  "items": [ { "id": "1.1", "type": "long", "q": "<question>", "why": "<ce que ça cherche>", "rows": 4 } ] } ] }');
+  L.push("```");
+  L.push("");
+  L.push("Types d'items disponibles, avec leurs champs :");
+  L.push("  long/text (rows, ph) · likert (poles:[gauche,droite]) · scale (min,max) ·");
+  L.push("  choice/multi (options[], other:true) · rank (options[]) · pairs (pairs:[{a,b}]) ·");
+  L.push("  stems (stems[]) · rows (cols:[3 titres], rows:n) · fields (fields:[{id,label,type,options}]) ·");
+  L.push("  grid3 (cols:[{id,head}], rows:n) · alloc (domains[], compare:\"<id d'un autre alloc>\").");
+  L.push("  Tout item peut porter sensitive:true (bouton « je préfère ne pas répondre ») et optional:true.");
   L.push("");
   L.push("---");
   L.push("");
-  SECTIONS.forEach(s => {
-    L.push("## SECTION " + s.n + " · " + s.titre + "  [" + s.axe + "]");
+  ent.sections.forEach(sec => {
+    L.push("## SECTION " + sec.n + " · " + sec.titre + "  [" + sec.axe + "]");
     L.push("");
-    s.items.forEach(it => {
+    sec.items.forEach(it => {
       L.push("**" + it.id + " — " + it.q + "**");
       const t = fmt(it);
       if(t.indexOf("\n") >= 0 || t.startsWith("    ")) { L.push(""); L.push(t); }
@@ -957,16 +1247,22 @@ function dossierText(){
   L.push("### Données brutes (pour relecture automatique)");
   L.push("");
   L.push("```json");
-  L.push(JSON.stringify({v: VERSION, entretien: 1, started: state.started, ended: new Date().toISOString(), a: state.a}, null, 1));
+  L.push(JSON.stringify({v: VERSION, entretien: ent.n, started: bk.started, ended: new Date().toISOString(), a: bk.a}, null, 1));
   L.push("```");
+  eIdx = was; SECTIONS = wasS;
   return L.join("\n");
+}
+
+function dossierComplet(){
+  const faits = ENTRETIENS.filter(x => { const p = entretienProgress(x); return p.done > 0; });
+  return faits.map((x, i) => dossierText(x, ENTRETIENS.indexOf(x))).join("\n\n\n" + "=".repeat(70) + "\n\n\n");
 }
 
 function showDossier(){
   const m = document.getElementById("main");
   m.textContent = "";
   const col = el("div", "col"); col.style.maxWidth = "44rem";
-  col.appendChild(el("div", "eyebrow", "Entretien 1 · terminé"));
+  col.appendChild(el("div", "eyebrow", "Entretien " + E().n + " · " + E().titre + " · terminé"));
   col.appendChild(el("h1", "h-sec", "Le dossier"));
   col.appendChild(el("p", "lede", "Tout ce que tu viens d'écrire, remis en forme avec les questions, et accompagné de la consigne qui servira à bâtir l'entretien 2. Copie-le, puis donne-le à Claude."));
 
@@ -975,7 +1271,8 @@ function showDossier(){
   const skipped = tot.filter(i => get(i.id) === SKIP).length;
   const mots = tot.reduce((a, i) => { const v = get(i.id); return a + (typeof v === "string" && v !== SKIP ? v.trim().split(/\s+/).filter(Boolean).length : 0); }, 0);
   const st = el("div", "stats");
-  [["Items renseignés", rep + "/" + tot.length], ["Mots rédigés", String(mots)], ["Questions passées", String(skipped)], ["Honnêteté", (get("9.3") != null ? get("9.3") + "/10" : "—")]]
+  const hid = (E().meta || {}).honnetete;
+  [["Items renseignés", rep + "/" + tot.length], ["Mots rédigés", String(mots)], ["Questions passées", String(skipped)], ["Honnêteté", (hid && get(hid) != null ? get(hid) + "/10" : "—")]]
     .forEach(([k, v]) => { const d = el("div", "stat"); d.appendChild(el("div", "k", k)); d.appendChild(el("div", "v", v)); st.appendChild(d); });
   col.appendChild(st);
 
@@ -995,8 +1292,16 @@ function showDossier(){
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   };
   const b3 = el("button", "btn ghost", "← Revenir aux réponses");
-  b3.onclick = () => render();
+  b3.onclick = () => { cur = SECTIONS.length - 1; render(); };
   nav.appendChild(b1); nav.appendChild(b2); nav.appendChild(b3);
+  if(ENTRETIENS.filter(x => entretienProgress(x).done > 0).length > 1){
+    const b5 = el("button", "btn ghost", "Dossier complet (tous les entretiens)");
+    b5.onclick = () => { const t = dossierComplet(); document.getElementById("outbox").value = t;
+      navigator.clipboard.writeText(t).then(() => toast("Dossier complet copié — tous les entretiens faits."),
+        () => toast("Le texte complet est dans la zone ci-dessous, fais ⌘C."));
+    };
+    nav.appendChild(b5);
+  }
   nav.style.marginTop = "26px";
   col.appendChild(nav);
 
@@ -1013,7 +1318,7 @@ function showDossier(){
   b4.onclick = () => {
     if(!confirm("Effacer définitivement toutes tes réponses ? Si tu n'as pas copié le dossier, il sera perdu.")) return;
     try{ localStorage.removeItem(K); }catch(e){}
-    state = {v: VERSION, started: null, a: {}}; cur = 0; render(); toast("Réponses effacées.");
+    state = {v: VERSION, e: {}, custom: null}; syncCustom(); eIdx = 0; SECTIONS = ENTRETIENS[0].sections; cur = -1; render(); toast("Réponses effacées.");
   };
   pl.appendChild(b4);
   col.appendChild(pl);
@@ -1027,13 +1332,133 @@ function toast(t){
   setTimeout(() => d.remove(), 4200);
 }
 
+/* ─────────── accueil : la série des entretiens ─────────── */
+function syncCustom(){
+  const i = ENTRETIENS.findIndex(x => x.key === "sur-mesure");
+  if(i >= 0) ENTRETIENS.splice(i, 1);
+  if(state.custom) ENTRETIENS.push(state.custom);
+  if(eIdx >= ENTRETIENS.length) eIdx = 0;
+  SECTIONS = ENTRETIENS[eIdx].sections;
+}
+
+const CHAMPS = {likert:"poles", choice:"options", multi:"options", rank:"options",
+                pairs:"pairs", stems:"stems", fields:"fields", alloc:"domains", grid3:"cols", rows:"cols"};
+
+function loadCustom(raw){
+  let o;
+  try{ o = JSON.parse(raw); }
+  catch(err){ return "Ce n'est pas du JSON valide. " + err.message; }
+  if(!o || typeof o !== "object" || Array.isArray(o)) return "Le contenu doit être un objet JSON { … }.";
+  if(!Array.isArray(o.sections) || !o.sections.length) return "Il manque la liste « sections ».";
+  for(const sec of o.sections){
+    if(!sec || typeof sec !== "object") return "Une section n'est pas un objet.";
+    if(!Array.isArray(sec.items) || !sec.items.length) return "La section « " + (sec.titre || sec.n || "?") + " » n'a pas d'items.";
+    for(const it of sec.items){
+      if(!it || !it.id || !it.q || !it.type) return "Un item de la section « " + (sec.titre || sec.n || "?") + " » n'a pas d'id, de question ou de type.";
+      if(TYPES_OK.indexOf(it.type) < 0) return "Type inconnu « " + it.type + " » (item " + it.id + "). Types acceptés : " + TYPES_OK.join(", ") + ".";
+      const need = CHAMPS[it.type];
+      if(need && !Array.isArray(it[need])) return "L'item " + it.id + " (type " + it.type + ") doit avoir une liste « " + need + " ».";
+      if(it.type === "scale"){ if(it.min == null) it.min = 0; if(it.max == null) it.max = 10; }
+      if(it.type === "rows" && !it.rows) it.rows = 4;
+      if(it.type === "grid3" && !it.rows) it.rows = 3;
+    }
+  }
+  state.custom = {key:"sur-mesure", n:String(o.n || "sur mesure"),
+    titre:String(o.titre || "Entretien sur mesure"),
+    pour:o.pour ? String(o.pour) : "",
+    duree:o.duree ? String(o.duree) : "",
+    pitch:String(o.pitch || "Entretien écrit à partir de tes dossiers précédents."),
+    sections:o.sections, meta:(o.meta && typeof o.meta === "object") ? o.meta : {}};
+  save(); syncCustom();
+  return null;
+}
+
+function renderHome(){
+  const m = document.getElementById("main");
+  m.textContent = "";
+  if(CORRUPT) m.appendChild(el("div","banner","Une sauvegarde est présente sur cet appareil mais illisible. Par sécurité elle n'est pas écrasée : rien ne sera enregistré tant qu'elle est là. Copie tes dossiers avant de fermer l'onglet."));
+  else if(NOSTORE) m.appendChild(el("div","banner","Ce navigateur n'autorise pas l'enregistrement local ici (navigation privée, ou page ouverte hors du site). Les entretiens fonctionnent, mais fermer l'onglet effacera tout."));
+
+  const col = el("div", "col");
+  col.appendChild(el("div", "eyebrow", "Exploration psychologique · plusieurs tours"));
+  col.appendChild(el("h1", "h-sec", "Les entretiens"));
+  col.appendChild(el("p", "lede", "Une série, pas un test. Chaque tour part du dossier du précédent et creuse là où ça résiste. Rien n'est envoyé nulle part : tes réponses restent dans ce navigateur, et c'est toi qui choisis à qui tu donnes le dossier."));
+
+  const cards = el("div", "cards");
+  ENTRETIENS.forEach((ent, i) => {
+    const p = entretienProgress(ent);
+    const c = el("article", "card");
+    c.appendChild(el("div", "num", ent.n));
+    const t = el("div", "cardbody");
+    t.appendChild(el("h2", "cardt", ent.titre));
+    const sub = el("div", "cardmeta");
+    sub.appendChild(el("span", null, ent.sections.flatMap(x => x.items).filter(x => x.type !== "consent").length + " questions"));
+    if(ent.duree) sub.appendChild(el("span", null, ent.duree));
+    if(ent.pour) sub.appendChild(el("span", null, "écrit pour " + ent.pour));
+    t.appendChild(sub);
+    t.appendChild(el("p", "cardp", ent.pitch));
+    if(p.total){
+      const pr = el("div", "prog"); const fill = el("i");
+      fill.style.width = Math.round(100 * p.done / p.total) + "%";
+      pr.appendChild(fill); t.appendChild(pr);
+      t.appendChild(el("div", "cardstat", p.done === 0 ? "Pas commencé" : p.done + " / " + p.total + " questions renseignées"));
+    }
+    const row = el("div", "cardnav");
+    const go1 = el("button", "btn", p.done === 0 ? "Commencer" : (p.done === p.total ? "Relire" : "Reprendre"));
+    go1.onclick = () => openEntretien(ENTRETIENS.indexOf(ent));
+    row.appendChild(go1);
+    if(p.done > 0){
+      const d = el("button", "btn ghost", "Dossier");
+      d.onclick = () => { eIdx = ENTRETIENS.indexOf(ent); SECTIONS = ent.sections; showDossier(); };
+      row.appendChild(d);
+    }
+    if(ent.requiert && entretienProgress(ENTRETIENS[0]).done === 0)
+      row.appendChild(el("div", "cardwarn", "à faire après l'entretien " + ent.requiert));
+    t.appendChild(row);
+    c.appendChild(t); cards.appendChild(c);
+  });
+  col.appendChild(cards);
+
+  const pl = el("div", "plate");
+  pl.appendChild(el("h3", null, "Charger un entretien sur mesure"));
+  pl.appendChild(el("p", null, "Quand Claude a lu ton dossier, il renvoie un bloc JSON : le tour suivant, écrit sur tes réponses à toi. Colle-le ici, il s'ajoutera à la liste au-dessus. Rien d'autre à installer."));
+  const ta = el("textarea"); ta.placeholder = '{ "divan": 2, "n": "3", "titre": "…", "sections": [ … ] }';
+  ta.rows = 4; ta.style.fontFamily = "var(--mono)"; ta.style.fontSize = "12px";
+  pl.appendChild(ta);
+  const err = el("div", "loaderr"); err.hidden = true;
+  const lb = el("button", "btn"); lb.textContent = "Charger"; lb.style.marginTop = "12px";
+  lb.onclick = () => {
+    const v = ta.value.trim();
+    if(!v){ err.hidden = false; err.textContent = "Colle d'abord le bloc JSON."; return; }
+    const problem = loadCustom(v);
+    if(problem){ err.hidden = false; err.textContent = problem; return; }
+    err.hidden = true; toast("Entretien sur mesure chargé."); render();
+  };
+  pl.appendChild(lb); pl.appendChild(err);
+  if(state.custom){
+    const rm = el("button", "skip", "Retirer l'entretien sur mesure chargé");
+    rm.onclick = () => {
+      if(!confirm("Retirer cet entretien ? Les réponses que tu y as déjà données seront effacées.")) return;
+      state.custom = null; delete state.e["sur-mesure"]; save(); syncCustom(); render(); toast("Entretien retiré.");
+    };
+    pl.appendChild(rm);
+  }
+  col.appendChild(pl);
+
+  const w = el("div", "warn");
+  w.appendChild(el("b", null, "Ce n'est pas un soin. "));
+  w.appendChild(el("span", null, "Aucune échelle ici ne mesure une maladie et rien de ce qui suit n'est un diagnostic. Si tu vas très mal en ce moment : en France, le 3114 (gratuit, 24h/24) est la ligne nationale de prévention du suicide, et le 15 pour une urgence."));
+  col.appendChild(w);
+
+  m.appendChild(col);
+  paintRail();
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+
 /* ─────────── démarrage ─────────── */
 const loaded = load();
-if(loaded){
-  state = {v: VERSION, started: loaded.started || null, a: loaded.a || {}};
-  const first = SECTIONS.findIndex(s => { const p = secProgress(s); return p.total && p.done < p.total; });
-  cur = get("0.3") === "oui" ? (first < 0 ? SECTIONS.length - 1 : Math.max(1, first)) : 0;
-}
+if(loaded) state = loaded;
+syncCustom();
 render();
 
 if("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
