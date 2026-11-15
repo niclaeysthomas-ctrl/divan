@@ -59,8 +59,9 @@ button{font-family:var(--ui);font-size:inherit;cursor:pointer}
 .col{max-width:34rem}
 @media (max-width:860px){
   .shell{grid-template-columns:minmax(0,1fr)}
-  .rail{position:sticky;top:0;min-height:0;border-right:0;border-bottom:1px solid var(--rule);background:var(--stone);z-index:20;padding:10px 16px;flex-direction:row;align-items:center;gap:14px;overflow-x:auto}
-  .rail .railtitle{font-size:12px}
+  .rail{position:sticky;top:0;min-height:0;border-right:0;border-bottom:1px solid var(--rule);background:var(--stone);z-index:20;padding:10px 16px;flex-direction:row;align-items:center;gap:12px;overflow:visible}
+  .rail .railtitle{font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .rail .bar{flex:1 1 auto;min-width:96px}
   .rail .seclist{display:none}
   .main{padding:22px 18px 110px}
 }
