@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LE COURS — LE DIVAN</title>
+<meta name="description" content="Plan de cours : ce que la recherche en psychologie établit vraiment, et ce qu'elle a démoli.">
+<meta name="theme-color" content="#E9EAE6">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --stone:#E9EAE6; --stone2:#F2F3F0; --panel:#FDFDFC;
+  --ink:#15181C; --ink-soft:#4A5056; --faint:#7D848B;
+  --rule:#D2D5CF; --rule-soft:#E2E4DF;
+  --bleu:#2A3F8F; --bleu-soft:#E4E7F3; --bleu-line:#A9B4DC;
+  --rose:#8E5450; --rose-soft:#F3E7E5;
+  --vert:#3C6A52; --vert-soft:#E3EDE6;
+  --or:#7E6220; --or-soft:#F4EBD8;
+  --on-fg:#FDFDFC;
+  --disp:"Newsreader",Georgia,"Times New Roman",serif;
+  --ui:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --stone:#14181B; --stone2:#1A1F23; --panel:#1E2429;
+    --ink:#E8EAE5; --ink-soft:#AFB6BA; --faint:#7E868C;
+    --rule:#2C3338; --rule-soft:#232A2E;
+    --bleu:#97AAEA; --bleu-soft:#1B2340; --bleu-line:#3C4A7C;
+    --rose:#DC9E98; --rose-soft:#352421;
+    --vert:#7CC19A; --vert-soft:#16291F;
+    --or:#D7AE63; --or-soft:#2C2416;
+    --on-fg:#14181B;
+  }
+}
+:root[data-theme="dark"]{
+  --stone:#14181B; --stone2:#1A1F23; --panel:#1E2429;
+  --ink:#E8EAE5; --ink-soft:#AFB6BA; --faint:#7E868C;
+  --rule:#2C3338; --rule-soft:#232A2E;
+  --bleu:#97AAEA; --bleu-soft:#1B2340; --bleu-line:#3C4A7C;
+  --rose:#DC9E98; --rose-soft:#352421;
+  --vert:#7CC19A; --vert-soft:#16291F;
+  --or:#D7AE63; --or-soft:#2C2416;
+  --on-fg:#14181B;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--stone);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:500;text-wrap:balance;margin:0}
+a{color:var(--bleu)}
+button{font-family:var(--ui);font-size:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{max-width:780px;margin:0 auto;padding:30px 28px 110px}
+@media (max-width:620px){.wrap{padding:20px 18px 90px}}
+
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:12px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-decoration:none}
+.brand b{color:var(--ink);font-weight:500}
+.brand:hover b{color:var(--bleu)}
+
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bleu);margin:34px 0 10px}
+h1{font-size:clamp(32px,6vw,50px);line-height:1.06;letter-spacing:-.015em}
+.lede{font-family:var(--disp);font-style:italic;font-size:20px;line-height:1.5;color:var(--ink-soft);margin-top:16px;max-width:34rem}
+.body p{font-size:16.5px;line-height:1.65;color:var(--ink-soft);max-width:34rem}
+
+/* verdicts */
+.pill{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:2px;white-space:nowrap;vertical-align:1px}
+.p-etabli{background:var(--vert-soft);color:var(--vert);border:1px solid var(--vert)}
+.p-conteste{background:var(--or-soft);color:var(--or);border:1px solid var(--or)}
+.p-effondre{background:var(--rose-soft);color:var(--rose);border:1px solid var(--rose)}
+.p-marketing{background:transparent;color:var(--faint);border:1px dashed var(--faint)}
+
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin-top:28px}
+.leg{background:var(--panel);padding:13px 15px;display:flex;flex-direction:column;gap:5px}
+.leg span{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin-top:14px}
+.stat{background:var(--panel);padding:12px 14px}
+.stat .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.stat .v{font-family:var(--disp);font-size:27px;line-height:1.15;margin-top:1px;font-variant-numeric:tabular-nums}
+
+/* blocs & modules */
+.bloc{margin-top:54px}
+.blochead{display:flex;gap:14px;align-items:baseline;border-top:2px solid var(--ink);padding-top:12px}
+.blocn{font-family:var(--mono);font-size:12px;color:var(--bleu);letter-spacing:.1em}
+.bloct{font-size:25px;line-height:1.15}
+.blocl{font-family:var(--disp);font-style:italic;color:var(--ink-soft);font-size:17px;line-height:1.5;margin-top:8px;max-width:33rem}
+
+.mod{border-top:1px solid var(--rule-soft);padding:26px 0 4px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:0 14px}
+.mod:first-of-type{border-top:1px solid var(--rule);margin-top:20px}
+.modn{font-family:var(--disp);font-size:27px;line-height:1;color:var(--bleu);font-variant-numeric:tabular-nums}
+.modt{font-size:21px;line-height:1.25}
+.modq{font-family:var(--disp);font-style:italic;font-size:16.5px;line-height:1.5;color:var(--ink-soft);margin-top:6px}
+
+.lecons{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.lecon{display:grid;grid-template-columns:34px minmax(0,1fr);gap:0 10px;align-items:baseline}
+.lecon .ln{font-family:var(--mono);font-size:10.5px;color:var(--faint);padding-top:3px}
+.lecon .lt{font-size:15.5px;line-height:1.4}
+.lecon .ld{font-size:14px;color:var(--ink-soft);line-height:1.5;margin-top:2px}
+
+.banc{margin:18px 0 6px;border-left:2px solid var(--bleu-line);padding:2px 0 2px 14px;display:flex;flex-direction:column;gap:9px}
+.banct{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.idee{font-size:14.5px;line-height:1.5}
+.idee q{font-style:italic;quotes:"\201C" "\201D"}
+.idee .pill{margin-right:7px}
+
+.divan{font-family:var(--mono);font-size:11px;color:var(--faint);margin:14px 0 2px;line-height:1.6}
+.divan b{color:var(--bleu);font-weight:500}
+
+@media (max-width:620px){
+  .mod{grid-template-columns:minmax(0,1fr)}
+  .modn{font-size:20px;margin-bottom:4px}
+  .lecon{grid-template-columns:minmax(0,1fr)}
+  .lecon .ln{padding:0 0 1px}
+}
+
+.plate{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:22px 24px;margin-top:46px}
+.plate h3{font-size:20px;margin-bottom:10px}
+.plate p{margin:0 0 11px;font-size:15.5px;color:var(--ink-soft);line-height:1.62}
+.plate p:last-child{margin-bottom:0}
+.plate code{font-family:var(--mono);font-size:13px;background:var(--stone2);padding:1px 5px;border-radius:2px;color:var(--ink)}
+.warn{border-left:3px solid var(--rose);background:var(--rose-soft);border-radius:0 3px 3px 0;padding:14px 16px;margin-top:22px;font-size:14.5px;line-height:1.6}
+.warn b{color:var(--rose)}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--faint);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="./"><b>LE DIVAN</b> · retour aux entretiens</a>
+    <span class="brand">Plan de cours · v1</span>
+  </div>
+  <div id="app"></div>
+</div>
+
+<script>
+"use strict";
+
+/* ═══════════════════════════════════════════════════════════════
+   LE COURS — plan. Chaque leçon s'écrira une par une.
+   Verdicts : etabli · conteste · effondre · marketing
+   ═══════════════════════════════════════════════════════════════ */
+
+const PLAN = [
+{
+  bloc:"A", titre:"L'outillage",
+  lede:"Un seul module, et c'est le plus rentable de tout le cours. Sans lui, tout le reste se lit comme une collection d'anecdotes dont on ne peut rien faire.",
+  modules:[
+  {
+    n:1, titre:"Lire une étude sans être dupe",
+    q:"Pourquoi « une étude a montré que… » n'est pas un argument, et par quoi le remplacer.",
+    divan:"Ce module conditionne tous les autres : c'est lui qui te permettra de contredire ce cours.",
+    lecons:[
+      {n:"1.1", t:"Corrélation, causalité, et le troisième larron",
+       d:"Les gens qui courent sont plus heureux. Trois lectures possibles de cette phrase, dont deux n'ont rien à voir avec la course. La randomisation, et pourquoi on ne peut pas toujours la faire."},
+      {n:"1.2", t:"La taille d'effet, la seule question qui compte",
+       d:"« Significatif » veut dire « probablement pas dû au hasard », pas « important ». Le d de Cohen, le r, l'odds ratio, lus en langage ordinaire : combien de gens ça change, et de combien."},
+      {n:"1.3", t:"Comment une étude fausse naît sans la moindre fraude",
+       d:"p-hacking, tiroir des résultats nuls, hypothèse écrite après coup. Trois mécanismes honnêtes qui produisent de la littérature fausse à grande échelle."},
+      {n:"1.4", t:"La crise de la réplication",
+       d:"2011-2015 : on refait cent expériences classiques, environ un tiers à 40 % tiennent. Ce que ça a vraiment cassé, et les réponses (préenregistrement, réplications multi-laboratoires, échantillons dix fois plus grands)."},
+      {n:"1.5", t:"Méta-analyses : le meilleur et le pire outil",
+       d:"Agréger cinquante études ne les rend pas vraies. Biais de publication, hétérogénéité, et l'entonnoir qui permet de le voir à l'œil nu."},
+      {n:"1.6", t:"WEIRD : sur qui la psychologie a-t-elle été faite ?",
+       d:"L'écrasante majorité des sujets vient de pays occidentaux, éduqués, industrialisés, riches, démocratiques — et souvent du cours d'intro de psycho. Ce que ça invalide, et ce que ça n'invalide pas."},
+      {n:"1.7", t:"Cinq questions pour trier une affirmation en deux minutes",
+       d:"La grille qu'on réutilisera dans tout le reste du cours, appliquée en direct à trois affirmations prises sur les réseaux."}
+    ],
+    idees:[
+      {s:"effondre", t:"« C'est prouvé scientifiquement »", d:"une étude seule ne prouve rien ; la réplication indépendante est l'unité de preuve."},
+      {s:"conteste", t:"« Les sciences humaines, ce n'est pas vraiment de la science »", d:"vrai pour une partie de la production des années 1990-2010, faux pour la méthodologie actuelle."}
+    ]
+  }]
+},
+{
+  bloc:"B", titre:"Qui tu es",
+  lede:"La psychologie des différences individuelles : ce qui te distingue durablement des autres. C'est le domaine le plus solide de la discipline, et c'est aussi celui que le commerce a le plus pillé.",
+  modules:[
+  {
+    n:2, titre:"La personnalité",
+    q:"Combien y a-t-il de façons d'être quelqu'un, et est-ce que ça bouge ?",
+    divan:"Éclaire la section 4 de l'entretien 1 (Tempérament).",
+    lecons:[
+      {n:"2.1", t:"Les cinq grands facteurs, et d'où ils sortent",
+       d:"L'hypothèse lexicale : si une différence humaine compte, la langue a fini par lui donner un mot. On factorise le dictionnaire, il reste cinq paquets. Pourquoi c'est moins arbitraire que ça en a l'air."},
+      {n:"2.2", t:"Ce que ces cinq facteurs prédisent réellement",
+       d:"Réussite professionnelle, santé, divorce, longévité : des liens réels mais modestes, qu'on traduira en nombres compréhensibles plutôt qu'en coefficients."},
+      {n:"2.3", t:"HEXACO : la sixième dimension",
+       d:"Honnêteté-humilité, le facteur ajouté par la recherche des années 2000. Pourquoi il change la lecture de presque tout ce qui suit."},
+      {n:"2.4", t:"La triade noire",
+       d:"Narcissisme, machiavélisme, psychopathie : trois concepts cliniques devenus un genre de contenu. Ce que les échelles mesurent vraiment, pourquoi les trois corrèlent tellement entre elles, et le débat sur le « facteur D » — l'idée qu'il n'y aurait au fond qu'une seule dimension."},
+      {n:"2.5", t:"Est-ce que la personnalité change ?",
+       d:"Oui : maturation avec l'âge, effets des événements de vie, et des essais montrant des changements volontaires modestes mais réels. Contre l'idée que « les gens ne changent pas »."},
+      {n:"2.6", t:"Héritabilité : ce que « 40 à 60 % » veut dire exactement",
+       d:"La phrase la plus mal comprise de la psychologie. Ce n'est pas « 50 % de toi vient de tes parents ». Démonstration sur un exemple chiffré, puis l'erreur d'interprétation qu'on retrouvera au module 3."}
+    ],
+    idees:[
+      {s:"marketing", t:"Le MBTI (INTJ, ENFP…)", d:"fidélité test-retest faible, types bimodaux non retrouvés dans les données ; produit commercial, pas instrument de recherche."},
+      {s:"marketing", t:"L'ennéagramme", d:"aucune origine empirique ; structure non retrouvée en analyse factorielle."},
+      {s:"etabli", t:"Les cinq grands facteurs", d:"retrouvés dans des dizaines de langues et de cultures ; l'un des résultats les plus répliqués de la discipline."},
+      {s:"conteste", t:"« C'est un pervers narcissique »", d:"le trouble existe et se mesure ; l'étiquette telle qu'elle circule décrit surtout une expérience de victime, pas un diagnostic."},
+      {s:"conteste", t:"Les tests de personnalité en recrutement", d:"validité prédictive réelle mais faible ; très sensible à la falsification volontaire."}
+    ]
+  },
+  {
+    n:3, titre:"L'intelligence",
+    q:"Le sujet le plus solide et le plus détesté de la psychologie.",
+    divan:"",
+    lecons:[
+      {n:"3.1", t:"Le facteur g, ou le résultat gênant",
+       d:"Toutes les épreuves cognitives corrèlent positivement entre elles, quelles qu'elles soient. Ce fait est vieux d'un siècle, personne n'a réussi à le faire disparaître, et il n'implique pas ce qu'on croit."},
+      {n:"3.2", t:"Ce que le QI prédit, et avec quelle force",
+       d:"École, emploi, santé, mortalité : les liens les plus robustes de la psychologie appliquée. Et la différence entre « prédit statistiquement » et « détermine »."},
+      {n:"3.3", t:"L'effet Flynn et son retournement",
+       d:"Les scores ont monté pendant des décennies, puis stagné voire baissé dans certains pays. Les explications candidates, et ce qu'elles disent de ce que mesure le test."},
+      {n:"3.4", t:"Gènes, milieu, et l'erreur qu'on fait toujours",
+       d:"L'héritabilité monte avec l'âge, et elle est plus faible dans les milieux défavorisés. Deux résultats contre-intuitifs qui règlent la plupart des disputes de comptoir."},
+      {n:"3.5", t:"Intelligences multiples et intelligence émotionnelle",
+       d:"Une théorie très populaire sans support empirique, et une autre qui mesure en partie de la personnalité recyclée. Ce qui, dans la seconde, tient quand même."}
+    ],
+    idees:[
+      {s:"effondre", t:"« Les intelligences multiples » (Gardner)", d:"jamais validée factoriellement ; les « intelligences » corrèlent, donc ce ne sont pas des capacités indépendantes."},
+      {s:"effondre", t:"« On n'utilise que 10 % de notre cerveau »", d:"faux à tous les niveaux d'analyse."},
+      {s:"effondre", t:"« Le QI ne mesure que la capacité à passer des tests »", d:"c'est l'un des prédicteurs les mieux validés qui existent en psychologie."},
+      {s:"conteste", t:"« L'intelligence émotionnelle compte plus que le QI »", d:"l'affirmation vient d'un livre grand public ; les mesures sérieuses prédisent peu une fois la personnalité contrôlée."}
+    ]
+  },
+  {
+    n:4, titre:"Les émotions",
+    q:"Qu'est-ce qu'une émotion, et peut-on vraiment les lire sur un visage ?",
+    divan:"Éclaire la section 7 de l'entretien 1 (Mécanismes) et la section 4 de l'entretien 2 (La voix).",
+    lecons:[
+      {n:"4.1", t:"Deux théories qui s'affrontent encore",
+       d:"Émotions de base, universelles et câblées (Ekman) contre émotions construites par le cerveau à partir d'un état corporel et de concepts appris (Barrett). Le débat n'est pas tranché, et chaque camp a de vraies données."},
+      {n:"4.2", t:"Les expressions faciales sont-elles universelles ?",
+       d:"Ce que montrent les études interculturelles quand on arrête de proposer une liste de mots à choisir."},
+      {n:"4.3", t:"Réguler : trois stratégies, trois factures",
+       d:"Réévaluation (changer la lecture), suppression (ne rien montrer), acceptation. Laquelle coûte quoi, à court et à long terme."},
+      {n:"4.4", t:"Nommer une émotion la modifie",
+       d:"L'étiquetage affectif, et pourquoi écrire ce qu'on ressent fait baisser l'intensité — avec ce que l'effet a de modeste."},
+      {n:"4.5", t:"L'intéroception, ou lire son corps",
+       d:"Beaucoup de gens confondent faim, fatigue et angoisse. Ce que la recherche dit de cette compétence et de son entraînement."}
+    ],
+    idees:[
+      {s:"effondre", t:"« Il faut évacuer sa colère »", d:"frapper un coussin augmente l'agressivité ultérieure au lieu de la vider ; la catharsis est l'un des mythes les mieux réfutés."},
+      {s:"effondre", t:"« Le langage corporel trahit le menteur »", d:"les indices comportementaux de mensonge sont minuscules ; les humains détectent le mensonge à peine mieux qu'au hasard."},
+      {s:"effondre", t:"Le polygraphe", d:"mesure l'activation, pas le mensonge ; taux de faux positifs élevé."},
+      {s:"etabli", t:"La suppression expressive coûte cher", d:"efficace sur l'instant, associée à une moins bonne qualité relationnelle et à plus de rumination."}
+    ]
+  },
+  {
+    n:5, titre:"La motivation et la volonté",
+    q:"Pourquoi tu fais ce que tu ne veux pas faire, et l'inverse.",
+    divan:"Éclaire la section 3 de l'entretien 2 (Le prix du changement).",
+    lecons:[
+      {n:"5.1", t:"Autonomie, compétence, lien",
+       d:"La théorie de l'autodétermination : trois besoins, et ce qui se passe quand l'un manque. L'un des cadres les mieux soutenus de la psychologie appliquée."},
+      {n:"5.2", t:"Comment payer quelqu'un lui fait perdre l'envie",
+       d:"L'effet de surjustification : récompenser une activité déjà aimée diminue l'envie spontanée. Les conditions précises où ça se produit — elles sont plus étroites qu'on ne le raconte."},
+      {n:"5.3", t:"La mort de la volonté-carburant",
+       d:"L'idée que la volonté s'épuise comme un muscle a dominé vingt ans, puis n'a pas survécu aux réplications multi-laboratoires. Ce qui la remplace : motivation, attention, et croyances sur sa propre fatigue."},
+      {n:"5.4", t:"Les habitudes, pour de vrai",
+       d:"Ce que l'automatisme est vraiment, pourquoi le contexte fait presque tout le travail, et d'où sort le chiffre de « 21 jours » (d'un chirurgien esthétique des années 1960)."},
+      {n:"5.5", t:"La procrastination n'est pas un problème de temps",
+       d:"C'est une stratégie de régulation d'une émotion désagréable associée à la tâche. Ce que cette reformulation change dans ce qui marche."},
+      {n:"5.6", t:"Fixer un objectif : ce qui marche",
+       d:"Intentions d'implémentation (« si X, alors je fais Y »), contraste mental, et pourquoi visualiser le succès seul fait baisser la performance."}
+    ],
+    idees:[
+      {s:"effondre", t:"« La volonté est un muscle qui s'épuise »", d:"les grandes réplications préenregistrées trouvent un effet proche de zéro."},
+      {s:"effondre", t:"« 21 jours pour prendre une habitude »", d:"aucune base ; les durées observées varient énormément selon le comportement."},
+      {s:"effondre", t:"« Visualise ta réussite »", d:"la visualisation positive seule réduit l'effort ; c'est le contraste avec les obstacles qui marche."},
+      {s:"conteste", t:"Le « mindset de croissance »", d:"effet moyen faible dans les grandes réplications, plus net chez les élèves en difficulté ; l'idée n'est pas morte mais l'ampleur promise ne tient pas."}
+    ]
+  }]
+},
+{
+  bloc:"C", titre:"Comment la machine tourne",
+  lede:"Perception, jugement, mémoire, cerveau. C'est ici que la crise de la réplication a fait le plus de dégâts — et c'est donc ici qu'il faut être le plus prudent avec ce qu'on croit savoir.",
+  modules:[
+  {
+    n:6, titre:"Juger et décider",
+    q:"Les biais cognitifs : lesquels ont survécu ?",
+    divan:"",
+    lecons:[
+      {n:"6.1", t:"Les deux systèmes, et ce qu'il en reste",
+       d:"Rapide et intuitif contre lent et délibéré : une métaphore pédagogique très utile, que son propre auteur a nuancée. Ce qu'on peut en faire sans y croire littéralement."},
+      {n:"6.2", t:"Les biais solides",
+       d:"Ancrage, disponibilité, cadrage, coût irrécupérable. Démonstrations reproductibles, y compris sur toi, avec des exemples financiers."},
+      {n:"6.3", t:"Les biais qui se sont effondrés",
+       d:"L'amorçage social : lire des mots liés à la vieillesse ferait marcher plus lentement. Le résultat le plus cité de la discipline, non répliqué. Comment un tel résultat peut exister."},
+      {n:"6.4", t:"L'aversion à la perte : solide ou gonflée ?",
+       d:"Le « perdre fait deux fois plus mal que gagner » est contesté depuis une dizaine d'années. État du débat."},
+      {n:"6.5", t:"Le nudge après le bruit",
+       d:"Les méta-analyses récentes, le biais de publication massif qu'on y trouve, et ce qui marche quand même."},
+      {n:"6.6", t:"Surconfiance et calibration",
+       d:"Le seul biais qu'on sait vraiment entraîner : parier avec des intervalles de confiance. Exercice chiffré, applicable à tes valorisations."}
+    ],
+    idees:[
+      {s:"effondre", t:"L'amorçage social (marcher lentement après des mots de vieillesse)", d:"non répliqué en préenregistré."},
+      {s:"etabli", t:"L'ancrage", d:"un des effets les plus robustes, reproduit sur des décennies et dans des contextes réels."},
+      {s:"conteste", t:"« L'intuition des experts »", d:"fiable dans les environnements réguliers avec retour rapide (échecs, pompiers), mauvaise ailleurs (prédiction boursière, recrutement)."},
+      {s:"marketing", t:"« On prend 35 000 décisions par jour »", d:"chiffre sans source traçable, recopié depuis des blogs."}
+    ]
+  },
+  {
+    n:7, titre:"La mémoire",
+    q:"Pourquoi tes souvenirs les plus nets sont parfois les plus faux.",
+    divan:"Éclaire la section 3 de l'entretien 1 (Origines) : ce que vaut un premier souvenir.",
+    lecons:[
+      {n:"7.1", t:"Se souvenir, c'est reconstruire",
+       d:"La mémoire ne relit pas un enregistrement, elle refabrique une scène à chaque rappel — et la réécrit en la reposant."},
+      {n:"7.2", t:"Fabriquer un faux souvenir en laboratoire",
+       d:"Les travaux d'Elizabeth Loftus : des gens se souviennent avec émotion d'événements qui n'ont jamais eu lieu. Protocole, taux de réussite, limites éthiques."},
+      {n:"7.3", t:"Témoignage oculaire et erreurs judiciaires",
+       d:"La confiance du témoin et l'exactitude sont faiblement liées une fois l'identification contaminée. L'application la plus lourde de conséquences de tout ce cours."},
+      {n:"7.4", t:"Les souvenirs refoulés",
+       d:"Un des débats les plus violents de la discipline. Ce qui est établi, ce qui ne l'est pas, et pourquoi les deux camps ont des raisons de tenir."},
+      {n:"7.5", t:"Ce qui fait tenir une trace",
+       d:"Espacement, récupération active, sommeil, interférence. La partie la plus directement utilisable du cours pour toi."}
+    ],
+    idees:[
+      {s:"effondre", t:"« J'ai une mémoire photographique »", d:"l'eidétisme vrai chez l'adulte n'a quasiment jamais été documenté en conditions contrôlées."},
+      {s:"effondre", t:"« On retient 10 % de ce qu'on lit, 90 % de ce qu'on fait »", d:"la « pyramide de l'apprentissage » n'a aucune source empirique ; les chiffres ont été inventés."},
+      {s:"effondre", t:"Relire ses notes pour réviser", d:"produit une impression de maîtrise sans gain de rétention ; se tester produit le gain."},
+      {s:"etabli", t:"L'effet de test", d:"se tester fait mieux retenir que réétudier, à temps d'étude égal. Effet large et très répliqué."}
+    ]
+  },
+  {
+    n:8, titre:"Le cerveau et les neuromythes",
+    q:"Ce qu'une image de cerveau coloré prouve, et surtout ce qu'elle ne prouve pas.",
+    divan:"",
+    lecons:[
+      {n:"8.1", t:"Ce que l'IRM fonctionnelle mesure vraiment",
+       d:"Un signal indirect, lent, moyenné sur des milliers de neurones. Les tests statistiques massifs et la fameuse étude sur le saumon mort."},
+      {n:"8.2", t:"La plasticité, sans la magie",
+       d:"Le cerveau change avec l'usage : vrai, démontré, et beaucoup plus limité et spécifique que ce que les publicités en font."},
+      {n:"8.3", t:"L'hémisphère créatif et l'hémisphère rationnel",
+       d:"D'où vient le mythe (des patients au corps calleux sectionné), et pourquoi le saut jusqu'aux « profils cérébraux » est illégitime."},
+      {n:"8.4", t:"Les styles d'apprentissage",
+       d:"« Je suis visuel » : la croyance la plus répandue chez les enseignants, et l'une des mieux réfutées. Le test crucial est simple, on le détaillera."},
+      {n:"8.5", t:"L'entraînement cérébral",
+       d:"On progresse au jeu. On ne progresse pas ailleurs. La différence entre transfert proche et transfert lointain, et pourquoi tout le marché repose dessus."}
+    ],
+    idees:[
+      {s:"effondre", t:"« Cerveau gauche / cerveau droit »", d:"la latéralisation existe pour certaines fonctions, les profils de personnalité qu'on en tire, non."},
+      {s:"effondre", t:"Les styles d'apprentissage (visuel, auditif, kinesthésique)", d:"enseigner dans le style supposé n'améliore pas les résultats ; c'est le test décisif, et il échoue."},
+      {s:"effondre", t:"L'effet Mozart", d:"l'effet initial était minuscule, transitoire, et dû à l'éveil, pas à Mozart."},
+      {s:"effondre", t:"Le brain training", d:"gains réels sur les tâches entraînées, transfert lointain non démontré."}
+    ]
+  },
+  {
+    n:9, titre:"Sommeil, corps, substances",
+    q:"La part de ta psychologie qui est en réalité de la physiologie.",
+    divan:"Éclaire la section 2 de l'entretien 1 (Le décor).",
+    lecons:[
+      {n:"9.1", t:"Ce que le sommeil fait à la mémoire et à l'humeur",
+       d:"Consolidation, régulation émotionnelle, seuil de réactivité. Les effets d'une privation partielle répétée, qui est le cas réel de presque tout le monde."},
+      {n:"9.2", t:"Chronotypes : être du soir n'est pas un vice",
+       d:"La part héritable du chronotype, le décalage social, et ce que la recherche dit des lève-tard tardifs — avec ce qu'elle ne dit pas."},
+      {n:"9.3", t:"Exercice physique et dépression",
+       d:"Un des effets non médicamenteux les mieux documentés. On regardera l'ampleur réelle, et le biais de publication qui l'exagère."},
+      {n:"9.4", t:"Caféine, alcool, cannabis",
+       d:"Effets cognitifs documentés à court et moyen terme, sevrages, et la différence entre « associé à » et « cause »."}
+    ],
+    idees:[
+      {s:"conteste", t:"« Il faut huit heures de sommeil »", d:"moyenne de population avec une vraie variance individuelle ; mais la plupart des gens qui se croient au-dessus du lot ne le sont pas."},
+      {s:"etabli", t:"La privation de sommeil dégrade la régulation émotionnelle", d:"résultat robuste, expérimental, à effet large."},
+      {s:"effondre", t:"« L'alcool aide à dormir »", d:"endormissement plus rapide, architecture du sommeil dégradée."}
+    ]
+  }]
+},
+{
+  bloc:"D", titre:"Les autres",
+  lede:"Psychologie sociale : le domaine le plus spectaculaire, le plus enseigné, et celui dont les expériences fondatrices ont le plus mal vieilli. On va les reprendre une par une.",
+  modules:[
+  {
+    n:10, titre:"L'influence",
+    q:"Les expériences célèbres : lesquelles tiennent encore debout ?",
+    divan:"",
+    lecons:[
+      {n:"10.1", t:"Asch et la conformité",
+       d:"Le protocole exact, les taux réels, et la partie du résultat qu'on cite toujours de travers : la majorité des réponses restaient correctes."},
+      {n:"10.2", t:"Milgram, avec les archives",
+       d:"Ce qui a été trouvé dans les enregistrements et les notes des décennies plus tard : pressions non prévues au protocole, variantes jamais publiées, participants qui ne croyaient pas à la mise en scène. Ce qu'il reste de solide."},
+      {n:"10.3", t:"Stanford : l'expérience qui n'en était pas une",
+       d:"Pas d'hypothèse testée, gardiens instruits, résultat écrit d'avance. Comment une démonstration théâtrale est devenue pendant cinquante ans un fait scientifique."},
+      {n:"10.4", t:"L'effet spectateur",
+       d:"Celui-là tient, mais les enregistrements de rue montrent qu'on intervient bien plus souvent que le mythe de Kitty Genovese ne le laisse croire."},
+      {n:"10.5", t:"La persuasion",
+       d:"Réciprocité, engagement, preuve sociale, rareté : lesquels ont été répliqués, et à quelle échelle d'effet."}
+    ],
+    idees:[
+      {s:"effondre", t:"L'expérience de la prison de Stanford", d:"méthodologiquement invalide ; à enseigner comme cas d'école de ce qu'il ne faut pas faire."},
+      {s:"conteste", t:"« 65 % des gens torturent sur ordre »", d:"le chiffre vient d'une seule variante ; d'autres conditions donnent des taux très différents."},
+      {s:"etabli", t:"L'effet spectateur", d:"répliqué, mais l'effet se réduit quand le danger est non ambigu."},
+      {s:"conteste", t:"Le test de biais implicite (IAT)", d:"mesure quelque chose, mais prédit très mal le comportement individuel et sa fidélité test-retest est faible. Les formations anti-biais fondées dessus n'ont pas démontré d'effet durable."}
+    ]
+  },
+  {
+    n:11, titre:"Les liens",
+    q:"Ce qui prédit qu'un lien dure, et ce qui prédit qu'il casse.",
+    divan:"Éclaire la section 5 de l'entretien 1 (Les liens) et la section 7 de l'entretien 2.",
+    lecons:[
+      {n:"11.1", t:"L'attachement adulte, en deux dimensions",
+       d:"Anxiété et évitement, plutôt que quatre cases. Ce que ces deux axes prédisent réellement dans un couple, et avec quelle force."},
+      {n:"11.2", t:"Ce qui prédit la durée d'un couple",
+       d:"Les grandes bases de données récentes : quels facteurs ressortent, lesquels sont des bruits, et pourquoi les prédictions à 90 % des années 1990 étaient des artefacts de méthode."},
+      {n:"11.3", t:"La solitude",
+       d:"Un facteur de risque pour la santé dont l'ampleur a été comparée au tabac — comparaison contestée. On regardera les deux versions."},
+      {n:"11.4", t:"Soutien social : qui aide, et comment",
+       d:"La différence entre le soutien reçu et le soutien perçu, et pourquoi le second prédit mieux que le premier."}
+    ],
+    idees:[
+      {s:"marketing", t:"Les cinq langages de l'amour", d:"catégories inventées par un pasteur ; les études récentes ne retrouvent ni les cinq types ni le bénéfice d'« accorder » les langages."},
+      {s:"effondre", t:"« Les opposés s'attirent »", d:"la similarité prédit l'attraction ; la complémentarité ne la prédit quasiment pas."},
+      {s:"effondre", t:"« 93 % de la communication est non verbale »", d:"citation déformée d'une étude de 1967 portant sur des mots isolés et contradictoires."},
+      {s:"conteste", t:"« Prédire le divorce à 90 % »", d:"les modèles étaient ajustés sur les couples qu'ils prédisaient ; la prédiction réelle sur de nouveaux couples est bien plus faible."}
+    ]
+  },
+  {
+    n:12, titre:"Groupes, morale, idéologie",
+    q:"Pourquoi des gens intelligents croient des choses fausses, toi compris.",
+    divan:"Pour un amateur de débat : ce module est celui qui te concerne le plus directement.",
+    lecons:[
+      {n:"12.1", t:"Le raisonnement motivé",
+       d:"On ne raisonne pas pour trouver le vrai, on raisonne pour défendre une position. Résultat le plus inconfortable : plus on est compétent en calcul, plus on se trompe sur les données qui menacent son camp."},
+      {n:"12.2", t:"Les fondements moraux",
+       d:"Le modèle de Haidt : son intérêt descriptif, et les critiques méthodologiques sérieuses qu'il a reçues."},
+      {n:"12.3", t:"Polarisation et bulles de filtres",
+       d:"Les données d'exposition réelles contredisent en partie le récit courant. On regardera les grandes études de plateformes."},
+      {n:"12.4", t:"L'effet de retour de flamme",
+       d:"L'idée que corriger une fausse croyance la renforce. Largement non répliquée : corriger marche généralement. Bonne nouvelle, rarement relayée."},
+      {n:"12.5", t:"Ce qui fait changer d'avis",
+       d:"Entretien en profondeur, questions plutôt qu'arguments, et l'effet documenté d'une conversation de dix minutes."}
+    ],
+    idees:[
+      {s:"effondre", t:"L'effet de retour de flamme (backfire)", d:"non retrouvé dans les grandes réplications ; les corrections fonctionnent le plus souvent."},
+      {s:"conteste", t:"« Les réseaux sociaux nous enferment dans des bulles »", d:"l'exposition croisée mesurée est souvent plus forte en ligne qu'hors ligne ; le problème semble être ailleurs."},
+      {s:"etabli", t:"Le raisonnement motivé", d:"très répliqué, y compris chez les experts et sur des données chiffrées."}
+    ]
+  }]
+},
+{
+  bloc:"E", titre:"Quand ça va mal",
+  lede:"Développement, troubles, traitements. C'est le bloc où les enjeux sont réels : une idée fausse y coûte des années de vie à quelqu'un.",
+  modules:[
+  {
+    n:13, titre:"Le développement",
+    q:"Qu'est-ce qui, dans l'enfance, détermine vraiment la suite ?",
+    divan:"Éclaire la section 3 de l'entretien 1 (Origines) et la section 5 de l'entretien 2 (Les règles).",
+    lecons:[
+      {n:"13.1", t:"L'attachement précoce : portée réelle",
+       d:"Ce que la situation étrange mesure, la continuité réellement observée jusqu'à l'âge adulte, et pourquoi elle est plus faible que ce que le discours courant suppose."},
+      {n:"13.2", t:"Parents, pairs, gènes",
+       d:"La part de l'environnement partagé sur la personnalité adulte est faible : un résultat de génétique comportementale solide et très mal accepté. Ce qu'il implique, et ce qu'il n'implique pas (il n'autorise pas la maltraitance, par exemple)."},
+      {n:"13.3", t:"L'adversité dans l'enfance",
+       d:"Le score d'expériences adverses, sa relation dose-réponse avec la santé adulte, et ses limites quand on l'utilise sur une personne plutôt que sur une population."},
+      {n:"13.4", t:"L'adolescence",
+       d:"Maturation asynchrone du contrôle et de la recherche de sensation. Ce que ce modèle explique, et ce qu'on lui fait dire en trop."}
+    ],
+    idees:[
+      {s:"effondre", t:"« Tout se joue avant trois ans »", d:"slogan sans support ; la plasticité et les effets de l'environnement se poursuivent largement au-delà."},
+      {s:"effondre", t:"L'ordre de naissance détermine la personnalité", d:"les grandes études sur des centaines de milliers de sujets ne trouvent quasiment rien."},
+      {s:"conteste", t:"« Les parents font tout »", d:"influence réelle sur les valeurs, les opportunités, la sécurité ; très faible sur les traits de personnalité adultes."}
+    ]
+  },
+  {
+    n:14, titre:"La psychopathologie",
+    q:"Où passe la frontière entre une difficulté et un trouble ?",
+    divan:"Éclaire la section 6 de l'entretien 2 (Honte), et le cadre général des deux entretiens.",
+    lecons:[
+      {n:"14.1", t:"Catégories ou dimensions",
+       d:"Le DSM range en boîtes ; les données ressemblent à des continuums. Ce que propose la classification hiérarchique récente, et pourquoi ça change la façon de se lire soi-même."},
+      {n:"14.2", t:"La dépression et le mythe du déséquilibre chimique",
+       d:"La théorie sérotoninergique n'a jamais été démontrée, et son abandon ne dit rien contre l'efficacité des traitements. Comment deux faits apparemment contradictoires tiennent ensemble."},
+      {n:"14.3", t:"L'anxiété et l'évitement",
+       d:"Le moteur commun à presque tous les troubles anxieux : le soulagement immédiat qui renforce la peur. Mécanisme solide, et base de ce qui soigne."},
+      {n:"14.4", t:"TDAH et autisme chez l'adulte",
+       d:"Augmentation des diagnostics : sur-diagnostic, rattrapage, élargissement des critères ? Les trois hypothèses et leurs données."},
+      {n:"14.5", t:"Le facteur p",
+       d:"Les troubles psychiques corrèlent tous entre eux, comme les tests cognitifs. Le parallèle avec le facteur g, et ce qu'on en fait."}
+    ],
+    idees:[
+      {s:"effondre", t:"« La dépression est un déséquilibre en sérotonine »", d:"jamais établi ; l'argument publicitaire a survécu trente ans à l'absence de preuve."},
+      {s:"effondre", t:"« La dépression, c'est de la tristesse »", d:"l'anhédonie et le ralentissement en sont des marqueurs plus centraux que la tristesse."},
+      {s:"effondre", t:"« Tout le monde est un peu autiste »", d:"les traits sont continus, le trouble suppose un retentissement ; la phrase efface la différence."},
+      {s:"conteste", t:"« Les diagnostics explosent parce qu'on pathologise tout »", d:"des données vont dans les deux sens selon le trouble et le pays."}
+    ]
+  },
+  {
+    n:15, titre:"Ce qui soigne",
+    q:"Entre les thérapies, les médicaments et le temps, qu'est-ce qui agit ?",
+    divan:"",
+    lecons:[
+      {n:"15.1", t:"Les grandes familles de psychothérapie",
+       d:"Comportementale et cognitive, troisième vague, psychodynamique, systémique. Ce que chacune postule, ce que chacune a démontré."},
+      {n:"15.2", t:"Le verdict du dodo",
+       d:"« Tout le monde a gagné, tout le monde mérite un prix » : les thérapies sérieuses donnent des résultats comparables en moyenne. Les exceptions nettes, qui comptent énormément (exposition pour les phobies et le trouble obsessionnel, par exemple)."},
+      {n:"15.3", t:"Les facteurs communs",
+       d:"Alliance, attentes, cadre, effet du thérapeute : la part de la variance qui ne dépend pas de la méthode."},
+      {n:"15.4", t:"Les médicaments",
+       d:"Effet moyen réel, importance du placebo, différence entre dépression légère et sévère, question du sevrage. Un domaine où les deux camps militants déforment."},
+      {n:"15.5", t:"Psychédéliques et nouvelles promesses",
+       d:"État réel des essais cliniques, problème de l'aveugle impossible, et pourquoi il faut être prudent sans être fermé."},
+      {n:"15.6", t:"Ce que l'auto-assistance peut faire",
+       d:"Les formats guidés font mieux que les non guidés ; l'abandon est le principal ennemi. Ce que cela dit d'un outil comme LE DIVAN — et ses limites."}
+    ],
+    idees:[
+      {s:"etabli", t:"L'exposition pour les phobies et le TOC", d:"l'un des traitements psychologiques les plus efficaces documentés."},
+      {s:"conteste", t:"« Toutes les thérapies se valent »", d:"vrai en moyenne sur les troubles courants, faux pour plusieurs troubles précis."},
+      {s:"conteste", t:"« Les antidépresseurs, c'est du placebo »", d:"l'écart au placebo est réel mais modeste en moyenne, et croît avec la sévérité."},
+      {s:"marketing", t:"La PNL (programmation neuro-linguistique)", d:"aucune des prédictions testables d'origine n'a été confirmée."}
+    ]
+  }]
+},
+{
+  bloc:"F", titre:"Le banc d'essai",
+  lede:"Les deux modules d'application. Le premier sur le terrain où tu vas travailler, le second pour récapituler tout ce qui aura été jugé en chemin.",
+  modules:[
+  {
+    n:16, titre:"Travail, performance, expertise",
+    q:"Ce que la psychologie sait du recrutement, du talent et de l'épuisement.",
+    divan:"Directement utile pour tes entretiens de stage — des deux côtés de la table.",
+    lecons:[
+      {n:"16.1", t:"Les dix mille heures",
+       d:"Ce qu'Ericsson a vraiment écrit, ce que Gladwell en a fait, et ce que les méta-analyses trouvent : la pratique explique une part réelle mais minoritaire de la variance, très variable selon les domaines."},
+      {n:"16.2", t:"Ce qui prédit la performance au travail",
+       d:"Le classement des prédicteurs, les révisions récentes de ce classement, et la place catastrophique de l'entretien non structuré."},
+      {n:"16.3", t:"Pourquoi l'entretien libre ne marche pas",
+       d:"Il crée une impression de connaissance sans information. L'entretien structuré, lui, prédit — et presque personne ne le fait."},
+      {n:"16.4", t:"Le burnout",
+       d:"Construit flou, mesures hétérogènes, frontière contestée avec la dépression. Ce qu'on peut affirmer sans se tromper."},
+      {n:"16.5", t:"Open space, réunions, télétravail",
+       d:"Les quelques études naturelles sérieuses, et ce que les entreprises préfèrent ignorer."}
+    ],
+    idees:[
+      {s:"effondre", t:"La règle des 10 000 heures", d:"formulée par un journaliste, désavouée par le chercheur dont il s'inspirait."},
+      {s:"effondre", t:"La graphologie en recrutement", d:"validité prédictive nulle, encore utilisée en France."},
+      {s:"effondre", t:"« Je sais juger quelqu'un en cinq minutes »", d:"les jugements rapides sont fiables entre eux — et peu valides."},
+      {s:"conteste", t:"« L'open space favorise la collaboration »", d:"les mesures objectives trouvent souvent l'inverse."}
+    ]
+  },
+  {
+    n:17, titre:"Le grand récapitulatif",
+    q:"Tout ce qui a été jugé en chemin, remis dans une seule table.",
+    divan:"",
+    lecons:[
+      {n:"17.1", t:"La table des verdicts",
+       d:"Toutes les idées reçues du cours, rangées par verdict, avec en une ligne la raison du classement. La page à garder."},
+      {n:"17.2", t:"Reconnaître une pseudo-science psychologique en cinq questions",
+       d:"Grille applicable à n'importe quel contenu : qui l'a testé, qu'est-ce qui la réfuterait, que vend l'auteur, l'effet a-t-il été répliqué ailleurs, et par qui."},
+      {n:"17.3", t:"Ce que la psychologie ne sait toujours pas",
+       d:"La conscience, la causalité des troubles, la prédiction individuelle. L'honnêteté sur les trous est la dernière leçon du cours."}
+    ],
+    idees:[]
+  }]
+}
+];
+
+/* ─────────── rendu ─────────── */
+const el = (t, c, x) => { const n = document.createElement(t); if(c) n.className = c; if(x != null) n.textContent = x; return n; };
+const LABEL = {etabli:"Établi", conteste:"Contesté", effondre:"Effondré", marketing:"Marketing"};
+
+function render(){
+  const app = document.getElementById("app");
+  app.textContent = "";
+
+  app.appendChild(el("div", "eyebrow", "Plan de cours · psychologie"));
+  app.appendChild(el("h1", null, "Ce que la recherche établit vraiment"));
+  app.appendChild(el("p", "lede", "Un cours pour quelqu'un qui part de zéro et qui veut pouvoir trancher : prendre les idées qui circulent — la triade noire, les styles d'apprentissage, les langages de l'amour, la volonté qui s'épuise — et savoir lesquelles tiennent debout, lesquelles sont mortes en réplication, et lesquelles n'ont jamais été autre chose qu'un produit."));
+
+  const body = el("div", "body");
+  const p1 = el("p", null, "La psychologie a traversé entre 2011 et 2015 une crise qui a emporté une partie de ses résultats les plus enseignés. C'est une bonne nouvelle : la discipline a été l'une des premières à faire son ménage, et on sait aujourd'hui assez bien distinguer ce qui tient de ce qui ne tient pas. Ce cours est organisé autour de cette distinction plutôt qu'autour des chapitres habituels.");
+  const p2 = el("p", null, "Chaque idée reçue croisée en chemin reçoit donc un verdict, et la raison du verdict. Quand le débat est réellement ouvert entre chercheurs sérieux, c'est écrit : il n'y a pas de faux équilibre ici, mais pas de tranchant artificiel non plus.");
+  body.appendChild(p1); body.appendChild(p2);
+  app.appendChild(body);
+
+  const lg = el("div", "legend");
+  [["etabli","Répliqué par des équipes indépendantes. On peut s'appuyer dessus."],
+   ["conteste","Des données réelles des deux côtés. Le débat est ouvert, et on dira où il en est."],
+   ["effondre","N'a pas survécu aux réplications, ou méthode d'origine viciée."],
+   ["marketing","N'a jamais été une affirmation scientifique. Un produit, un livre, une marque."]]
+   .forEach(([k, d]) => {
+     const c = el("div", "leg");
+     const pl = el("span"); const b = el("span", "pill p-" + k, LABEL[k]); pl.appendChild(b);
+     c.appendChild(pl); c.appendChild(el("span", null, d)); lg.appendChild(c);
+   });
+  app.appendChild(lg);
+
+  const nMod = PLAN.reduce((a, b) => a + b.modules.length, 0);
+  const nLec = PLAN.reduce((a, b) => a + b.modules.reduce((x, m) => x + m.lecons.length, 0), 0);
+  const idees = PLAN.flatMap(b => b.modules.flatMap(m => m.idees));
+  const st = el("div", "stats");
+  [["Blocs", String(PLAN.length)], ["Modules", String(nMod)], ["Leçons", String(nLec)],
+   ["Idées jugées", String(idees.length)], ["Écrites", "0"]]
+   .forEach(([k, v]) => { const d = el("div", "stat"); d.appendChild(el("div", "k", k)); d.appendChild(el("div", "v", v)); st.appendChild(d); });
+  app.appendChild(st);
+
+  PLAN.forEach(b => {
+    const sec = el("section", "bloc");
+    const h = el("div", "blochead");
+    h.appendChild(el("span", "blocn", "BLOC " + b.bloc));
+    h.appendChild(el("h2", "bloct", b.titre));
+    sec.appendChild(h);
+    sec.appendChild(el("p", "blocl", b.lede));
+
+    b.modules.forEach(m => {
+      const mod = el("article", "mod");
+      mod.appendChild(el("div", "modn", String(m.n)));
+      const col = el("div");
+      col.appendChild(el("h3", "modt", m.titre));
+      col.appendChild(el("p", "modq", m.q));
+
+      const ul = el("ul", "lecons");
+      m.lecons.forEach(l => {
+        const li = el("li", "lecon");
+        li.appendChild(el("span", "ln", l.n));
+        const d = el("div");
+        d.appendChild(el("div", "lt", l.t));
+        d.appendChild(el("div", "ld", l.d));
+        li.appendChild(d); ul.appendChild(li);
+      });
+      col.appendChild(ul);
+
+      if(m.idees.length){
+        const banc = el("div", "banc");
+        banc.appendChild(el("div", "banct", "Au banc d'essai"));
+        m.idees.forEach(i => {
+          const d = el("div", "idee");
+          d.appendChild(el("span", "pill p-" + i.s, LABEL[i.s]));
+          const q = document.createElement("q"); q.textContent = i.t.replace(/^«\s*|\s*»$/g, "");
+          d.appendChild(q);
+          d.appendChild(el("span", null, " — " + i.d));
+          banc.appendChild(d);
+        });
+        col.appendChild(banc);
+      }
+
+      if(m.divan) col.appendChild(el("div", "divan", "↳ " + m.divan));
+      mod.appendChild(col);
+      sec.appendChild(mod);
+    });
+    app.appendChild(sec);
+  });
+
+  const pl = el("div", "plate");
+  pl.appendChild(el("h3", null, "Comment on va travailler"));
+  pl.appendChild(el("p", null, "Une leçon à la fois, dans l'ordre que tu veux — il suffit de demander son numéro, par exemple « écris la 2.4 ». Le module 1 est le seul qui gagne vraiment à être lu en premier : il donne les outils pour contredire tout le reste."));
+  pl.appendChild(el("p", null, "Chaque leçon sera écrite dépliée, pas comprimée : un exemple concret avant chaque règle, chaque terme technique défini là où il apparaît, et les chiffres montrés plutôt qu'affirmés. Quand une taille d'effet est donnée, elle sera traduite en quelque chose de lisible — combien de personnes sur cent, pas un coefficient nu."));
+  pl.appendChild(el("p", null, "Les leçons écrites viendront se loger dans cette page, à la place de leur résumé. Le compteur « écrites » en haut suivra l'avancement."));
+  app.appendChild(pl);
+
+  const w = el("div", "warn");
+  w.appendChild(el("b", null, "Un cours, pas un soin. "));
+  w.appendChild(el("span", null, "Rien ici ne sert à se diagnostiquer, ni à diagnostiquer quelqu'un d'autre. Connaître la littérature sur la dépression ne permet pas de savoir si on en a une, exactement comme lire sur la cardiologie ne permet pas de se poser un stent."));
+  app.appendChild(w);
+
+  const f = el("div", "foot");
+  f.appendChild(el("div", null, "LE COURS · un module du DIVAN · plan v1, " + nLec + " leçons à écrire"));
+  const a = document.createElement("a"); a.href = "./"; a.textContent = "← Les entretiens";
+  f.appendChild(a);
+  app.appendChild(f);
+}
+
+render();
+</script>
+</body>
+</html>

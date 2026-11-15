@@ -188,6 +188,11 @@ input[type=range]{flex:1;accent-color:var(--bleu);height:26px}
 .cardnav .btn{padding:8px 15px;font-size:14px}
 .cardwarn{font-family:var(--mono);font-size:10.5px;color:var(--rose)}
 .loaderr{margin-top:10px;color:var(--rose);font-size:13.5px;line-height:1.5}
+.coursbox{display:block;text-decoration:none;color:inherit;border:1px solid var(--bleu-line);background:var(--bleu-soft);border-radius:4px;padding:16px 20px;margin-top:22px}
+.coursbox:hover{border-color:var(--bleu)}
+.coursk{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bleu)}
+.courst{font-family:var(--disp);font-size:20px;line-height:1.25;margin-top:3px}
+.coursd{font-size:14.5px;color:var(--ink-soft);line-height:1.5;margin-top:7px}
 @media (max-width:520px){.card{grid-template-columns:minmax(0,1fr)}.card .num{font-size:26px;margin-bottom:8px}}
 
 /* ——— navigation ——— */
@@ -1418,6 +1423,13 @@ function renderHome(){
     c.appendChild(t); cards.appendChild(c);
   });
   col.appendChild(cards);
+
+  const cours = document.createElement("a");
+  cours.className = "coursbox"; cours.href = "cours.html";
+  cours.appendChild(el("div", "coursk", "Le cours"));
+  cours.appendChild(el("div", "courst", "Psychologie : ce que la recherche établit vraiment"));
+  cours.appendChild(el("div", "coursd", "Six blocs, dix-sept modules. Les idées qui circulent passées une par une au banc d'essai : établi, contesté, effondré, ou simple produit commercial. Voir le plan →"));
+  col.appendChild(cours);
 
   const pl = el("div", "plate");
   pl.appendChild(el("h3", null, "Charger un entretien sur mesure"));
