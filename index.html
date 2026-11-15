@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LE DIVAN</title>
+<meta name="description" content="Entretiens successifs d'exploration psychologique. Chaque tour creuse plus loin que le précédent.">
+<meta name="theme-color" content="#E9EAE6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --stone:#E9EAE6; --stone2:#F2F3F0; --panel:#FDFDFC;
+  --ink:#15181C; --ink-soft:#4A5056; --faint:#7D848B;
+  --rule:#D2D5CF; --rule-soft:#E2E4DF;
+  --bleu:#2A3F8F; --bleu-soft:#E4E7F3; --bleu-line:#A9B4DC;
+  --rose:#8E5450; --rose-soft:#F3E7E5;
+  --vert:#3C6A52; --vert-soft:#E3EDE6;
+  --on-fg:#FDFDFC;
+  --disp:"Newsreader",Georgia,"Times New Roman",serif;
+  --ui:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --stone:#14181B; --stone2:#1A1F23; --panel:#1E2429;
+    --ink:#E8EAE5; --ink-soft:#AFB6BA; --faint:#7E868C;
+    --rule:#2C3338; --rule-soft:#232A2E;
+    --bleu:#97AAEA; --bleu-soft:#1B2340; --bleu-line:#3C4A7C;
+    --rose:#DC9E98; --rose-soft:#352421;
+    --vert:#7CC19A; --vert-soft:#16291F; --on-fg:#14181B;
+  }
+}
+:root[data-theme="dark"]{
+  --stone:#14181B; --stone2:#1A1F23; --panel:#1E2429;
+  --ink:#E8EAE5; --ink-soft:#AFB6BA; --faint:#7E868C;
+  --rule:#2C3338; --rule-soft:#232A2E;
+  --bleu:#97AAEA; --bleu-soft:#1B2340; --bleu-line:#3C4A7C;
+  --rose:#DC9E98; --rose-soft:#352421;
+  --vert:#7CC19A; --vert-soft:#16291F; --on-fg:#14181B;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--stone);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--disp);font-weight:500;text-wrap:balance;margin:0}
+a{color:var(--bleu)}
+button{font-family:var(--ui);font-size:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ——— ossature ——— */
+.shell{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:184px minmax(0,1fr);align-items:start}
+.rail{position:sticky;top:0;padding:28px 20px 40px;border-right:1px solid var(--rule);min-height:100vh;display:flex;flex-direction:column;gap:22px}
+.main{padding:28px 32px 120px;min-width:0}
+.col{max-width:34rem}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:sticky;top:0;min-height:0;border-right:0;border-bottom:1px solid var(--rule);background:var(--stone);z-index:20;padding:10px 16px;flex-direction:row;align-items:center;gap:14px;overflow-x:auto}
+  .rail .railtitle{font-size:12px}
+  .rail .seclist{display:none}
+  .main{padding:22px 18px 110px}
+}
+
+/* ——— rail ——— */
+.railtitle{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+.railtitle b{color:var(--ink);font-weight:500}
+.seclist{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.seclist button{display:flex;gap:9px;align-items:baseline;width:100%;text-align:left;background:none;border:0;padding:5px 6px;color:var(--ink-soft);font-size:13.5px;line-height:1.3;border-radius:2px}
+.seclist button:hover{background:var(--stone2);color:var(--ink)}
+.seclist .n{font-family:var(--mono);font-size:10.5px;color:var(--faint);flex:0 0 auto}
+.seclist .on{color:var(--ink);background:var(--bleu-soft)}
+.seclist .on .n{color:var(--bleu)}
+.seclist .done .n::after{content:"·";margin-left:2px;color:var(--vert)}
+.bar{display:flex;gap:3px;align-items:flex-end;height:14px}
+.bar i{display:block;flex:1;height:3px;background:var(--rule);border-radius:2px}
+.bar i.f{background:var(--bleu);height:7px}
+.bar i.p{background:var(--bleu-line);height:5px}
+
+/* ——— en-tête de section ——— */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bleu);margin-bottom:10px}
+.h-sec{font-size:clamp(28px,4.4vw,40px);line-height:1.12;letter-spacing:-.01em}
+.lede{font-family:var(--disp);font-style:italic;font-size:19px;line-height:1.5;color:var(--ink-soft);margin-top:14px;max-width:32rem}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:18px;display:flex;gap:16px;flex-wrap:wrap}
+
+/* ——— items ——— */
+.items{display:flex;flex-direction:column;gap:0;margin-top:34px}
+.item{border-top:1px solid var(--rule-soft);padding:24px 0 26px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 12px}
+.item:first-child{border-top:1px solid var(--rule)}
+.code{font-family:var(--mono);font-size:11px;color:var(--faint);padding-top:5px;letter-spacing:.02em}
+.q{font-family:var(--disp);font-size:21px;line-height:1.36;letter-spacing:-.005em}
+.why{font-family:var(--disp);font-style:italic;color:var(--ink-soft);font-size:16.5px;line-height:1.5;margin-top:7px}
+.field{margin-top:14px}
+.item.sens .code{color:var(--rose)}
+@media (max-width:620px){
+  .item{grid-template-columns:minmax(0,1fr);gap:0}
+  .code{padding:0 0 6px}
+  .q{font-size:19.5px}
+}
+
+/* ——— contrôles ——— */
+textarea,input[type=text],input[type=number],select{width:100%;font-family:var(--ui);font-size:15.5px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:11px 12px;line-height:1.5}
+textarea{min-height:120px;resize:vertical;font-family:var(--disp);font-size:17px}
+textarea:focus,input:focus,select:focus{border-color:var(--bleu);outline:none;box-shadow:0 0 0 3px var(--bleu-soft)}
+.hint{font-size:12.5px;color:var(--faint);margin-top:6px}
+.count{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right;margin-top:4px}
+
+.opts{display:flex;flex-direction:column;gap:1px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1px solid transparent;border-radius:3px;background:var(--stone2);font-size:15px;line-height:1.4}
+.opt:hover{background:var(--bleu-soft)}
+.opt input{margin:4px 0 0;accent-color:var(--bleu);flex:0 0 auto}
+.opt.sel{background:var(--bleu-soft);border-color:var(--bleu-line)}
+
+.lik{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:4px}
+.lik button{aspect-ratio:1;border:1px solid var(--rule);background:var(--panel);border-radius:3px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding:0}
+.lik button:hover{border-color:var(--bleu);color:var(--bleu)}
+.lik button.on{background:var(--bleu);border-color:var(--bleu);color:var(--on-fg)}
+.poles{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--faint);margin-top:6px}
+.poles span{max-width:46%}
+.poles span:last-child{text-align:right}
+
+.scalewrap{display:flex;align-items:center;gap:14px}
+input[type=range]{flex:1;accent-color:var(--bleu);height:26px}
+.scaleval{font-family:var(--mono);font-size:19px;min-width:3.2ch;text-align:right;font-variant-numeric:tabular-nums}
+
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.pair button{text-align:left;background:var(--stone2);border:1px solid var(--rule);border-radius:3px;padding:12px 13px;font-family:var(--disp);font-size:16.5px;line-height:1.35;color:var(--ink)}
+.pair button:hover{border-color:var(--bleu)}
+.pair button.on{background:var(--bleu-soft);border-color:var(--bleu)}
+.pairlab{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin:14px 0 6px;letter-spacing:.08em;text-transform:uppercase}
+@media (max-width:520px){.pair{grid-template-columns:1fr}}
+
+.rank{display:flex;flex-direction:column;gap:4px}
+.rank button{display:flex;gap:11px;align-items:center;text-align:left;background:var(--stone2);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;font-size:15px;color:var(--ink)}
+.rank button .num{font-family:var(--mono);font-size:11px;width:22px;height:22px;border-radius:50%;border:1px solid var(--rule);display:grid;place-items:center;flex:0 0 auto;color:var(--faint)}
+.rank button.on{border-color:var(--bleu);background:var(--bleu-soft)}
+.rank button.on .num{background:var(--bleu);border-color:var(--bleu);color:var(--on-fg);font-weight:500}
+
+.stems{display:flex;flex-direction:column;gap:12px}
+.stem{display:flex;flex-direction:column;gap:5px}
+.stem label{font-family:var(--disp);font-size:17px;line-height:1.35;color:var(--ink)}
+
+.rows{display:flex;flex-direction:column;gap:8px}
+.row3{display:grid;grid-template-columns:72px 1fr 1fr;gap:6px}
+@media (max-width:620px){.row3{grid-template-columns:62px 1fr}.row3 input:last-child{grid-column:1/-1}}
+.rowhead{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.f label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:4px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.grid3 .gh{font-family:var(--mono);font-size:10.5px;color:var(--bleu);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+@media (max-width:620px){.grid3{grid-template-columns:1fr}}
+
+.alloc{display:flex;flex-direction:column;gap:7px}
+.al{display:grid;grid-template-columns:minmax(96px,1fr) 70px 54px;gap:10px;align-items:center}
+.al .nm{font-size:14.5px}
+.al input[type=range]{width:100%}
+.al .v{font-family:var(--mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.al .v.gapup{color:var(--vert)}.al .v.gapdn{color:var(--rose)}
+.total{font-family:var(--mono);font-size:12px;margin-top:10px;padding:8px 11px;border-radius:3px;background:var(--stone2);color:var(--ink-soft);display:flex;justify-content:space-between;gap:12px}
+.total.ok{background:var(--vert-soft);color:var(--vert)}
+.total.bad{background:var(--rose-soft);color:var(--rose)}
+
+.skip{background:none;border:0;padding:4px 0;margin-top:8px;font-size:12.5px;color:var(--faint);text-decoration:underline;text-underline-offset:3px}
+.skip:hover{color:var(--rose)}
+.skipped{opacity:.45;pointer-events:none}
+.skipmark{font-family:var(--mono);font-size:11px;color:var(--rose);margin-top:10px}
+
+/* ——— navigation ——— */
+.nav{display:flex;gap:10px;align-items:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--stone);border-radius:3px;padding:11px 20px;font-weight:500;font-size:15px}
+.btn:hover{background:var(--bleu);border-color:var(--bleu);color:var(--on-fg)}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{background:var(--stone2);color:var(--ink);border-color:var(--ink)}
+.navnote{font-family:var(--mono);font-size:11px;color:var(--faint);margin-left:auto}
+
+/* ——— seuil & sortie ——— */
+.plate{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:22px 24px;margin-top:24px}
+.plate h3{font-size:19px;margin-bottom:8px}
+.plate p{margin:0 0 10px;font-size:15px;color:var(--ink-soft);line-height:1.6}
+.plate p:last-child{margin-bottom:0}
+.warn{border-left:3px solid var(--rose);background:var(--rose-soft);border-radius:0 3px 3px 0;padding:14px 16px;margin-top:20px;font-size:14.5px;line-height:1.55}
+.warn b{color:var(--rose)}
+.deal{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 14px;font-size:15px;margin-top:18px;align-items:baseline}
+.deal dt{font-family:var(--mono);font-size:11px;color:var(--bleu);letter-spacing:.08em;text-transform:uppercase;padding-top:3px}
+.deal dd{margin:0;color:var(--ink-soft)}
+.banner{background:var(--rose-soft);color:var(--rose);border:1px solid var(--rose);border-radius:3px;padding:11px 14px;font-size:14px;margin:0 0 20px;line-height:1.5}
+.mirror{margin-top:16px;border:1px solid var(--bleu-line);background:var(--bleu-soft);border-radius:3px;padding:14px 16px;font-size:14.5px;line-height:1.6}
+.mirror b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--bleu);display:block;margin-bottom:6px}
+.out{width:100%;min-height:300px;font-family:var(--mono);font-size:11.5px;line-height:1.6;background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:14px;white-space:pre;overflow:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-top:22px}
+.stat{background:var(--panel);padding:12px 14px}
+.stat .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.stat .v{font-family:var(--disp);font-size:25px;line-height:1.2;margin-top:2px;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;background:var(--ink);color:var(--stone);padding:11px 18px;border-radius:3px;font-size:14px;z-index:60;box-shadow:0 6px 24px rgba(0,0,0,.22)}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="rail">
+    <div class="railtitle"><b>LE DIVAN</b> · entretien 1</div>
+    <div class="bar" id="bar" aria-hidden="true"></div>
+    <ul class="seclist" id="seclist"></ul>
+  </nav>
+  <main class="main" id="main"></main>
+</div>
+<script>
+"use strict";
+const K = "divan_v1";
+const VERSION = 1;
+
+/* ═══════════════════════════════════════════════════════════════════
+   ENTRETIEN 1 — « Faire connaissance »
+   Chaque section : code, titre, axe (rail), lede (pourquoi), items.
+   Types : long text likert scale choice multi rank pairs stems rows
+           fields grid3 alloc consent
+   ═══════════════════════════════════════════════════════════════════ */
+
+const LIK = ["Pas du tout","","","Moyen","","","Tout à fait"];
+
+const SECTIONS = [
+{
+  n:"0", axe:"Le seuil", titre:"Avant de commencer",
+  lede:"Trois minutes de cadre. Ce n'est pas une formalité : savoir exactement où vont tes réponses change ce que tu acceptes d'écrire.",
+  intro:true,
+  items:[
+    {id:"0.1",type:"fields",q:"Comment je t'appelle ?",why:"Un prénom, un pseudonyme, une initiale. Personne ne vérifie.",fields:[
+      {id:"nom",label:"Prénom ou pseudonyme"},
+      {id:"age",label:"Âge",type:"number"},
+      {id:"situation",label:"Situation en trois mots",ph:"ex. étudiante, seule, Lyon"}
+    ]},
+    {id:"0.2",type:"choice",q:"Est-ce que tu as déjà parlé de tout ça à quelqu'un ?",why:"Pas pour juger : pour savoir si tu défriches ou si tu reprends un chantier déjà ouvert.",options:[
+      "Jamais, à personne",
+      "À des proches, jamais à un professionnel",
+      "Un suivi psy par le passé, terminé",
+      "Un suivi psy en cours",
+      "Je préfère ne pas le dire"
+    ]},
+    {id:"0.3",type:"consent",q:"Le contrat",why:""}
+  ]
+},
+{
+  n:"1", axe:"La demande", titre:"Ce qui t'amène",
+  lede:"On commence par ta version. Pas la version propre que tu donnerais à un médecin pressé : celle que tu te racontes quand tu n'as personne à ménager.",
+  items:[
+    {id:"1.1",type:"long",q:"Raconte-moi qui tu es, comme si tu avais cinq minutes et personne à impressionner.",why:"Ce que tu choisis de dire en premier m'apprend déjà par où tu te tiens debout. Vas-y en désordre, je trie après.",rows:7,hint:"Dix lignes suffisent. Les listes sont permises."},
+    {id:"1.2",type:"text",q:"S'il n'y avait qu'un seul problème à régler, lequel ?",why:"Un seul. Le choix est l'information : ce que tu mets en premier n'est pas toujours le plus douloureux, c'est souvent le plus avouable."},
+    {id:"1.3",type:"choice",q:"Depuis quand ?",options:["Depuis toujours, je ne me souviens pas d'avant","Depuis l'adolescence","Depuis quelques années","Depuis un événement précis","C'est récent, quelques mois"]},
+    {id:"1.4",type:"text",q:"Et s'il y a un événement précis : lequel ?",why:"Laisse vide si ça ne s'applique pas.",optional:true},
+    {id:"1.5",type:"scale",q:"Aujourd'hui, à quel point ça pèse ?",why:"0 = c'est une curiosité. 10 = ça décide de mes journées.",min:0,max:10},
+    {id:"1.6",type:"long",q:"Il y a ce que ça te coûte, et ce que ça te rapporte. Qu'est-ce que ce problème te permet d'éviter ?",why:"Question désagréable, et centrale. Un fonctionnement qui dure a presque toujours un bénéfice caché — en clinique on parle de bénéfice secondaire. Ce n'est pas une accusation, c'est la pièce qui manque pour comprendre pourquoi ça résiste.",rows:4},
+    {id:"1.7",type:"multi",q:"Qu'est-ce que tu attends de ces entretiens ?",why:"Plusieurs réponses possibles. Ça règle le ton de la suite.",options:[
+      "Comprendre un schéma qui se répète",
+      "Mettre des mots sur quelque chose de flou",
+      "Prendre une décision que je reporte",
+      "Être challengé, même si ça gratte",
+      "Être écouté sans contradiction",
+      "Pure curiosité intellectuelle",
+      "Vérifier si je suis normal"
+    ],other:true},
+    {id:"1.8",type:"long",q:"À quoi reconnaîtrais-tu que ça a marché ? Décris une scène concrète.",why:"« Aller mieux » ne se vérifie pas. « Je décroche le téléphone sans préparer la phrase » se vérifie. Donne-moi une scène, un geste, un matin.",rows:4},
+    {id:"1.9",type:"text",q:"Qu'est-ce que tu ne veux surtout pas qu'on touche ?",why:"Réponse respectée, sans exception, dans tous les entretiens suivants. Tu peux nommer le sujet sans l'expliquer.",sensitive:true,optional:true}
+  ]
+},
+{
+  n:"2", axe:"Le décor", titre:"La vie telle qu'elle est",
+  lede:"Avant la psychologie, la logistique. Un sommeil à cinq heures explique plus d'« angoisse existentielle » qu'on ne l'admet, et beaucoup de ce qu'on croit être un caractère est un état.",
+  items:[
+    {id:"2.1",type:"fields",q:"L'état des lieux",why:"Approximatif suffit. Semaine ordinaire, pas la pire.",fields:[
+      {id:"sommeil_h",label:"Heures de sommeil / nuit",type:"number"},
+      {id:"coucher",label:"Heure de coucher",ph:"ex. 1h30"},
+      {id:"sport",label:"Séances de sport / semaine",type:"number"},
+      {id:"seul",label:"Tu vis",type:"select",options:["Seul","En couple","En famille","En colocation","Autre"]},
+      {id:"ecrans",label:"Écrans / jour (heures)",type:"number"},
+      {id:"travail",label:"Études ou travail",ph:"ex. M2, 50h/sem"}
+    ]},
+    {id:"2.2",type:"likert",q:"Mon sommeil est réparateur.",poles:["Je me lève épuisé","Je me lève reposé"]},
+    {id:"2.3",type:"likert",q:"J'ai de l'énergie pour ce qui ne m'intéresse pas.",why:"Pouvoir se lever pour ce qui passionne et pas pour le reste n'est pas de la paresse : c'est une information sur la source de l'élan.",poles:["Aucune","Autant que pour le reste"]},
+    {id:"2.4",type:"multi",q:"Qu'est-ce que tu consommes, et à quelle fréquence ?",why:"Sans jugement, et tu peux passer. C'est une question de dosage, pas de morale.",options:[
+      "Alcool, occasionnel","Alcool, plusieurs fois par semaine","Cannabis, occasionnel","Cannabis, régulier",
+      "Nicotine","Caféine en grande quantité","Médicaments prescrits (anxiolytique, antidépresseur…)",
+      "Autre substance","Rien de tout ça"
+    ],sensitive:true},
+    {id:"2.5",type:"long",q:"Une journée ordinaire de ta semaine, en six lignes. Du réveil au coucher.",why:"Le quotidien dit ce que les intentions cachent. Je cherche les trous : les heures qui ne sont pas racontées.",rows:6},
+    {id:"2.6",type:"text",q:"Qui as-tu vu, en vrai, ces sept derniers jours ?",why:"Noms ou rôles, peu importe. Compter suffit souvent à comprendre."}
+  ]
+},
+{
+  n:"3", axe:"Origines", titre:"Les premières difficultés",
+  lede:"Non pas pour tout faire remonter à l'enfance — paresse intellectuelle fréquente — mais parce que les stratégies qu'on applique à trente ans ont été inventées à six, quand elles étaient la meilleure solution disponible.",
+  items:[
+    {id:"3.1",type:"rows",q:"Ta ligne de vie : les moments où quelque chose a basculé.",why:"En bien ou en mal, les deux comptent. Six lignes maximum, le tri est déjà une réponse.",cols:["Âge","Ce qui s'est passé","Ce que ça a changé"],rows:6},
+    {id:"3.2",type:"text",q:"Le premier souvenir qui te vient, sans le choisir.",why:"Technique ancienne (Adler, 1930) : parmi des milliers de scènes oubliées, celle qui reste a été gardée pour une raison. On ne l'interprète pas tout de suite, on la note."},
+    {id:"3.3",type:"choice",q:"Enfant, quelle était ta place dans la maison ?",why:"Les familles distribuent des rôles sans les annoncer. On les garde longtemps après avoir quitté la maison.",options:[
+      "Celui qui répare, qui arrange les choses",
+      "Celui qui ne dérange pas, qui se fait petit",
+      "Celui qu'on admire, la fierté de la maison",
+      "Celui qui dérange, le problème",
+      "Celui qu'on oublie",
+      "Celui qui tient le rôle de l'adulte",
+      "Autre"
+    ],other:true},
+    {id:"3.4",type:"long",q:"À qui allais-tu quand ça n'allait pas ? Et si personne : qu'est-ce que tu faisais, concrètement ?",why:"La réponse « personne » n'est pas un vide. C'est une stratégie, et elle a un nom, un lieu, un geste. Ce geste-là est souvent encore là aujourd'hui.",rows:4},
+    {id:"3.5",type:"text",q:"Qu'est-ce qu'il était interdit d'être, chez toi ?",why:"Pas interdit de faire : interdit d'être. En colère, triste, bruyant, moyen, fier, faible, différent."},
+    {id:"3.6",type:"likert",q:"Enfant, je savais à l'avance comment mes parents allaient réagir.",why:"La prévisibilité compte souvent plus que la sévérité. Un cadre dur mais lisible se traverse mieux qu'un cadre doux et aléatoire.",poles:["Jamais, ça dépendait du jour","Toujours, je savais"]},
+    {id:"3.7",type:"long",q:"Qu'est-ce que tu as compris tout seul, trop tôt ?",why:"Il y a presque toujours une phrase. Souvent elle commence par « que les adultes… » ou « que je ne pouvais pas… ».",rows:3,sensitive:true}
+  ]
+},
+{
+  n:"4", axe:"Tempérament", titre:"Comment tu es câblé",
+  lede:"Des échelles courtes, inspirées des cinq grands facteurs de personnalité. Ce ne sont pas des tests validés : juste des repères pour que la suite ne parte pas d'un portrait faux. Réponds vite, le premier mouvement est le bon.",
+  items:[
+    {id:"4.1",type:"likert",q:"J'ai besoin d'un plan avant d'agir.",poles:["J'improvise","Je planifie tout"]},
+    {id:"4.2",type:"likert",q:"Après une soirée en groupe, je suis rechargé.",poles:["Vidé","Rechargé"]},
+    {id:"4.3",type:"likert",q:"Je repasse les conversations dans ma tête, longtemps après.",poles:["Jamais","En boucle"]},
+    {id:"4.4",type:"likert",q:"Un conflit ouvert me paraît préférable à un non-dit.",poles:["J'évite le conflit","Je préfère le conflit"]},
+    {id:"4.5",type:"likert",q:"Je me lasse vite de ce que je maîtrise.",poles:["Je consolide","Je passe à autre chose"]},
+    {id:"4.6",type:"likert",q:"On lit mes émotions sur mon visage.",poles:["Visage fermé","Livre ouvert"]},
+    {id:"4.7",type:"likert",q:"Quand je rate, je sais exactement pourquoi.",why:"Attention au piège : savoir pourquoi n'est pas toujours comprendre. Parfois c'est seulement avoir une explication prête.",poles:["Je ne sais pas","Je sais toujours"]},
+    {id:"4.8",type:"likert",q:"Je préfère une tâche difficile que je peux rater à une tâche facile que je réussirai.",poles:["Facile et sûr","Difficile et risqué"]},
+    {id:"4.9",type:"likert",q:"Je remarque ce qui va mal avant ce qui va bien.",poles:["Je vois le bon","Je vois le défaut"]},
+    {id:"4.10",type:"pairs",q:"Les dilemmes. Aucune bonne réponse, choisis quand même.",why:"Les questions à choix forcé contournent la réponse flatteuse : on ne peut pas prendre les deux.",pairs:[
+      {a:"Avoir raison seul",b:"Avoir tort avec les autres"},
+      {a:"Être admiré",b:"Être compris"},
+      {a:"Être libre et exposé",b:"Être protégé et tenu"},
+      {a:"Une vie intense et courte",b:"Une vie paisible et longue"},
+      {a:"Qu'on me dise la vérité brutalement",b:"Qu'on me ménage"},
+      {a:"Décevoir quelqu'un",b:"Me trahir moi-même"}
+    ]}
+  ]
+},
+{
+  n:"5", axe:"Les liens", titre:"Les autres",
+  lede:"Deux dimensions structurent les théories de l'attachement : la peur d'être abandonné et la gêne devant la proximité. Elles se combinent plus qu'elles ne s'opposent, et aucune des quatre combinaisons n'est une maladie.",
+  items:[
+    {id:"5.1",type:"likert",q:"J'ai peur qu'on cesse de m'aimer sans que je comprenne pourquoi.",poles:["Jamais","Souvent"]},
+    {id:"5.2",type:"likert",q:"Quand on se rapproche trop, j'ai besoin d'air.",poles:["Jamais","Toujours"]},
+    {id:"5.3",type:"likert",q:"Je demande de l'aide facilement.",poles:["Jamais","Facilement"]},
+    {id:"5.4",type:"likert",q:"Je préfère tout gérer seul plutôt que dépendre de quelqu'un.",poles:["Je m'appuie sur les autres","Seul, toujours"]},
+    {id:"5.5",type:"long",q:"Quelqu'un met trois heures à répondre à ton message. Qu'est-ce que tu te racontes pendant ces trois heures ?",why:"Mot pour mot, la phrase intérieure. Ce qu'on invente pour combler un silence est la signature la plus fiable d'un style d'attachement.",rows:4},
+    {id:"5.6",type:"rank",q:"Classe ces cinq craintes, de la plus vive à la plus lointaine.",why:"Clique dans l'ordre. Le classement compte plus que chaque item pris seul.",options:[
+      "Être abandonné",
+      "Être étouffé, perdre mon indépendance",
+      "Être vu tel que je suis",
+      "Être inutile aux autres",
+      "Être trahi par quelqu'un en qui j'avais confiance"
+    ]},
+    {id:"5.7",type:"text",q:"Qu'est-ce qui te fait partir d'une relation ?",why:"Amitié, couple, travail : le motif de sortie est souvent le même partout."},
+    {id:"5.8",type:"text",q:"Qui peut te faire changer d'avis ?",why:"Si la réponse est « personne », c'est une réponse. Si c'est un nom, c'en est une autre."},
+    {id:"5.9",type:"long",q:"Dans tes relations, quel reproche reviens-t-il le plus souvent dans la bouche des autres ?",why:"Pas celui que tu trouves juste : celui qui revient. La répétition est un fait, même quand le reproche est faux.",rows:3}
+  ]
+},
+{
+  n:"6", axe:"L'écart", titre:"Valeurs, idéal, réel",
+  lede:"On arrive au cœur. La dissonance cognitive, au sens de Festinger (1957), n'est pas l'hypocrisie : c'est l'inconfort de tenir ensemble deux choses incompatibles — et le travail que le cerveau fait pour que ça ne se sente pas. On va mesurer l'écart au lieu d'en parler.",
+  items:[
+    {id:"6.1",type:"alloc",q:"Répartis 100 points sur ce qui compte vraiment pour toi.",why:"Pas ce qui devrait compter : ce qui compte. Le total doit faire 100, donc choisir c'est enlever ailleurs.",domains:["Travail / réussite","Famille","Amour","Amitiés","Santé / corps","Création / art","Savoir / comprendre","Argent / sécurité","Spiritualité / sens","Plaisir / confort"]},
+    {id:"6.2",type:"alloc",q:"Maintenant répartis 100 points sur ce qui a réellement reçu ton temps et ton énergie, ces trente derniers jours.",why:"Mêmes domaines. L'écart entre les deux colonnes s'affiche tout de suite — c'est la seule chose de cet entretien que tu peux lire avant moi.",domains:["Travail / réussite","Famille","Amour","Amitiés","Santé / corps","Création / art","Savoir / comprendre","Argent / sécurité","Spiritualité / sens","Plaisir / confort"],compare:"6.1"},
+    {id:"6.3",type:"grid3",q:"Trois adjectifs par colonne.",why:"Théorie des écarts du soi (Higgins, 1987) : la souffrance ne vient pas du soi réel seul, mais de sa distance avec le soi idéal (ce qu'on voudrait) et le soi normatif (ce qu'on croit devoir être). Les deux écarts ne font pas le même mal.",cols:[
+      {id:"reel",head:"Ce que je suis"},
+      {id:"ideal",head:"Ce que je voudrais être"},
+      {id:"devoir",head:"Ce que je crois devoir être"}
+    ],rows:3},
+    {id:"6.4",type:"text",q:"Une chose que tu défends en public et que tu ne fais pas en privé.",why:"Tout le monde en a une. L'intérêt n'est pas la contradiction, c'est l'explication que tu te donnes pour la supporter.",sensitive:true},
+    {id:"6.5",type:"text",q:"Une règle que tu appliques aux autres et pas à toi.",why:"Ou l'inverse — la sévérité à sens unique marche dans les deux directions."},
+    {id:"6.6",type:"long",q:"Qu'est-ce que tu as abandonné en te disant que c'était raisonnable ?",why:"La rationalisation est le mécanisme le plus poli qui existe. Elle ne mérite pas d'être démasquée à tout prix : parfois c'était vraiment raisonnable. Parfois non.",rows:4},
+    {id:"6.7",type:"likert",q:"Quand mes actes ne collent pas à mes principes, je change mes actes plutôt que mes principes.",poles:["J'ajuste le principe","J'ajuste l'acte"]},
+    {id:"6.8",type:"text",q:"Complète : « Je serais quelqu'un de mieux si… »",why:"Attention à ce que tu mets après le « si ». La condition dit où tu situes le pouvoir d'agir."}
+  ]
+},
+{
+  n:"7", axe:"Mécanismes", titre:"Ce que tu fais quand ça chauffe",
+  lede:"On ne se connaît pas par ses intentions mais par ses réflexes sous pression. Trois scènes, et des questions sur l'après.",
+  items:[
+    {id:"7.1",type:"long",q:"Scène. Tu rends un travail dont tu es fier. On te répond en trois lignes, dont deux de critiques, et rien sur le reste. Que se passe-t-il dans la minute qui suit — dans ton corps, dans ta tête, dans ce que tu fais ?",why:"La minute, pas la version racontée le soir.",rows:4},
+    {id:"7.2",type:"choice",q:"Et vingt-quatre heures plus tard, qu'est-ce que tu as fait de cette critique ?",options:[
+      "Je l'ai démontée point par point, elle était injuste",
+      "Je l'ai acceptée en bloc et j'ai tout refait",
+      "Je l'ai rangée sans la relire",
+      "Je l'ai racontée à quelqu'un pour voir si j'avais le droit d'être vexé",
+      "Je me suis mis à douter du projet entier",
+      "Je n'y pensais plus"
+    ]},
+    {id:"7.3",type:"long",q:"Scène. Quelqu'un que tu aimes te dit, calmement, que tu l'as blessé. Tu ne t'en étais pas rendu compte. Quelle est ta première phrase ?",why:"Mot pour mot. Entre « pardon » et « attends, tu exagères » il y a tout un monde, et aucune des deux n'est honteuse.",rows:3},
+    {id:"7.4",type:"choice",q:"Dans une dispute, ton premier réflexe :",options:[
+      "Attaquer, prendre l'avantage",
+      "Me fermer, arrêter de parler",
+      "Expliquer, démontrer, argumenter",
+      "Céder vite pour que ça s'arrête",
+      "Désamorcer par l'humour",
+      "Partir physiquement"
+    ]},
+    {id:"7.5",type:"likert",q:"Quand une émotion monte, j'arrive à me raconter la situation autrement pour qu'elle baisse.",why:"C'est la réévaluation cognitive : changer la lecture pour changer l'émotion. C'est la stratégie la mieux documentée.",poles:["Jamais","Souvent"]},
+    {id:"7.6",type:"likert",q:"Quand une émotion monte, je la garde pour moi et je n'en montre rien.",why:"C'est la suppression expressive. Elle fonctionne à court terme et coûte cher à long terme. Beaucoup de gens font tourner les deux, et c'est le mélange qui est intéressant.",poles:["Jamais","Toujours"]},
+    {id:"7.7",type:"pairs",q:"Honte ou culpabilité ? Choisis la phrase la plus proche de ce que tu te dis réellement.",why:"La distinction est fine et décisive : la culpabilité porte sur l'acte (« j'ai mal fait »), la honte porte sur la personne (« je suis mauvais »). La première répare, la seconde paralyse.",pairs:[
+      {a:"J'ai oublié son anniversaire : j'ai été négligent, je rattrape ça.",b:"J'ai oublié son anniversaire : je suis quelqu'un de mauvais pour les autres."},
+      {a:"J'ai raté l'examen : je n'ai pas assez travaillé.",b:"J'ai raté l'examen : je ne suis pas à ma place ici."},
+      {a:"Je me suis emporté : c'était la fatigue, j'ai dérapé.",b:"Je me suis emporté : c'est ma vraie nature qui est sortie."}
+    ]},
+    {id:"7.8",type:"text",q:"Qu'est-ce que tu fais à 23h quand tu ne veux pas penser ?",why:"La réponse est rarement noble, et c'est très bien. L'anesthésie choisie en dit long sur ce qu'il s'agit d'anesthésier."},
+    {id:"7.9",type:"long",q:"Quand ça va vraiment mal, qu'est-ce que tu te dis à toi-même ? Mot pour mot, avec le vocabulaire exact.",why:"Pas le résumé poli. Les termes que tu emploies. C'est la question la plus utile de cet entretien, et la plus désagréable à écrire.",rows:4,sensitive:true},
+    {id:"7.10",type:"text",q:"Et cette voix-là, elle a la voix de qui ?",why:"Parfois personne. Souvent quelqu'un."}
+  ]
+},
+{
+  n:"8", axe:"Phrases à finir", titre:"Sans réfléchir",
+  lede:"Complètement de phrases : une technique vieille d'un siècle, qui marche parce qu'elle va plus vite que la relecture. Ne corrige rien, n'allonge pas. Le premier bout qui vient.",
+  items:[
+    {id:"8.1",type:"stems",q:"Finis ces phrases.",why:"Dix secondes chacune. Si une phrase ne vient pas, passe : le blanc sera noté comme une réponse, et c'en est une.",stems:[
+      "Ce que les gens ne voient pas chez moi, c'est…",
+      "Si j'arrêtais de…",
+      "J'ai peur que…",
+      "Je mérite…",
+      "Quand je réussis, je…",
+      "Mon père…",
+      "Ma mère…",
+      "Le silence…",
+      "La colère, chez moi…",
+      "Ce que je n'ai jamais dit à personne, c'est…",
+      "Dans dix ans…",
+      "Si je n'avais plus rien à prouver, je…"
+    ]}
+  ]
+},
+{
+  n:"9", axe:"La sortie", titre:"Ce qu'on fait de tout ça",
+  lede:"Dernière page. Elle fabrique le dossier, et surtout elle fixe les règles de l'entretien 2 — que tu écris toi-même, ici.",
+  items:[
+    {id:"9.1",type:"long",q:"Qu'est-ce que tu as remarqué en répondant ?",why:"Une question sur laquelle tu as hésité, une réponse qui t'a surpris, une que tu as adoucie.",rows:4},
+    {id:"9.2",type:"text",q:"Quelle question ai-je évitée, et que tu aurais voulu qu'on te pose ?",why:"Elle ouvrira l'entretien 2."},
+    {id:"9.3",type:"scale",q:"À quel point as-tu été honnête ?",why:"Personne ne répond 10, et 10 serait suspect. Cette note change la façon dont je lis le reste.",min:0,max:10},
+    {id:"9.4",type:"text",q:"Où as-tu arrondi ?",why:"Le numéro de l'item suffit, sans l'expliquer.",optional:true},
+    {id:"9.5",type:"text",q:"Trois sujets que tu autorises pour l'entretien 2.",why:"On ira plus loin, mais là où tu ouvres la porte."},
+    {id:"9.6",type:"text",q:"Un sujet interdit pour l'entretien 2.",why:"Il sera écarté sans discussion ni allusion.",sensitive:true,optional:true},
+    {id:"9.7",type:"choice",q:"Quel ton veux-tu pour l'entretien 2 ?",options:[
+      "Direct, quitte à être inconfortable",
+      "Progressif, un sujet à la fois",
+      "Analytique : explique-moi les mécanismes au fur et à mesure",
+      "Bref : moins de questions, plus profondes"
+    ]}
+  ]
+}
+];
+
+/* ─────────── état ─────────── */
+let state = {v:VERSION, started:null, a:{}};
+let CORRUPT = false, NOSTORE = false, QUOTA = false;
+let cur = 0;
+
+function banner(msg){
+  state._banner = msg;
+  const m = document.getElementById("main");
+  if(!m) return;
+  let b = m.querySelector(".banner");
+  if(!b){ b = document.createElement("div"); b.className="banner"; m.prepend(b); }
+  b.textContent = msg;
+}
+
+function load(){
+  let raw;
+  try{ raw = localStorage.getItem(K); }
+  catch(e){ NOSTORE = true; return null; }            // stockage inaccessible (navigation privée, origine opaque)
+  if(raw === null) return null;                       // vide : légitime, on démarre
+  try{
+    const o = JSON.parse(raw);
+    if(!o || typeof o !== "object" || typeof o.a !== "object") throw new Error("forme");
+    return o;
+  }catch(e){ CORRUPT = true; return null; }           // illisible ≠ vide : on n'écrase pas
+}
+function save(){
+  if(CORRUPT || NOSTORE) return;                      // refus d'écrire sur un état illisible
+  try{ localStorage.setItem(K, JSON.stringify(state)); QUOTA = false; }
+  catch(e){
+    if(!QUOTA){ QUOTA = true; banner("Mémoire du navigateur pleine : tes réponses ne sont plus sauvegardées automatiquement. Va à la dernière section et copie le dossier maintenant."); }
+  }
+}
+const get = id => state.a[id];
+function set(id, v){ state.a[id] = v; save(); paintRail(); }
+
+/* ─────────── utilitaires ─────────── */
+const el = (t, cls, txt) => { const n = document.createElement(t); if(cls) n.className = cls; if(txt != null) n.textContent = txt; return n; };
+const SKIP = "__passe__";
+const allItems = () => SECTIONS.flatMap(s => s.items);
+function isAnswered(it){
+  const v = get(it.id);
+  if(v === SKIP) return true;
+  if(v == null) return false;
+  if(typeof v === "string") return v.trim() !== "";
+  if(Array.isArray(v)) return v.some(x => x != null && String(x).trim() !== "");
+  if(typeof v === "object") return Object.values(v).some(x => x != null && String(x).trim() !== "");
+  return true;
+}
+function secProgress(s){
+  const qs = s.items.filter(i => i.type !== "consent");
+  const done = qs.filter(isAnswered).length;
+  return {done, total: qs.length};
+}
+
+/* ─────────── rail ─────────── */
+function paintRail(){
+  const bar = document.getElementById("bar");
+  bar.textContent = "";
+  SECTIONS.forEach((s, i) => {
+    const t = el("i");
+    const p = secProgress(s);
+    if(i === cur) t.className = "f";
+    else if(p.total && p.done === p.total) t.className = "f";
+    else if(p.done > 0) t.className = "p";
+    bar.appendChild(t);
+  });
+  const ul = document.getElementById("seclist");
+  ul.textContent = "";
+  SECTIONS.forEach((s, i) => {
+    const li = el("li");
+    const b = el("button");
+    const p = secProgress(s);
+    b.className = (i === cur ? "on " : "") + (p.total && p.done === p.total ? "done" : "");
+    b.appendChild(el("span", "n", s.n));
+    b.appendChild(el("span", null, s.axe));
+    b.onclick = () => go(i);
+    li.appendChild(b); ul.appendChild(li);
+  });
+}
+
+/* ─────────── rendu des contrôles ─────────── */
+function ctl(it){
+  const wrap = el("div", "field");
+  const T = it.type;
+
+  if(T === "long" || T === "text"){
+    const inp = T === "long" ? el("textarea") : el("input");
+    if(T === "text") inp.type = "text";
+    if(T === "long" && it.rows) inp.rows = it.rows;
+    if(it.ph) inp.placeholder = it.ph;
+    const v = get(it.id); if(typeof v === "string" && v !== SKIP) inp.value = v;
+    inp.oninput = () => set(it.id, inp.value);
+    wrap.appendChild(inp);
+    if(T === "long"){
+      const c = el("div", "count");
+      const upd = () => { const w = inp.value.trim() ? inp.value.trim().split(/\s+/).length : 0; c.textContent = w + (w > 1 ? " mots" : " mot"); };
+      inp.addEventListener("input", upd); upd(); wrap.appendChild(c);
+    }
+  }
+
+  else if(T === "likert"){
+    const g = el("div", "lik");
+    const v = get(it.id);
+    for(let i = 1; i <= 7; i++){
+      const b = el("button", v === i ? "on" : null, String(i));
+      b.type = "button"; b.setAttribute("aria-label", i + " sur 7");
+      b.onclick = () => { set(it.id, i); render(); };
+      g.appendChild(b);
+    }
+    wrap.appendChild(g);
+    const p = el("div", "poles");
+    p.appendChild(el("span", null, it.poles ? it.poles[0] : LIK[0]));
+    p.appendChild(el("span", null, it.poles ? it.poles[1] : LIK[6]));
+    wrap.appendChild(p);
+  }
+
+  else if(T === "scale"){
+    const row = el("div", "scalewrap");
+    const r = el("input"); r.type = "range"; r.min = it.min; r.max = it.max; r.step = 1;
+    const v = get(it.id);
+    r.value = (typeof v === "number") ? v : Math.round((it.min + it.max) / 2);
+    const out = el("div", "scaleval", (typeof v === "number") ? v + "/" + it.max : "—");
+    r.oninput = () => { out.textContent = r.value + "/" + it.max; set(it.id, +r.value); };
+    row.appendChild(r); row.appendChild(out); wrap.appendChild(row);
+  }
+
+  else if(T === "choice" || T === "multi"){
+    const box = el("div", "opts");
+    const v = get(it.id);
+    const sel = T === "multi" ? (Array.isArray(v) ? v.slice() : []) : v;
+    it.options.forEach(o => {
+      const on = T === "multi" ? sel.includes(o) : sel === o;
+      const lab = el("label", "opt" + (on ? " sel" : ""));
+      const i = el("input"); i.type = T === "multi" ? "checkbox" : "radio"; i.name = "r" + it.id; i.checked = on;
+      i.onchange = () => {
+        if(T === "multi"){
+          const k = sel.indexOf(o); if(k < 0) sel.push(o); else sel.splice(k, 1);
+          set(it.id, sel);
+        } else set(it.id, o);
+        render();
+      };
+      lab.appendChild(i); lab.appendChild(el("span", null, o));
+      box.appendChild(lab);
+    });
+    wrap.appendChild(box);
+    if(it.other){
+      const o = el("div", "f"); o.style.marginTop = "10px";
+      const l = el("label", null, "Autre — précise"); const i = el("input"); i.type = "text";
+      const ov = get(it.id + ".autre"); if(typeof ov === "string") i.value = ov;
+      i.oninput = () => set(it.id + ".autre", i.value);
+      o.appendChild(l); o.appendChild(i); wrap.appendChild(o);
+    }
+  }
+
+  else if(T === "pairs"){
+    const v = Array.isArray(get(it.id)) ? get(it.id).slice() : new Array(it.pairs.length).fill(null);
+    it.pairs.forEach((p, i) => {
+      wrap.appendChild(el("div", "pairlab", "Dilemme " + (i + 1)));
+      const g = el("div", "pair");
+      ["a", "b"].forEach(side => {
+        const b = el("button", v[i] === side ? "on" : null, p[side]);
+        b.type = "button";
+        b.onclick = () => { v[i] = side; set(it.id, v); render(); };
+        g.appendChild(b);
+      });
+      wrap.appendChild(g);
+    });
+  }
+
+  else if(T === "rank"){
+    const v = Array.isArray(get(it.id)) ? get(it.id).slice() : [];
+    const box = el("div", "rank");
+    it.options.forEach(o => {
+      const k = v.indexOf(o);
+      const b = el("button", k >= 0 ? "on" : null); b.type = "button";
+      b.appendChild(el("span", "num", k >= 0 ? String(k + 1) : "·"));
+      b.appendChild(el("span", null, o));
+      b.onclick = () => {
+        const j = v.indexOf(o); if(j >= 0) v.splice(j, 1); else v.push(o);
+        set(it.id, v); render();
+      };
+      box.appendChild(b);
+    });
+    wrap.appendChild(box);
+    wrap.appendChild(el("div", "hint", v.length === it.options.length ? "Classement complet. Reclique pour retirer." : "Clique de la plus vive à la plus lointaine — " + v.length + "/" + it.options.length));
+  }
+
+  else if(T === "stems"){
+    const v = Array.isArray(get(it.id)) ? get(it.id).slice() : new Array(it.stems.length).fill("");
+    const box = el("div", "stems");
+    it.stems.forEach((s, i) => {
+      const d = el("div", "stem");
+      const id = "st" + it.id + "_" + i;
+      const l = el("label", null, s); l.htmlFor = id;
+      const inp = el("input"); inp.type = "text"; inp.id = id; inp.value = v[i] || "";
+      inp.oninput = () => { v[i] = inp.value; set(it.id, v); };
+      d.appendChild(l); d.appendChild(inp); box.appendChild(d);
+    });
+    wrap.appendChild(box);
+  }
+
+  else if(T === "rows"){
+    const v = Array.isArray(get(it.id)) ? get(it.id).slice() : [];
+    const box = el("div", "rows");
+    const head = el("div", "row3");
+    it.cols.forEach(c => head.appendChild(el("div", "rowhead", c)));
+    box.appendChild(head);
+    for(let r = 0; r < it.rows; r++){
+      if(!v[r]) v[r] = ["", "", ""];
+      const line = el("div", "row3");
+      it.cols.forEach((c, j) => {
+        const i = el("input"); i.type = "text"; i.value = v[r][j] || "";
+        i.setAttribute("aria-label", c + " ligne " + (r + 1));
+        i.oninput = () => { v[r][j] = i.value; set(it.id, v); };
+        line.appendChild(i);
+      });
+      box.appendChild(line);
+    }
+    wrap.appendChild(box);
+  }
+
+  else if(T === "fields"){
+    const v = (get(it.id) && typeof get(it.id) === "object" && !Array.isArray(get(it.id))) ? Object.assign({}, get(it.id)) : {};
+    const box = el("div", "fields");
+    it.fields.forEach(f => {
+      const d = el("div", "f");
+      const id = "fl" + it.id + "_" + f.id;
+      const l = el("label", null, f.label); l.htmlFor = id;
+      let i;
+      if(f.type === "select"){
+        i = el("select");
+        const blank = el("option", null, "—"); blank.value = ""; i.appendChild(blank);
+        f.options.forEach(o => { const op = el("option", null, o); op.value = o; i.appendChild(op); });
+      } else { i = el("input"); i.type = f.type === "number" ? "number" : "text"; if(f.ph) i.placeholder = f.ph; }
+      i.id = id; i.value = v[f.id] || "";
+      i.oninput = i.onchange = () => { v[f.id] = i.value; set(it.id, v); };
+      d.appendChild(l); d.appendChild(i); box.appendChild(d);
+    });
+    wrap.appendChild(box);
+  }
+
+  else if(T === "grid3"){
+    const v = (get(it.id) && typeof get(it.id) === "object") ? Object.assign({}, get(it.id)) : {};
+    const box = el("div", "grid3");
+    it.cols.forEach(c => {
+      const col = el("div");
+      col.appendChild(el("div", "gh", c.head));
+      for(let r = 0; r < it.rows; r++){
+        const key = c.id + r;
+        const i = el("input"); i.type = "text"; i.value = v[key] || "";
+        i.setAttribute("aria-label", c.head + " " + (r + 1));
+        i.style.marginBottom = "6px";
+        i.oninput = () => { v[key] = i.value; set(it.id, v); };
+        col.appendChild(i);
+      }
+      box.appendChild(col);
+    });
+    wrap.appendChild(box);
+  }
+
+  else if(T === "alloc"){
+    const v = (get(it.id) && typeof get(it.id) === "object") ? Object.assign({}, get(it.id)) : {};
+    const box = el("div", "alloc");
+    const tot = el("div", "total");
+    const mir = it.compare ? el("div", "mirror") : null;
+    const sum = () => it.domains.reduce((a, d) => a + (+v[d] || 0), 0);
+
+    const paintTotal = () => {
+      const t = sum();
+      tot.className = "total" + (t === 100 ? " ok" : (t > 100 ? " bad" : ""));
+      tot.textContent = "";
+      tot.appendChild(el("span", null, "Total réparti : " + t + " / 100"));
+      tot.appendChild(el("span", null, t === 100 ? "✓ bon" : (t > 100 ? "retire " + (t - 100) : "reste " + (100 - t))));
+    };
+
+    const paintMirror = () => {
+      if(!mir) return;
+      const base = get(it.compare) || {};
+      mir.textContent = "";
+      mir.appendChild(el("b", null, "Ton écart, calculé"));
+      const posed = it.domains.some(d => +base[d] > 0);
+      if(!posed){ mir.appendChild(el("span", null, "La grille précédente est encore vide : remplis-la d'abord, l'écart se calculera ici tout seul.")); return; }
+      const gaps = it.domains.map(d => ({d, g: (+v[d] || 0) - (+base[d] || 0)})).filter(x => x.g !== 0).sort((a, b) => Math.abs(b.g) - Math.abs(a.g));
+      if(!gaps.length){ mir.appendChild(el("span", null, "Déclaré et vécu coïncident exactement. C'est rare — soit tu es aligné, soit la seconde grille a recopié la première.")); return; }
+      const neg = gaps.filter(x => x.g < 0).slice(0, 2).map(x => x.d + " (−" + Math.abs(x.g) + ")");
+      const pos = gaps.filter(x => x.g > 0).slice(0, 2).map(x => x.d + " (+" + x.g + ")");
+      let t = "";
+      if(neg.length) t += "Ce qui compte et n'a pas eu ton temps : " + neg.join(", ") + ". ";
+      if(pos.length) t += "Ce qui a pris plus que sa part : " + pos.join(", ") + ". ";
+      t += "Garde cet écart en tête pour l'item 6.6.";
+      mir.appendChild(el("span", null, t));
+    };
+
+    const paints = [];
+    it.domains.forEach(d => {
+      const line = el("div", "al");
+      line.appendChild(el("div", "nm", d));
+      const r = el("input"); r.type = "range"; r.min = 0; r.max = 50; r.step = 5; r.value = +v[d] || 0;
+      r.setAttribute("aria-label", d);
+      const out = el("div", "v");
+      const paint = () => {
+        const val = +v[d] || 0;
+        if(it.compare){
+          const g = val - (+(get(it.compare) || {})[d] || 0);
+          out.className = "v" + (g > 0 ? " gapup" : (g < 0 ? " gapdn" : ""));
+          out.textContent = val + (g === 0 ? " =" : (g > 0 ? " +" + g : " " + g));
+        } else out.textContent = String(val);
+      };
+      paints.push(paint); paint();
+      r.oninput = () => { v[d] = +r.value; set(it.id, v); paints.forEach(f => f()); paintTotal(); paintMirror(); };
+      line.appendChild(r); line.appendChild(out); box.appendChild(line);
+    });
+
+    wrap.appendChild(box); paintTotal(); wrap.appendChild(tot);
+    if(mir){ paintMirror(); wrap.appendChild(mir); }
+  }
+
+  else if(T === "consent"){
+    const d = el("dl", "deal");
+    [["Durée","Entre 25 et 40 minutes. Tu peux fermer et revenir : tout est enregistré dans ce navigateur, sur cet appareil."],
+     ["Où vont tes réponses","Nulle part. Rien n'est envoyé, il n'y a pas de serveur ni de compte. À la fin, tu obtiens un dossier que tu copies — et c'est toi qui décides à qui tu le donnes."],
+     ["Ce que ce n'est pas","Pas un diagnostic, pas un test validé, pas un soin. Un entretien exploratoire, par curiosité sérieuse. Aucune échelle ici ne mesure une maladie."],
+     ["La suite","Le dossier de l'entretien 1 sert à écrire l'entretien 2, qui ira plus loin sur les points que tu auras ouverts. Puis l'entretien 3, et ainsi de suite."],
+     ["Tu peux passer","Chaque question sensible porte un « je préfère ne pas répondre ». Un blanc n'est pas un échec : c'est une donnée, et elle est respectée."]
+    ].forEach(([k, t]) => { d.appendChild(el("dt", null, k)); d.appendChild(el("dd", null, t)); });
+    wrap.appendChild(d);
+    const w = el("div", "warn");
+    w.appendChild(el("b", null, "Si tu vas très mal en ce moment : "));
+    w.appendChild(el("span", null, "cette page ne remplace personne et ne répond pas. En France, le 3114 (gratuit, 24h/24) est la ligne nationale de prévention du suicide ; le 15 pour une urgence. Si l'une des questions te met en difficulté, ferme l'onglet — tes réponses resteront là."));
+    wrap.appendChild(w);
+    const lab = el("label", "opt" + (get(it.id) === "oui" ? " sel" : "")); lab.style.marginTop = "18px";
+    const cb = el("input"); cb.type = "checkbox"; cb.checked = get(it.id) === "oui";
+    cb.onchange = () => { set(it.id, cb.checked ? "oui" : null); render(); };
+    lab.appendChild(cb);
+    lab.appendChild(el("span", null, "J'ai lu, et je réponds pour moi, librement."));
+    wrap.appendChild(lab);
+  }
+
+  return wrap;
+}
+
+/* ─────────── rendu d'une section ─────────── */
+function render(){
+  const s = SECTIONS[cur];
+  const m = document.getElementById("main");
+  m.textContent = "";
+  if(CORRUPT) { m.appendChild(el("div","banner","Une sauvegarde est bien présente sur cet appareil, mais illisible. Par sécurité elle n'est pas écrasée : tes réponses de cette session ne seront pas enregistrées. Copie le dossier avant de fermer l'onglet.")); }
+  else if(NOSTORE) { m.appendChild(el("div","banner","Ce navigateur n'autorise pas l'enregistrement local ici (navigation privée, ou page ouverte hors du site). L'entretien fonctionne, mais fermer l'onglet effacera tout : copie le dossier avant de partir.")); }
+  else if(state._banner){ const b = el("div","banner",state._banner); m.appendChild(b); }
+
+  const col = el("div", "col");
+  col.appendChild(el("div", "eyebrow", "Entretien 1 · Section " + s.n + " sur 9"));
+  col.appendChild(el("h1", "h-sec", s.titre));
+  col.appendChild(el("p", "lede", s.lede));
+
+  const p = secProgress(s);
+  const mt = el("div", "meta");
+  mt.appendChild(el("span", null, s.axe.toUpperCase()));
+  if(p.total) mt.appendChild(el("span", null, p.done + "/" + p.total + " renseignées"));
+  col.appendChild(mt);
+
+  const list = el("div", "items");
+  s.items.forEach(it => {
+    const box = el("div", "item" + (it.sensitive ? " sens" : ""));
+    box.appendChild(el("div", "code", it.type === "consent" ? "·" : it.id));
+    const body = el("div");
+    body.appendChild(el("h2", "q", it.q));
+    if(it.why) body.appendChild(el("p", "why", it.why));
+    const skipped = get(it.id) === SKIP;
+    if(skipped){
+      body.appendChild(el("div", "skipmark", "Passée — « je préfère ne pas répondre »"));
+      const b = el("button", "skip", "Finalement, répondre");
+      b.type = "button"; b.onclick = () => { set(it.id, null); render(); };
+      body.appendChild(b);
+    } else {
+      body.appendChild(ctl(it));
+      if(it.sensitive){
+        const b = el("button", "skip", "Je préfère ne pas répondre");
+        b.type = "button"; b.onclick = () => { set(it.id, SKIP); render(); };
+        body.appendChild(b);
+      }
+    }
+    box.appendChild(body);
+    list.appendChild(box);
+  });
+  col.appendChild(list);
+
+  /* navigation */
+  const nav = el("div", "nav");
+  if(cur > 0){ const b = el("button", "btn ghost", "← Précédent"); b.onclick = () => go(cur - 1); nav.appendChild(b); }
+  if(cur < SECTIONS.length - 1){
+    const b = el("button", "btn", s.intro ? "Commencer l'entretien →" : "Suivant →");
+    if(s.intro && get("0.3") !== "oui"){ b.disabled = true; b.style.opacity = ".45"; b.style.cursor = "not-allowed"; b.title = "Coche le contrat pour continuer"; }
+    b.onclick = () => go(cur + 1); nav.appendChild(b);
+  } else {
+    const b = el("button", "btn", "Produire le dossier ↓"); b.onclick = showDossier; nav.appendChild(b);
+  }
+  const tot = allItems().filter(i => i.type !== "consent");
+  nav.appendChild(el("div", "navnote", tot.filter(isAnswered).length + " / " + tot.length + " au total"));
+  col.appendChild(nav);
+
+  m.appendChild(col);
+  paintRail();
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+function go(i){ cur = Math.max(0, Math.min(SECTIONS.length - 1, i)); if(!state.started){ state.started = new Date().toISOString(); save(); } render(); }
+
+/* ─────────── dossier ─────────── */
+function fmt(it){
+  const v = get(it.id);
+  if(v === SKIP) return "(passée — préfère ne pas répondre)";
+  if(v == null || v === "") return "(sans réponse)";
+  switch(it.type){
+    case "likert": return v + "/7  [1 = " + it.poles[0] + " · 7 = " + it.poles[1] + "]";
+    case "scale":  return v + "/" + it.max;
+    case "multi":  { const a = Array.isArray(v) ? v : [];
+                     const o = get(it.id + ".autre");
+                     return (a.length ? a.join(" · ") : "(aucune case)") + (o ? "  + autre : " + o : ""); }
+    case "choice": { const o = get(it.id + ".autre"); return v + (o ? "  + autre : " + o : ""); }
+    case "pairs":  return it.pairs.map((p, i) => {
+                     const c = (Array.isArray(v) ? v[i] : null);
+                     return "    " + (i + 1) + ". " + (c ? "« " + p[c] + " »" + "   (écarté : " + p[c === "a" ? "b" : "a"] + ")" : "(sans réponse)");
+                   }).join("\n");
+    case "rank":   return (Array.isArray(v) ? v : []).map((x, i) => "    " + (i + 1) + ". " + x).join("\n") || "(non classé)";
+    case "stems":  return it.stems.map((s, i) => {
+                     const r = (Array.isArray(v) ? v[i] : "") || "";
+                     return "    " + s + " " + (r.trim() ? r : "(blanc)");
+                   }).join("\n");
+    case "rows":   return (Array.isArray(v) ? v : []).filter(r => r && r.some(c => (c || "").trim()))
+                     .map(r => "    " + (r[0] || "?") + " ans — " + (r[1] || "") + (r[2] ? "  → " + r[2] : "")).join("\n") || "(vide)";
+    case "fields": return it.fields.map(f => "    " + f.label + " : " + ((v[f.id] || "").toString().trim() || "—")).join("\n");
+    case "grid3":  return it.cols.map(c => {
+                     const vals = []; for(let r = 0; r < it.rows; r++) vals.push((v[c.id + r] || "").trim());
+                     return "    " + c.head + " : " + (vals.filter(Boolean).join(", ") || "—");
+                   }).join("\n");
+    case "alloc":  { const ds = it.domains.filter(d => +v[d] > 0).sort((a, b) => (+v[b]) - (+v[a]));
+                     let t = ds.map(d => "    " + d + " : " + (+v[d])).join("\n") || "    (rien réparti)";
+                     t += "\n    total : " + it.domains.reduce((a, d) => a + (+v[d] || 0), 0);
+                     if(it.compare){
+                       const b = get(it.compare) || {};
+                       const g = it.domains.map(d => ({d, g: (+v[d] || 0) - (+b[d] || 0)})).filter(x => x.g !== 0).sort((x, y) => Math.abs(y.g) - Math.abs(x.g));
+                       t += "\n    ÉCART déclaré→vécu : " + (g.length ? g.map(x => x.d + " " + (x.g > 0 ? "+" : "") + x.g).join(" · ") : "nul");
+                     }
+                     return t; }
+    case "consent":return v === "oui" ? "contrat accepté" : "non accepté";
+    default:       return String(v);
+  }
+}
+
+function dossierText(){
+  const nom = (get("0.1") && get("0.1").nom) || "anonyme";
+  const age = (get("0.1") && get("0.1").age) || "?";
+  const sit = (get("0.1") && get("0.1").situation) || "";
+  const tot = allItems().filter(i => i.type !== "consent");
+  const rep = tot.filter(isAnswered).length;
+  const mots = tot.reduce((a, i) => { const v = get(i.id); return a + (typeof v === "string" && v !== SKIP ? v.trim().split(/\s+/).filter(Boolean).length : 0); }, 0);
+  const L = [];
+  L.push("# DOSSIER — LE DIVAN · ENTRETIEN 1");
+  L.push("");
+  L.push("Sujet : " + nom + " · " + age + " ans · " + sit);
+  L.push("Passation : " + new Date().toLocaleString("fr-FR") + (state.started ? "  (ouvert le " + new Date(state.started).toLocaleString("fr-FR") + ")" : ""));
+  L.push("Complétion : " + rep + "/" + tot.length + " items · " + mots + " mots rédigés");
+  L.push("Honnêteté auto-évaluée : " + (get("9.3") != null ? get("9.3") + "/10" : "non renseignée"));
+  L.push("Zone déclarée intouchable (item 1.9) : " + (fmt(SECTIONS[1].items.find(i => i.id === "1.9"))));
+  L.push("Sujet interdit pour l'entretien 2 (item 9.6) : " + (fmt(SECTIONS[9].items.find(i => i.id === "9.6"))));
+  L.push("Ton demandé pour l'entretien 2 (item 9.7) : " + (get("9.7") || "non renseigné"));
+  L.push("");
+  L.push("---");
+  L.push("");
+  L.push("## CONSIGNE POUR CLAUDE — construire l'ENTRETIEN 2");
+  L.push("");
+  L.push("Ce dossier est le produit de l'entretien 1 de l'app LE DIVAN (entretiens successifs,");
+  L.push("chacun plus profond que le précédent). Tu reçois les réponses brutes. Attendu :");
+  L.push("");
+  L.push("1. **Une lecture d'abord**, courte et honnête : ce qui se tient, ce qui se contredit,");
+  L.push("   ce qui a été évité. Distingue explicitement ce que les réponses établissent de ce");
+  L.push("   que tu supposes. Aucune étiquette diagnostique, aucun chiffre inventé.");
+  L.push("2. **Les reliures** : trois à cinq hypothèses de fond qui relient des réponses");
+  L.push("   éloignées les unes des autres (p.ex. un item de la section 3 avec un de la 7).");
+  L.push("   Chaque hypothèse citée par ses codes d'items, et formulée comme une hypothèse.");
+  L.push("3. **Les dissonances** : les écarts entre le déclaré et le vécu (items 6.1/6.2, 6.3,");
+  L.push("   6.4, 6.5), entre ce qui est dit d'une section à l'autre, et entre la note");
+  L.push("   d'honnêteté 9.3 et le reste.");
+  L.push("4. **L'ENTRETIEN 2**, écrit comme un nouveau tour jouable : 7 à 9 sections, chacune");
+  L.push("   avec son axe, son lede pédagogique, et des items typés dans la même grammaire que");
+  L.push("   ci-dessous (long, text, likert, scale, choice, multi, rank, pairs, stems, rows,");
+  L.push("   fields, grid3, alloc). Les questions doivent être personnalisées : elles citent");
+  L.push("   ses propres mots et reprennent ses propres contradictions. Pas de questionnaire");
+  L.push("   générique. Respecte sans exception la zone intouchable et le sujet interdit");
+  L.push("   ci-dessus, le ton demandé, et ouvre sur la question de l'item 9.2.");
+  L.push("5. **Le format de sortie** : le tableau JS `SECTIONS` prêt à coller dans");
+  L.push("   `~/divan/index.html`, plus la liste de ce que l'entretien 2 cherche à trancher.");
+  L.push("");
+  L.push("---");
+  L.push("");
+  SECTIONS.forEach(s => {
+    L.push("## SECTION " + s.n + " · " + s.titre + "  [" + s.axe + "]");
+    L.push("");
+    s.items.forEach(it => {
+      L.push("**" + it.id + " — " + it.q + "**");
+      const t = fmt(it);
+      if(t.indexOf("\n") >= 0 || t.startsWith("    ")) { L.push(""); L.push(t); }
+      else L.push("> " + t);
+      L.push("");
+    });
+  });
+  L.push("---");
+  L.push("");
+  L.push("### Données brutes (pour relecture automatique)");
+  L.push("");
+  L.push("```json");
+  L.push(JSON.stringify({v: VERSION, entretien: 1, started: state.started, ended: new Date().toISOString(), a: state.a}, null, 1));
+  L.push("```");
+  return L.join("\n");
+}
+
+function showDossier(){
+  const m = document.getElementById("main");
+  m.textContent = "";
+  const col = el("div", "col"); col.style.maxWidth = "44rem";
+  col.appendChild(el("div", "eyebrow", "Entretien 1 · terminé"));
+  col.appendChild(el("h1", "h-sec", "Le dossier"));
+  col.appendChild(el("p", "lede", "Tout ce que tu viens d'écrire, remis en forme avec les questions, et accompagné de la consigne qui servira à bâtir l'entretien 2. Copie-le, puis donne-le à Claude."));
+
+  const tot = allItems().filter(i => i.type !== "consent");
+  const rep = tot.filter(isAnswered).length;
+  const skipped = tot.filter(i => get(i.id) === SKIP).length;
+  const mots = tot.reduce((a, i) => { const v = get(i.id); return a + (typeof v === "string" && v !== SKIP ? v.trim().split(/\s+/).filter(Boolean).length : 0); }, 0);
+  const st = el("div", "stats");
+  [["Items renseignés", rep + "/" + tot.length], ["Mots rédigés", String(mots)], ["Questions passées", String(skipped)], ["Honnêteté", (get("9.3") != null ? get("9.3") + "/10" : "—")]]
+    .forEach(([k, v]) => { const d = el("div", "stat"); d.appendChild(el("div", "k", k)); d.appendChild(el("div", "v", v)); st.appendChild(d); });
+  col.appendChild(st);
+
+  const txt = dossierText();
+  const nav = el("div", "nav");
+  const b1 = el("button", "btn", "Copier le dossier");
+  b1.onclick = async () => {
+    try{ await navigator.clipboard.writeText(txt); toast("Dossier copié — colle-le dans une conversation avec Claude."); }
+    catch(e){ const ta = document.getElementById("outbox"); ta.focus(); ta.select(); toast("Copie automatique refusée par le navigateur : le texte est sélectionné, fais ⌘C."); }
+  };
+  const b2 = el("button", "btn ghost", "Télécharger (.md)");
+  b2.onclick = () => {
+    const nom = ((get("0.1") && get("0.1").nom) || "anonyme").replace(/[^a-z0-9]/gi, "-").toLowerCase();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([txt], {type: "text/markdown"}));
+    a.download = "divan-entretien1-" + nom + ".md"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  };
+  const b3 = el("button", "btn ghost", "← Revenir aux réponses");
+  b3.onclick = () => render();
+  nav.appendChild(b1); nav.appendChild(b2); nav.appendChild(b3);
+  nav.style.marginTop = "26px";
+  col.appendChild(nav);
+
+  const ta = el("textarea", "out"); ta.id = "outbox"; ta.value = txt; ta.readOnly = true;
+  ta.style.marginTop = "20px";
+  col.appendChild(ta);
+
+  const pl = el("div", "plate");
+  pl.appendChild(el("h3", null, "Et ensuite"));
+  const p1 = el("p", null, "Claude lira ce dossier et en tirera l'entretien 2 : plus resserré, plus personnel, construit sur tes contradictions plutôt que sur un questionnaire. Les sujets que tu as fermés resteront fermés.");
+  const p2 = el("p", null, "Tes réponses restent dans ce navigateur. Pour les effacer définitivement, utilise le bouton ci-dessous — il n'y a pas de corbeille.");
+  pl.appendChild(p1); pl.appendChild(p2);
+  const b4 = el("button", "skip", "Effacer toutes mes réponses de cet appareil");
+  b4.onclick = () => {
+    if(!confirm("Effacer définitivement toutes tes réponses ? Si tu n'as pas copié le dossier, il sera perdu.")) return;
+    try{ localStorage.removeItem(K); }catch(e){}
+    state = {v: VERSION, started: null, a: {}}; cur = 0; render(); toast("Réponses effacées.");
+  };
+  pl.appendChild(b4);
+  col.appendChild(pl);
+  m.appendChild(col);
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+
+function toast(t){
+  const old = document.querySelector(".toast"); if(old) old.remove();
+  const d = el("div", "toast", t); document.body.appendChild(d);
+  setTimeout(() => d.remove(), 4200);
+}
+
+/* ─────────── démarrage ─────────── */
+const loaded = load();
+if(loaded){
+  state = {v: VERSION, started: loaded.started || null, a: loaded.a || {}};
+  const first = SECTIONS.findIndex(s => { const p = secProgress(s); return p.total && p.done < p.total; });
+  cur = get("0.3") === "oui" ? (first < 0 ? SECTIONS.length - 1 : Math.max(1, first)) : 0;
+}
+render();
+
+if("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+</script>
+</body>
+</html>
