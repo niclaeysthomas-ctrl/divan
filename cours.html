@@ -181,6 +181,7 @@ td:last-child{font-variant-numeric:tabular-nums}
 <script src="cours-b2.js?v=1"></script>
 <script src="cours-c.js?v=1"></script>
 <script src="cours-c2.js?v=1"></script>
+<script src="cours-d.js?v=1"></script>
 <script>
 "use strict";
 
@@ -609,7 +610,7 @@ const PLAN = [
 /* ─────────── rendu ─────────── */
 const el = (t, c, x) => { const n = document.createElement(t); if(c) n.className = c; if(x != null) n.textContent = x; return n; };
 const LABEL = {etabli:"Établi", conteste:"Contesté", effondre:"Effondré", marketing:"Marketing"};
-const CONTENU = Object.assign({}, window.CONTENU_A || {}, window.CONTENU_B || {}, window.CONTENU_B2 || {}, window.CONTENU_C || {}, window.CONTENU_C2 || {});
+const CONTENU = Object.assign({}, window.CONTENU_A || {}, window.CONTENU_B || {}, window.CONTENU_B2 || {}, window.CONTENU_C || {}, window.CONTENU_C2 || {}, window.CONTENU_D || {});
 const LECONS = PLAN.flatMap(b => b.modules.flatMap(m => m.lecons.map(l => ({l, m, b}))));
 const ECRITES = LECONS.filter(x => CONTENU[x.l.n]);
 const mots = bl => bl.reduce((a, b) => a + [b.x, b.d, b.titre, b.mot, (b.items||[]).join(" "), (b.lignes||[]).join(" "), (b.rows||[]).flat().join(" ")].filter(Boolean).join(" ").split(/\s+/).length, 0);
