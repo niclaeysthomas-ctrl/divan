@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LA TROUSSE — LE DIVAN</title>
+<meta name="description" content="Fiches de médecine générale : qu'est-ce que c'est, que faire, et quand consulter sans attendre.">
+<meta name="theme-color" content="#E9EAE6">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --stone:#E9EAE6; --stone2:#F2F3F0; --panel:#FDFDFC;
+  --ink:#15181C; --ink-soft:#4A5056; --faint:#7D848B;
+  --rule:#D2D5CF; --rule-soft:#E2E4DF;
+  --bleu:#2A3F8F; --bleu-soft:#E4E7F3; --bleu-line:#A9B4DC;
+  --rose:#8E5450; --rose-soft:#F3E7E5;
+  --rouge:#A32C22; --rouge-soft:#F7E3E0;
+  --vert:#3C6A52; --vert-soft:#E3EDE6;
+  --or:#7E6220; --or-soft:#F4EBD8;
+  --on-fg:#FDFDFC;
+  --disp:"Newsreader",Georgia,"Times New Roman",serif;
+  --ui:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --stone:#14181B; --stone2:#1A1F23; --panel:#1E2429;
+    --ink:#E8EAE5; --ink-soft:#AFB6BA; --faint:#7E868C;
+    --rule:#2C3338; --rule-soft:#232A2E;
+    --bleu:#97AAEA; --bleu-soft:#1B2340; --bleu-line:#3C4A7C;
+    --rose:#DC9E98; --rose-soft:#352421;
+    --rouge:#F08A7C; --rouge-soft:#3A1F1B;
+    --vert:#7CC19A; --vert-soft:#16291F;
+    --or:#D7AE63; --or-soft:#2C2416;
+    --on-fg:#14181B;
+  }
+}
+:root[data-theme="dark"]{
+  --stone:#14181B; --stone2:#1A1F23; --panel:#1E2429;
+  --ink:#E8EAE5; --ink-soft:#AFB6BA; --faint:#7E868C;
+  --rule:#2C3338; --rule-soft:#232A2E;
+  --bleu:#97AAEA; --bleu-soft:#1B2340; --bleu-line:#3C4A7C;
+  --rose:#DC9E98; --rose-soft:#352421;
+  --rouge:#F08A7C; --rouge-soft:#3A1F1B;
+  --vert:#7CC19A; --vert-soft:#16291F;
+  --or:#D7AE63; --or-soft:#2C2416;
+  --on-fg:#14181B;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--stone);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:500;text-wrap:balance;margin:0}
+a{color:var(--bleu)}
+button{font-family:var(--ui);font-size:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{max-width:780px;margin:0 auto;padding:30px 28px 110px}
+@media (max-width:620px){.wrap{padding:20px 18px 90px}}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:12px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-decoration:none}
+.brand b{color:var(--ink);font-weight:500}
+.brand:hover b{color:var(--bleu)}
+
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bleu);margin:34px 0 10px}
+h1{font-size:clamp(30px,5.5vw,46px);line-height:1.07;letter-spacing:-.015em}
+.lede{font-family:var(--disp);font-style:italic;font-size:19.5px;line-height:1.5;color:var(--ink-soft);margin-top:16px;max-width:34rem}
+
+/* avertissement permanent */
+.disclaimer{border:1px solid var(--rouge);border-left-width:3px;background:var(--rouge-soft);border-radius:0 3px 3px 0;padding:15px 17px;margin-top:26px;font-size:14.5px;line-height:1.6}
+.disclaimer b{color:var(--rouge)}
+.urg{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.urgchip{font-family:var(--mono);font-size:11px;background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:6px 10px}
+.urgchip b{color:var(--rouge);font-weight:500}
+
+/* sommaire */
+.cat{margin-top:44px}
+.cath{display:flex;align-items:baseline;gap:12px;border-top:2px solid var(--ink);padding-top:11px;margin-bottom:14px}
+.cath h2{font-size:22px}
+.cath .n{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.liste{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.item{display:block;background:var(--panel);padding:14px 17px;text-decoration:none;color:inherit}
+.item:hover{background:var(--bleu-soft)}
+.item .t{font-family:var(--disp);font-size:19px;line-height:1.25}
+.item .r{font-size:14px;color:var(--ink-soft);line-height:1.5;margin-top:3px}
+
+/* fiche */
+.fiche{margin-top:28px;display:flex;flex-direction:column;gap:18px;max-width:35rem}
+.fmeta{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px}
+.fh{font-size:20px;line-height:1.25;margin-top:10px}
+.fp{font-size:16.5px;line-height:1.66;margin:0}
+.fdef{border:1px solid var(--rule);border-radius:3px;padding:13px 16px;background:var(--panel)}
+.fdefm{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.fdef p{margin:0;font-size:15.5px;line-height:1.6;color:var(--ink-soft)}
+.fcalc{font-family:var(--mono);font-size:12.5px;line-height:1.85;background:var(--stone2);border:1px solid var(--rule-soft);border-radius:3px;padding:14px 16px;overflow-x:auto;margin:0;white-space:pre;color:var(--ink)}
+ol.fnum,ul.fli{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+ol.fnum li,ul.fli li{font-size:16px;line-height:1.6}
+ol.fnum li::marker{font-family:var(--mono);font-size:13px;color:var(--bleu)}
+.tabwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;background:var(--panel)}
+th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:400;padding:10px 13px;border-bottom:1px solid var(--rule)}
+td{padding:10px 13px;border-bottom:1px solid var(--rule-soft);line-height:1.45;vertical-align:top}
+tr:last-child td{border-bottom:0}
+
+/* alerte */
+.alerte{border:1px solid var(--rose);border-left-width:3px;background:var(--rose-soft);border-radius:0 3px 3px 0;padding:15px 17px}
+.alerte.n15{border-color:var(--rouge);background:var(--rouge-soft)}
+.alerteh{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.alerte.n15 .alerteh{color:var(--rouge)}
+.alerteh .badge{background:var(--rouge);color:var(--on-fg);border-radius:2px;padding:2px 6px;letter-spacing:.06em}
+.alerte ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:8px}
+.alerte li{font-size:15px;line-height:1.55}
+
+.fkey{border-left:3px solid var(--vert);background:var(--vert-soft);border-radius:0 3px 3px 0;padding:15px 17px}
+.fkeyk{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--vert);margin-bottom:6px}
+.fkey p{margin:0;font-size:16.5px;line-height:1.6}
+
+.fnav{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px;padding-top:18px;border-top:1px solid var(--rule)}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--stone);border-radius:3px;padding:10px 17px;font-weight:500;font-size:14.5px;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--bleu);border-color:var(--bleu);color:var(--on-fg)}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{background:var(--stone2);border-color:var(--ink);color:var(--ink)}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--faint);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="./"><b>LE DIVAN</b> · retour aux entretiens</a>
+    <a class="brand" href="cours.html">Le cours →</a>
+  </div>
+  <div id="app"></div>
+</div>
+
+<script src="medecine-fiches.js?v=1"></script>
+<script>
+"use strict";
+
+const el = (t, c, x) => { const n = document.createElement(t); if(c) n.className = c; if(x != null) n.textContent = x; return n; };
+
+function rich(node, texte){
+  String(texte).split(/(\*\*[^*]+\*\*)/g).forEach(part => {
+    if(!part) return;
+    if(part.startsWith("**") && part.endsWith("**")) node.appendChild(el("b", null, part.slice(2, -2)));
+    else node.appendChild(document.createTextNode(part));
+  });
+  return node;
+}
+
+const CATS = [];
+FICHES.forEach(f => { if(CATS.indexOf(f.cat) < 0) CATS.push(f.cat); });
+
+function disclaimer(){
+  const d = el("div", "disclaimer");
+  d.appendChild(el("b", null, "Information générale, pas un avis médical. "));
+  d.appendChild(el("span", null, "Ces fiches résument ce que recommandent les sociétés savantes pour des situations courantes. Elles ne permettent pas de poser un diagnostic, ne tiennent pas compte de vos antécédents ni de vos traitements, et ne remplacent jamais un médecin ou un pharmacien. En cas de doute, c'est l'avis qui tranche, pas la fiche."));
+  const u = el("div", "urg");
+  [["15", "SAMU"], ["112", "urgence Europe"], ["18", "pompiers"], ["114", "SMS, sourds et malentendants"], ["116 117", "médecin de garde"], ["3114", "prévention du suicide"]]
+    .forEach(([n, q]) => { const c = el("span", "urgchip"); c.appendChild(el("b", null, n)); c.appendChild(el("span", null, " · " + q)); u.appendChild(c); });
+  d.appendChild(u);
+  return d;
+}
+
+function renderIndex(){
+  const app = document.getElementById("app");
+  app.textContent = "";
+  app.appendChild(el("div", "eyebrow", "Médecine générale · " + FICHES.length + " fiches"));
+  app.appendChild(el("h1", null, "La trousse"));
+  app.appendChild(el("p", "lede", "Ce que c'est, ce qui aide, ce qui ne sert à rien — et surtout les signes qui imposent de consulter sans attendre. Chaque fiche explique le mécanisme, parce qu'une consigne qu'on comprend est une consigne qu'on applique."));
+  app.appendChild(disclaimer());
+
+  CATS.forEach(cat => {
+    const fiches = FICHES.filter(f => f.cat === cat);
+    const sec = el("section", "cat");
+    const h = el("div", "cath");
+    h.appendChild(el("h2", null, cat));
+    h.appendChild(el("span", "n", fiches.length + (fiches.length > 1 ? " fiches" : " fiche")));
+    sec.appendChild(h);
+    const liste = el("div", "liste");
+    fiches.forEach(f => {
+      const a = document.createElement("a");
+      a.className = "item"; a.href = "#" + f.id;
+      a.appendChild(el("div", "t", f.titre));
+      a.appendChild(el("div", "r", f.resume));
+      liste.appendChild(a);
+    });
+    sec.appendChild(liste);
+    app.appendChild(sec);
+  });
+
+  const f = el("div", "foot");
+  f.appendChild(el("div", null, "LA TROUSSE · un module du DIVAN"));
+  const a = document.createElement("a"); a.href = "./"; a.textContent = "← Les entretiens";
+  f.appendChild(a);
+  app.appendChild(f);
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+
+function renderFiche(id){
+  const i = FICHES.findIndex(f => f.id === id);
+  const f = FICHES[i];
+  const app = document.getElementById("app");
+  app.textContent = "";
+
+  app.appendChild(el("div", "eyebrow", f.cat));
+  app.appendChild(el("h1", null, f.titre));
+  app.appendChild(el("p", "lede", f.resume));
+
+  const box = el("div", "fiche");
+  f.blocs.forEach(b => {
+    if(b.t === "h") box.appendChild(el("h2", "fh", b.x));
+    else if(b.t === "p") box.appendChild(rich(el("p", "fp"), b.x));
+    else if(b.t === "def"){
+      const d = el("div", "fdef");
+      d.appendChild(el("div", "fdefm", b.mot));
+      d.appendChild(rich(el("p"), b.x)); box.appendChild(d);
+    }
+    else if(b.t === "calc") box.appendChild(el("pre", "fcalc", b.lignes.join("\n")));
+    else if(b.t === "num" || b.t === "li"){
+      const list = el(b.t === "num" ? "ol" : "ul", b.t === "num" ? "fnum" : "fli");
+      b.items.forEach(x => list.appendChild(rich(el("li"), x)));
+      box.appendChild(list);
+    }
+    else if(b.t === "tab"){
+      const w = el("div", "tabwrap"); const tb = el("table");
+      const tr = el("tr"); b.head.forEach(h => tr.appendChild(el("th", null, h)));
+      const th = document.createElement("thead"); th.appendChild(tr); tb.appendChild(th);
+      const tbody = document.createElement("tbody");
+      b.rows.forEach(r => { const row = el("tr"); r.forEach(c => row.appendChild(el("td", null, c))); tbody.appendChild(row); });
+      tb.appendChild(tbody); w.appendChild(tb); box.appendChild(w);
+    }
+    else if(b.t === "alerte"){
+      const d = el("div", "alerte" + (b.niveau === "15" ? " n15" : ""));
+      const h = el("div", "alerteh");
+      if(b.niveau === "15") h.appendChild(el("span", "badge", "15"));
+      h.appendChild(el("span", null, b.titre || "Consulter"));
+      d.appendChild(h);
+      const ul = el("ul");
+      b.items.forEach(x => ul.appendChild(rich(el("li"), x)));
+      d.appendChild(ul); box.appendChild(d);
+    }
+    else if(b.t === "key"){
+      const d = el("div", "fkey");
+      d.appendChild(el("div", "fkeyk", "À retenir"));
+      d.appendChild(rich(el("p"), b.x)); box.appendChild(d);
+    }
+  });
+  app.appendChild(box);
+
+  const nav = el("div", "fnav");
+  if(i > 0){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + FICHES[i-1].id; a.textContent = "← " + FICHES[i-1].titre; nav.appendChild(a); }
+  if(i < FICHES.length - 1){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + FICHES[i+1].id; a.textContent = FICHES[i+1].titre + " →"; nav.appendChild(a); }
+  const back = document.createElement("a"); back.className = "btn"; back.href = "#"; back.textContent = "Toutes les fiches";
+  nav.appendChild(back);
+  app.appendChild(nav);
+
+  app.appendChild(disclaimer());
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+
+function route(){
+  const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if(h && FICHES.some(f => f.id === h)) renderFiche(h); else renderIndex();
+}
+addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>

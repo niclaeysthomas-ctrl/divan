@@ -1431,6 +1431,13 @@ function renderHome(){
   cours.appendChild(el("div", "coursd", "Six blocs, dix-sept modules. Les idées qui circulent passées une par une au banc d'essai : établi, contesté, effondré, ou simple produit commercial. Voir le plan →"));
   col.appendChild(cours);
 
+  const trousse = document.createElement("a");
+  trousse.className = "coursbox"; trousse.href = "medecine.html";
+  trousse.appendChild(el("div", "coursk", "La trousse"));
+  trousse.appendChild(el("div", "courst", "Médecine générale : que faire, et quand s'inquiéter"));
+  trousse.appendChild(el("div", "coursd", "Migraine, entorse, mal de dos, fièvre, antibiotiques, antalgiques. Ce que c'est, ce qui aide, ce qui ne sert à rien — et les signes qui imposent de consulter sans attendre. Voir les fiches →"));
+  col.appendChild(trousse);
+
   const pl = el("div", "plate");
   pl.appendChild(el("h3", null, "Charger un entretien sur mesure"));
   pl.appendChild(el("p", null, "Quand Claude a lu ton dossier, il renvoie un bloc JSON : le tour suivant, écrit sur tes réponses à toi. Colle-le ici, il s'ajoutera à la liste au-dessus. Rien d'autre à installer."));
