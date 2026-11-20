@@ -160,6 +160,16 @@ td:last-child{font-variant-numeric:tabular-nums}
 .lkey p{margin:0;font-size:16.5px;line-height:1.6}
 .fig{overflow-x:auto;border:1px solid var(--rule-soft);border-radius:3px;background:var(--panel);padding:12px}
 .fig svg{display:block;width:100%;height:auto;min-width:420px}
+.recap{display:flex;flex-direction:column;gap:26px;margin:4px 0}
+.recapgrp{border-top:1px solid var(--rule);padding-top:14px}
+.recaph{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.recaph .recapn{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.recapl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.recapl li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:0 10px;align-items:baseline;font-size:14.5px;line-height:1.5}
+.recapl .src{font-family:var(--mono);font-size:10.5px;color:var(--faint);padding-top:2px}
+.recapl b{font-weight:500}
+.recapl span.why{color:var(--ink-soft)}
+@media (max-width:560px){.recapl li{grid-template-columns:minmax(0,1fr)}.recapl .src{padding:0 0 1px}}
 .lecon.ouvrable{cursor:pointer}
 .lecon a{text-decoration:none;color:inherit}
 .lecon a:hover .lt{color:var(--bleu);text-decoration:underline;text-underline-offset:3px}
@@ -183,6 +193,7 @@ td:last-child{font-variant-numeric:tabular-nums}
 <script src="cours-c2.js?v=1"></script>
 <script src="cours-d.js?v=1"></script>
 <script src="cours-e.js?v=1"></script>
+<script src="cours-f.js?v=1"></script>
 <script>
 "use strict";
 
@@ -611,7 +622,17 @@ const PLAN = [
 /* ─────────── rendu ─────────── */
 const el = (t, c, x) => { const n = document.createElement(t); if(c) n.className = c; if(x != null) n.textContent = x; return n; };
 const LABEL = {etabli:"Établi", conteste:"Contesté", effondre:"Effondré", marketing:"Marketing"};
-const CONTENU = Object.assign({}, window.CONTENU_A || {}, window.CONTENU_B || {}, window.CONTENU_B2 || {}, window.CONTENU_C || {}, window.CONTENU_C2 || {}, window.CONTENU_D || {}, window.CONTENU_E || {});
+
+// **gras** rendu par noeuds de texte : aucune interpolation HTML
+function rich(node, texte){
+  String(texte).split(/(\*\*[^*]+\*\*)/g).forEach(part => {
+    if(!part) return;
+    if(part.startsWith("**") && part.endsWith("**")) node.appendChild(el("b", null, part.slice(2, -2)));
+    else node.appendChild(document.createTextNode(part));
+  });
+  return node;
+}
+const CONTENU = Object.assign({}, window.CONTENU_A || {}, window.CONTENU_B || {}, window.CONTENU_B2 || {}, window.CONTENU_C || {}, window.CONTENU_C2 || {}, window.CONTENU_D || {}, window.CONTENU_E || {}, window.CONTENU_F || {});
 const LECONS = PLAN.flatMap(b => b.modules.flatMap(m => m.lecons.map(l => ({l, m, b}))));
 const ECRITES = LECONS.filter(x => CONTENU[x.l.n]);
 const mots = bl => bl.reduce((a, b) => a + [b.x, b.d, b.titre, b.mot, (b.items||[]).join(" "), (b.lignes||[]).join(" "), (b.rows||[]).flat().join(" ")].filter(Boolean).join(" ").split(/\s+/).length, 0);
@@ -724,6 +745,55 @@ function render(){
   app.appendChild(f);
 }
 
+/* ─────────── table des verdicts, assemblée depuis le cours ─────────── */
+function buildRecap(){
+  const lignes = [];
+  const vus = new Set();
+  const norm = t => t.toLowerCase().replace(/[^a-zà-ÿ0-9]/g, "").slice(0, 40);
+
+  // 1. les verdicts rendus dans les leçons écrites : ils portent leur numéro
+  LECONS.forEach(({l}) => {
+    const blocs = CONTENU[l.n]; if(!blocs) return;
+    blocs.forEach(b => {
+      if(b.t !== "verdict") return;
+      const k = norm(b.x); if(vus.has(k)) return; vus.add(k);
+      lignes.push({s: b.s, titre: b.x, why: b.d, src: l.n});
+    });
+  });
+
+  // 2. les idées annoncées au plan dont le module n'est pas encore écrit
+  PLAN.forEach(bl => bl.modules.forEach(m => {
+    const ecrit = m.lecons.some(l => CONTENU[l.n]);
+    if(ecrit) return;
+    (m.idees || []).forEach(i => {
+      const k = norm(i.t); if(vus.has(k)) return; vus.add(k);
+      lignes.push({s: i.s, titre: i.t.replace(/^«\s*|\s*»$/g, ""), why: i.d, src: "mod. " + m.n});
+    });
+  }));
+
+  const wrap = el("div", "recap");
+  ["etabli", "conteste", "effondre", "marketing"].forEach(cat => {
+    const groupe = lignes.filter(x => x.s === cat);
+    if(!groupe.length) return;
+    const g = el("div", "recapgrp");
+    const h = el("h3", "recaph");
+    h.appendChild(el("span", "pill p-" + cat, LABEL[cat]));
+    h.appendChild(el("span", "recapn", groupe.length + (groupe.length > 1 ? " entrées" : " entrée")));
+    g.appendChild(h);
+    const ul = el("ul", "recapl");
+    groupe.forEach(x => {
+      const li = el("li");
+      li.appendChild(el("span", "src", x.src));
+      const d = el("div");
+      d.appendChild(el("b", null, x.titre));
+      d.appendChild(el("span", "why", " — " + x.why));
+      li.appendChild(d); ul.appendChild(li);
+    });
+    g.appendChild(ul); wrap.appendChild(g);
+  });
+  return wrap;
+}
+
 /* ─────────── vue leçon ─────────── */
 function renderLecon(num){
   const idx = LECONS.findIndex(x => x.l.n === num);
@@ -742,21 +812,21 @@ function renderLecon(num){
   const box = el("div", "lec");
   blocs.forEach(bl => {
     if(bl.t === "h") box.appendChild(el("h2", "lh", bl.x));
-    else if(bl.t === "p") box.appendChild(el("p", "lp", bl.x));
+    else if(bl.t === "p") box.appendChild(rich(el("p", "lp"), bl.x));
     else if(bl.t === "ex"){
       const d = el("div", "ex");
       d.appendChild(el("div", "exk", bl.titre || "Exemple"));
-      d.appendChild(el("p", null, bl.x)); box.appendChild(d);
+      d.appendChild(rich(el("p"), bl.x)); box.appendChild(d);
     }
     else if(bl.t === "def"){
       const d = el("div", "def");
       d.appendChild(el("div", "defm", bl.mot));
-      d.appendChild(el("p", null, bl.x)); box.appendChild(d);
+      d.appendChild(rich(el("p"), bl.x)); box.appendChild(d);
     }
     else if(bl.t === "calc") box.appendChild(el("pre", "calc", bl.lignes.join("\n")));
     else if(bl.t === "num" || bl.t === "li"){
       const list = el(bl.t === "num" ? "ol" : "ul", bl.t === "num" ? "lnum" : "lli");
-      bl.items.forEach(i => list.appendChild(el("li", null, i)));
+      bl.items.forEach(i => list.appendChild(rich(el("li"), i)));
       box.appendChild(list);
     }
     else if(bl.t === "tab"){
@@ -778,11 +848,12 @@ function renderLecon(num){
     else if(bl.t === "key"){
       const d = el("div", "lkey");
       d.appendChild(el("div", "lkeyk", "Ce qu'il faut retenir"));
-      d.appendChild(el("p", null, bl.x)); box.appendChild(d);
+      d.appendChild(rich(el("p"), bl.x)); box.appendChild(d);
     }
     else if(bl.t === "svg"){
       const d = el("div", "fig"); d.innerHTML = bl.src; box.appendChild(d);
     }
+    else if(bl.t === "recap") box.appendChild(buildRecap());
   });
   app.appendChild(box);
 
