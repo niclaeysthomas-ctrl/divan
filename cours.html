@@ -126,6 +126,41 @@ h1{font-size:clamp(32px,6vw,50px);line-height:1.06;letter-spacing:-.015em}
 .plate code{font-family:var(--mono);font-size:13px;background:var(--stone2);padding:1px 5px;border-radius:2px;color:var(--ink)}
 .warn{border-left:3px solid var(--rose);background:var(--rose-soft);border-radius:0 3px 3px 0;padding:14px 16px;margin-top:22px;font-size:14.5px;line-height:1.6}
 .warn b{color:var(--rose)}
+/* ——— examens ——— */
+.revbox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--bleu-line);background:var(--bleu-soft);border-radius:4px;padding:14px 17px;margin-top:16px}
+.revbox .rt{font-family:var(--disp);font-size:17px;line-height:1.3;flex:1 1 230px}
+.revbox .rn{font-family:var(--mono);font-size:11px;color:var(--bleu)}
+.modexam{margin-top:14px}
+.modexam button{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:3px;padding:5px 9px}
+.modexam button:hover{border-color:var(--bleu);color:var(--bleu)}
+.exprog{height:3px;background:var(--rule-soft);border-radius:2px;overflow:hidden;margin-top:16px}
+.exprog i{display:block;height:100%;background:var(--bleu)}
+.exmeta{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:10px;display:flex;gap:16px;flex-wrap:wrap}
+.exq{font-family:var(--disp);font-size:21px;line-height:1.45;margin:26px 0 0;max-width:34rem}
+.exzone{margin-top:20px;display:flex;flex-direction:column;gap:12px;max-width:34rem}
+.exzone textarea{width:100%;min-height:110px;padding:12px 14px;border:1px solid var(--rule);border-radius:3px;background:var(--panel);color:var(--ink);font-family:var(--ui);font-size:15.5px;line-height:1.6;resize:vertical}
+.exopt{display:flex;flex-direction:column;gap:8px}
+.exopt button{text-align:left;background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:12px 15px;font-size:15.5px;line-height:1.45;color:var(--ink)}
+.exopt button:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-soft)}
+.exopt button:disabled{cursor:default;opacity:.75}
+.exopt button.bon{border-color:var(--vert);background:var(--vert-soft);opacity:1}
+.exopt button.faux{border-color:var(--rose);background:var(--rose-soft);opacity:1}
+.exverd{display:flex;gap:8px;flex-wrap:wrap}
+.exverd button{background:none;border:1px solid var(--rule);border-radius:3px;padding:9px 13px;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.exverd button:hover:not(:disabled){border-color:var(--bleu);color:var(--bleu)}
+.exverd button:disabled{cursor:default}
+.exverd button.bon{border-color:var(--vert);background:var(--vert-soft);color:var(--vert)}
+.exverd button.faux{border-color:var(--rose);background:var(--rose-soft);color:var(--rose)}
+.exrep{border-left:3px solid var(--bleu);background:var(--stone2);border-radius:0 3px 3px 0;padding:14px 16px}
+.exrepk{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bleu);margin-bottom:6px}
+.exrep p{margin:0;font-size:16px;line-height:1.62}
+.exauto{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.exauto .lab{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-right:4px}
+.exbilan{border:1px solid var(--rule);border-radius:4px;background:var(--panel);padding:20px 22px;margin-top:24px}
+.exbilan .score{font-family:var(--disp);font-size:34px;line-height:1.1}
+.exbilan p{margin:8px 0 0;font-size:15.5px;color:var(--ink-soft);line-height:1.6}
+.exvide{font-family:var(--disp);font-style:italic;font-size:18px;color:var(--ink-soft);margin-top:20px;line-height:1.5}
+
 /* ——— leçon ——— */
 .lec-nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:38px;padding-top:18px;border-top:1px solid var(--rule)}
 .btn{border:1px solid var(--ink);background:var(--ink);color:var(--stone);border-radius:3px;padding:10px 17px;font-weight:500;font-size:14.5px;text-decoration:none;display:inline-block}
@@ -194,6 +229,7 @@ td:last-child{font-variant-numeric:tabular-nums}
 <script src="cours-d.js?v=1"></script>
 <script src="cours-e.js?v=1"></script>
 <script src="cours-f.js?v=1"></script>
+<script src="examens.js?v=1"></script>
 <script>
 "use strict";
 
@@ -672,6 +708,24 @@ function render(){
    .forEach(([k, v]) => { const d = el("div", "stat"); d.appendChild(el("div", "k", k)); d.appendChild(el("div", "v", v)); st.appendChild(d); });
   app.appendChild(st);
 
+  const dues = qDues().length, neuves = qNeuves().length;
+  if(dues || neuves){
+    const rb = el("div", "revbox");
+    rb.appendChild(el("div", "rt", dues
+      ? "Tu as " + dues + " question" + (dues > 1 ? "s" : "") + " à repasser aujourd'hui. Elles reviennent d'elles-mêmes, de plus en plus espacées."
+      : "Rien à réviser aujourd'hui. Tu peux passer un examen de séance pour découvrir de nouvelles questions."));
+    const ra = document.createElement("a"); ra.className = "btn";
+    ra.href = dues ? "#examen-revision" : "#examen-session";
+    ra.textContent = dues ? "Réviser (" + dues + ")" : "Examen de séance";
+    rb.appendChild(ra);
+    if(dues && neuves){
+      const rc = document.createElement("a"); rc.className = "btn ghost";
+      rc.href = "#examen-session"; rc.textContent = "Examen de séance";
+      rb.appendChild(rc);
+    }
+    app.appendChild(rb);
+  }
+
   PLAN.forEach(b => {
     const sec = el("section", "bloc");
     const h = el("div", "blochead");
@@ -720,6 +774,13 @@ function render(){
       }
 
       if(m.divan) col.appendChild(el("div", "divan", "↳ " + m.divan));
+      if(m.lecons.some(l => CONTENU[l.n]) && qDuModule(m.n).length){
+        const ex = el("div", "modexam");
+        const a = document.createElement("a");
+        a.href = "#examen-" + m.n; a.style.textDecoration = "none";
+        a.appendChild(el("button", null, "Examen du module " + m.n + " · " + qDuModule(m.n).length + " questions"));
+        ex.appendChild(a); col.appendChild(ex);
+      }
       mod.appendChild(col);
       sec.appendChild(mod);
     });
@@ -743,6 +804,213 @@ function render(){
   const a = document.createElement("a"); a.href = "./"; a.textContent = "← Les entretiens";
   f.appendChild(a);
   app.appendChild(f);
+}
+
+/* ─────────── examens : stockage, planification, passation ─────────── */
+const EXK = "divan_exam_v1";
+const BOITES = [1, 3, 7, 16, 35, 90];       // jours avant la prochaine présentation
+let EXETAT = {v:1, q:{}};
+let EXCORROMPU = false, EXMUET = false;
+
+const qkey = x => x.l + "|" + x.t + "|" + x.q.slice(0, 40);
+const aujourdhui = () => new Date().toISOString().slice(0, 10);
+const dansNJours = n => new Date(Date.now() + n * 86400000).toISOString().slice(0, 10);
+
+function examLoad(){
+  let brut;
+  try{ brut = localStorage.getItem(EXK); }
+  catch(e){ EXMUET = true; return; }            // stockage inaccessible : on joue sans mémoire
+  if(brut === null) return;                     // vide : cas normal d'un premier passage
+  try{
+    const o = JSON.parse(brut);
+    if(!o || typeof o !== "object" || typeof o.q !== "object") throw new Error("forme");
+    EXETAT = {v:1, q:o.q};
+  }catch(e){ EXCORROMPU = true; }               // illisible ≠ vide : on refuse d'écrire par-dessus
+}
+function examSave(){
+  if(EXCORROMPU || EXMUET) return;
+  try{ localStorage.setItem(EXK, JSON.stringify(EXETAT)); }
+  catch(e){ EXMUET = true; }                    // quota atteint : on continue sans enregistrer
+}
+
+const fiche = x => EXETAT.q[qkey(x)];
+function noter(x, reussi){
+  const k = qkey(x);
+  const f = EXETAT.q[k] || {n:0, ok:0, box:0, due:null};
+  f.n++;
+  if(reussi){ f.ok++; f.box = Math.min(f.box + 1, BOITES.length - 1); }
+  else { f.box = 0; }
+  f.due = dansNJours(BOITES[f.box]);
+  EXETAT.q[k] = f; examSave();
+}
+
+const modulesEcrits = () => PLAN.flatMap(b => b.modules).filter(m => m.lecons.some(l => CONTENU[l.n])).map(m => String(m.n));
+const qDuModule = n => EXAMENS.filter(x => x.m === String(n));
+function qDues(){
+  const h = aujourdhui();
+  return EXAMENS.filter(x => { const f = fiche(x); return f && f.due && f.due <= h; });
+}
+function qNeuves(){
+  const ok = modulesEcrits();
+  return EXAMENS.filter(x => !fiche(x) && ok.indexOf(x.m) >= 0);
+}
+function melange(a){ const t = a.slice(); for(let i = t.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [t[i], t[j]] = [t[j], t[i]]; } return t; }
+
+function serie(mode){
+  if(mode === "revision") return melange(qDues()).slice(0, 20);
+  if(mode === "session"){
+    const dues = melange(qDues()).slice(0, 5);
+    const neuves = melange(qNeuves()).slice(0, 8 - dues.length);
+    return melange(dues.concat(neuves));
+  }
+  return melange(qDuModule(mode));            // mode = numéro de module
+}
+
+/* ─────────── vue examen ─────────── */
+let EXLISTE = [], EXPOS = 0, EXBON = 0, EXMODE = "";
+
+function ouvrirExamen(mode){
+  EXMODE = mode; EXLISTE = serie(mode); EXPOS = 0; EXBON = 0;
+  renderExamen();
+}
+
+function titreExamen(){
+  if(EXMODE === "revision") return "Révision";
+  if(EXMODE === "session") return "Examen de séance";
+  const m = PLAN.flatMap(b => b.modules).find(m => String(m.n) === EXMODE);
+  return "Module " + EXMODE + (m ? " · " + m.titre : "");
+}
+
+function renderExamen(){
+  const app = document.getElementById("app");
+  app.textContent = "";
+  app.appendChild(el("div", "eyebrow", "Examen"));
+  app.appendChild(el("h1", null, titreExamen()));
+
+  if(EXCORROMPU) app.appendChild(el("div", "banner", "Une sauvegarde d'examens est présente sur cet appareil mais illisible. Par sécurité elle n'est pas écrasée : tes réponses de cette séance ne seront pas mémorisées."));
+  else if(EXMUET) app.appendChild(el("div", "banner", "L'enregistrement local est indisponible ici : tu peux passer l'examen, mais la file de révision ne gardera rien."));
+
+  if(!EXLISTE.length){
+    app.appendChild(el("p", "exvide", EXMODE === "revision"
+      ? "Rien à réviser aujourd'hui. Les questions reviennent d'elles-mêmes selon leur ancienneté — reviens dans quelques jours, ou passe un examen de module."
+      : "Aucune question disponible pour l'instant."));
+    app.appendChild(navExamen());
+    window.scrollTo({top:0, behavior:"instant"});
+    return;
+  }
+
+  if(EXPOS >= EXLISTE.length) return renderBilan();
+
+  const x = EXLISTE[EXPOS];
+  const pr = el("div", "exprog"); const fill = el("i");
+  fill.style.width = Math.round(100 * EXPOS / EXLISTE.length) + "%";
+  pr.appendChild(fill); app.appendChild(pr);
+
+  const meta = el("div", "exmeta");
+  meta.appendChild(el("span", null, "Question " + (EXPOS + 1) + " sur " + EXLISTE.length));
+  meta.appendChild(el("span", null, {rappel:"Rappel libre", verdict:"Verdict", qcm:"Choix multiple"}[x.t]));
+  meta.appendChild(el("span", null, "Leçon " + x.l));
+  const f = fiche(x);
+  if(f) meta.appendChild(el("span", null, "vue " + f.n + (f.n > 1 ? " fois" : " fois") + ", " + f.ok + " réussie" + (f.ok > 1 ? "s" : "")));
+  app.appendChild(meta);
+
+  app.appendChild(rich(el("p", "exq"), x.q));
+
+  const zone = el("div", "exzone");
+  app.appendChild(zone);
+
+  const reveler = (reussi) => {
+    const r = el("div", "exrep");
+    r.appendChild(el("div", "exrepk", "Réponse"));
+    r.appendChild(rich(el("p"), x.r));
+    zone.appendChild(r);
+    if(reussi === null){                         // rappel libre : la personne juge
+      const a = el("div", "exauto");
+      a.appendChild(el("span", "lab", "Tu l'avais ?"));
+      const oui = el("button", "btn", "Je savais");
+      const non = el("button", "btn ghost", "Je ne savais pas");
+      oui.onclick = () => { noter(x, true); EXBON++; EXPOS++; renderExamen(); };
+      non.onclick = () => { noter(x, false); EXPOS++; renderExamen(); };
+      a.appendChild(oui); a.appendChild(non);
+      zone.appendChild(a);
+    } else {
+      noter(x, reussi); if(reussi) EXBON++;
+      const b = el("button", "btn", EXPOS + 1 < EXLISTE.length ? "Question suivante →" : "Voir le bilan →");
+      b.onclick = () => { EXPOS++; renderExamen(); };
+      zone.appendChild(b);
+    }
+  };
+
+  if(x.t === "rappel"){
+    const ta = document.createElement("textarea");
+    ta.placeholder = "Écris ta réponse de mémoire, sans revenir à la leçon. C'est l'effort de récupération qui consolide, pas la lecture de la réponse.";
+    zone.appendChild(ta);
+    const b = el("button", "btn", "Voir la réponse");
+    b.onclick = () => { b.remove(); ta.readOnly = true; reveler(null); };
+    zone.appendChild(b);
+  }
+  else if(x.t === "verdict"){
+    const row = el("div", "exverd");
+    ["etabli", "conteste", "effondre", "marketing"].forEach(cat => {
+      const b = el("button", null, LABEL[cat]);
+      b.onclick = () => {
+        const bon = cat === x.s;
+        [...row.children].forEach(c => { c.disabled = true; });
+        b.className = bon ? "bon" : "faux";
+        if(!bon) [...row.children].forEach(c => { if(c.textContent === LABEL[x.s]) c.className = "bon"; });
+        reveler(bon);
+      };
+      row.appendChild(b);
+    });
+    zone.appendChild(row);
+  }
+  else {
+    const row = el("div", "exopt");
+    x.o.forEach((opt, i) => {
+      const b = el("button", null, opt);
+      b.onclick = () => {
+        const bon = i === x.c;
+        [...row.children].forEach((c, j) => { c.disabled = true; if(j === x.c) c.className = "bon"; });
+        if(!bon) b.className = "faux";
+        reveler(bon);
+      };
+      row.appendChild(b);
+    });
+    zone.appendChild(row);
+  }
+
+  app.appendChild(navExamen());
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+function renderBilan(){
+  const app = document.getElementById("app");
+  app.textContent = "";
+  app.appendChild(el("div", "eyebrow", "Examen terminé"));
+  app.appendChild(el("h1", null, titreExamen()));
+  const b = el("div", "exbilan");
+  b.appendChild(el("div", "score", EXBON + " / " + EXLISTE.length));
+  const rates = EXLISTE.length - EXBON;
+  b.appendChild(el("p", null, rates === 0
+    ? "Tout est su. Ces questions reviendront plus tard, de plus en plus espacées — c'est le principe de la leçon 7.5."
+    : rates + (rates > 1 ? " questions reviendront" : " question reviendra") + " dès demain, les autres plus tard. L'écart entre ce qu'on croit savoir et ce qu'on sait restituer est exactement ce que cet exercice mesure."));
+  app.appendChild(b);
+  app.appendChild(navExamen(true));
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+function navExamen(fin){
+  const nav = el("div", "lec-nav");
+  if(fin){
+    const dues = qDues().length;
+    if(dues){
+      const a = document.createElement("a"); a.className = "btn"; a.href = "#examen-revision";
+      a.textContent = "Réviser (" + dues + ")"; nav.appendChild(a);
+    }
+  }
+  const back = document.createElement("a"); back.className = "btn ghost"; back.href = "#plan"; back.textContent = "Le plan";
+  nav.appendChild(back);
+  return nav;
 }
 
 /* ─────────── table des verdicts, assemblée depuis le cours ─────────── */
@@ -861,6 +1129,11 @@ function renderLecon(num){
   const pos = ECRITES.findIndex(x => x.l.n === num);
   if(pos > 0){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + ECRITES[pos-1].l.n; a.textContent = "← " + ECRITES[pos-1].l.n; nav.appendChild(a); }
   if(pos < ECRITES.length - 1){ const a = document.createElement("a"); a.className = "btn"; a.href = "#" + ECRITES[pos+1].l.n; a.textContent = "Leçon " + ECRITES[pos+1].l.n + " · " + ECRITES[pos+1].l.t + " →"; nav.appendChild(a); }
+  if(qDuModule(m.n).length){
+    const ex = document.createElement("a"); ex.className = "btn ghost";
+    ex.href = "#examen-" + m.n; ex.textContent = "Examen du module " + m.n;
+    nav.appendChild(ex);
+  }
   const back = document.createElement("a"); back.className = "btn ghost"; back.href = "#plan"; back.textContent = "Le plan";
   nav.appendChild(back);
   app.appendChild(nav);
@@ -869,8 +1142,10 @@ function renderLecon(num){
 
 function route(){
   const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if(h.indexOf("examen-") === 0){ ouvrirExamen(h.slice(7)); return; }
   if(h && CONTENU[h]) renderLecon(h); else render();
 }
+examLoad();
 addEventListener("hashchange", route);
 route();
 </script>
