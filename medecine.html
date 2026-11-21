@@ -136,6 +136,7 @@ tr:last-child td{border-bottom:0}
 </div>
 
 <script src="medecine-fiches.js?v=1"></script>
+<script src="medecine-fiches2.js?v=1"></script>
 <script>
 "use strict";
 
@@ -150,8 +151,15 @@ function rich(node, texte){
   return node;
 }
 
+const TOUTES = (window.FICHES || []).concat(window.FICHES2 || []);
+const ORDRE = ["À lire en premier", "Tête", "Yeux", "Dents", "Peau et plaies",
+               "Os et muscles", "Infections", "Règles et cycle", "Médicaments", "Divers"];
 const CATS = [];
-FICHES.forEach(f => { if(CATS.indexOf(f.cat) < 0) CATS.push(f.cat); });
+TOUTES.forEach(f => { if(CATS.indexOf(f.cat) < 0) CATS.push(f.cat); });
+CATS.sort((a, b) => {
+  const ia = ORDRE.indexOf(a), ib = ORDRE.indexOf(b);
+  return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+});
 
 function disclaimer(){
   const d = el("div", "disclaimer");
@@ -167,13 +175,13 @@ function disclaimer(){
 function renderIndex(){
   const app = document.getElementById("app");
   app.textContent = "";
-  app.appendChild(el("div", "eyebrow", "Médecine générale · " + FICHES.length + " fiches"));
+  app.appendChild(el("div", "eyebrow", "Médecine générale · " + TOUTES.length + " fiches"));
   app.appendChild(el("h1", null, "La trousse"));
   app.appendChild(el("p", "lede", "Ce que c'est, ce qui aide, ce qui ne sert à rien — et surtout les signes qui imposent de consulter sans attendre. Chaque fiche explique le mécanisme, parce qu'une consigne qu'on comprend est une consigne qu'on applique."));
   app.appendChild(disclaimer());
 
   CATS.forEach(cat => {
-    const fiches = FICHES.filter(f => f.cat === cat);
+    const fiches = TOUTES.filter(f => f.cat === cat);
     const sec = el("section", "cat");
     const h = el("div", "cath");
     h.appendChild(el("h2", null, cat));
@@ -200,8 +208,8 @@ function renderIndex(){
 }
 
 function renderFiche(id){
-  const i = FICHES.findIndex(f => f.id === id);
-  const f = FICHES[i];
+  const i = TOUTES.findIndex(f => f.id === id);
+  const f = TOUTES[i];
   const app = document.getElementById("app");
   app.textContent = "";
 
@@ -251,8 +259,8 @@ function renderFiche(id){
   app.appendChild(box);
 
   const nav = el("div", "fnav");
-  if(i > 0){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + FICHES[i-1].id; a.textContent = "← " + FICHES[i-1].titre; nav.appendChild(a); }
-  if(i < FICHES.length - 1){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + FICHES[i+1].id; a.textContent = FICHES[i+1].titre + " →"; nav.appendChild(a); }
+  if(i > 0){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + TOUTES[i-1].id; a.textContent = "← " + TOUTES[i-1].titre; nav.appendChild(a); }
+  if(i < TOUTES.length - 1){ const a = document.createElement("a"); a.className = "btn ghost"; a.href = "#" + TOUTES[i+1].id; a.textContent = TOUTES[i+1].titre + " →"; nav.appendChild(a); }
   const back = document.createElement("a"); back.className = "btn"; back.href = "#"; back.textContent = "Toutes les fiches";
   nav.appendChild(back);
   app.appendChild(nav);
@@ -263,7 +271,7 @@ function renderFiche(id){
 
 function route(){
   const h = decodeURIComponent(location.hash.replace(/^#/, ""));
-  if(h && FICHES.some(f => f.id === h)) renderFiche(h); else renderIndex();
+  if(h && TOUTES.some(f => f.id === h)) renderFiche(h); else renderIndex();
 }
 addEventListener("hashchange", route);
 route();
